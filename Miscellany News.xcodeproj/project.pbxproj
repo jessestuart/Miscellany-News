@@ -30,12 +30,12 @@
 		D51626D913F86C7D00BDB710 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D51626DB13F86C7D00BDB710 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D51626DD13F86C7D00BDB710 /* Miscellany News-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Miscellany News-Prefix.pch"; sourceTree = "<group>"; };
-		D51626DE13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Miscellany_NewsAppDelegate.h; sourceTree = "<group>"; };
-		D51626DF13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Miscellany_NewsAppDelegate.m; sourceTree = "<group>"; };
+		D51626DE13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Miscellany_NewsAppDelegate.h; path = "Miscellany News/Miscellany_NewsAppDelegate.h"; sourceTree = "<group>"; };
+		D51626DF13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Miscellany_NewsAppDelegate.m; path = "Miscellany News/Miscellany_NewsAppDelegate.m"; sourceTree = "<group>"; };
 		D51626E213F86C7D00BDB710 /* Miscellany_News.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Miscellany_News.xcdatamodel; sourceTree = "<group>"; };
 		D51626E513F86C7D00BDB710 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
-		D51626E713F86C7D00BDB710 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		D51626E813F86C7D00BDB710 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		D51626E713F86C7D00BDB710 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = "Miscellany News/RootViewController.h"; sourceTree = "<group>"; };
+		D51626E813F86C7D00BDB710 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = "Miscellany News/RootViewController.m"; sourceTree = "<group>"; };
 		D51626EB13F86C7D00BDB710 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,7 +57,7 @@
 		D51626BE13F86C7D00BDB710 = {
 			isa = PBXGroup;
 			children = (
-				D51626D513F86C7D00BDB710 /* Miscellany News */,
+				D51626F613F8704200BDB710 /* Miscellany News */,
 				D51626CC13F86C7D00BDB710 /* Frameworks */,
 				D51626CA13F86C7D00BDB710 /* Products */,
 			);
@@ -82,7 +82,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D51626D513F86C7D00BDB710 /* Miscellany News */ = {
+		D51626D613F86C7D00BDB710 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D51626D713F86C7D00BDB710 /* Miscellany News-Info.plist */,
+				D51626D813F86C7D00BDB710 /* InfoPlist.strings */,
+				D51626DB13F86C7D00BDB710 /* main.m */,
+				D51626DD13F86C7D00BDB710 /* Miscellany News-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			path = "Miscellany News";
+			sourceTree = "<group>";
+		};
+		D51626F613F8704200BDB710 /* Miscellany News */ = {
 			isa = PBXGroup;
 			children = (
 				D51626DE13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.h */,
@@ -94,18 +106,7 @@
 				D51626E113F86C7D00BDB710 /* Miscellany_News.xcdatamodeld */,
 				D51626D613F86C7D00BDB710 /* Supporting Files */,
 			);
-			path = "Miscellany News";
-			sourceTree = "<group>";
-		};
-		D51626D613F86C7D00BDB710 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				D51626D713F86C7D00BDB710 /* Miscellany News-Info.plist */,
-				D51626D813F86C7D00BDB710 /* InfoPlist.strings */,
-				D51626DB13F86C7D00BDB710 /* main.m */,
-				D51626DD13F86C7D00BDB710 /* Miscellany News-Prefix.pch */,
-			);
-			name = "Supporting Files";
+			name = "Miscellany News";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +196,7 @@
 				D51626E513F86C7D00BDB710 /* en */,
 			);
 			name = MainWindow.xib;
+			path = "Miscellany News";
 			sourceTree = "<group>";
 		};
 		D51626EA13F86C7D00BDB710 /* RootViewController.xib */ = {
@@ -203,6 +205,7 @@
 				D51626EB13F86C7D00BDB710 /* en */,
 			);
 			name = RootViewController.xib;
+			path = "Miscellany News";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -292,6 +295,7 @@
 				D51626F113F86C7D00BDB710 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
@@ -302,7 +306,8 @@
 				D51626E213F86C7D00BDB710 /* Miscellany_News.xcdatamodel */,
 			);
 			currentVersion = D51626E213F86C7D00BDB710 /* Miscellany_News.xcdatamodel */;
-			path = Miscellany_News.xcdatamodeld;
+			name = Miscellany_News.xcdatamodeld;
+			path = "Miscellany News/Miscellany_News.xcdatamodeld";
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
