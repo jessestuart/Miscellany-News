@@ -1,0 +1,312 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D51626CE13F86C7D00BDB710 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D51626CD13F86C7D00BDB710 /* UIKit.framework */; };
+		D51626D013F86C7D00BDB710 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D51626CF13F86C7D00BDB710 /* Foundation.framework */; };
+		D51626D213F86C7D00BDB710 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D51626D113F86C7D00BDB710 /* CoreGraphics.framework */; };
+		D51626D413F86C7D00BDB710 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D51626D313F86C7D00BDB710 /* CoreData.framework */; };
+		D51626DA13F86C7D00BDB710 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D51626D813F86C7D00BDB710 /* InfoPlist.strings */; };
+		D51626DC13F86C7D00BDB710 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D51626DB13F86C7D00BDB710 /* main.m */; };
+		D51626E013F86C7D00BDB710 /* Miscellany_NewsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D51626DF13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.m */; };
+		D51626E313F86C7D00BDB710 /* Miscellany_News.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D51626E113F86C7D00BDB710 /* Miscellany_News.xcdatamodeld */; };
+		D51626E613F86C7D00BDB710 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D51626E413F86C7D00BDB710 /* MainWindow.xib */; };
+		D51626E913F86C7D00BDB710 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D51626E813F86C7D00BDB710 /* RootViewController.m */; };
+		D51626EC13F86C7D00BDB710 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D51626EA13F86C7D00BDB710 /* RootViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D51626C913F86C7D00BDB710 /* Miscellany News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Miscellany News.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D51626CD13F86C7D00BDB710 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D51626CF13F86C7D00BDB710 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D51626D113F86C7D00BDB710 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D51626D313F86C7D00BDB710 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D51626D713F86C7D00BDB710 /* Miscellany News-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Miscellany News-Info.plist"; sourceTree = "<group>"; };
+		D51626D913F86C7D00BDB710 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D51626DB13F86C7D00BDB710 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D51626DD13F86C7D00BDB710 /* Miscellany News-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Miscellany News-Prefix.pch"; sourceTree = "<group>"; };
+		D51626DE13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Miscellany_NewsAppDelegate.h; sourceTree = "<group>"; };
+		D51626DF13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Miscellany_NewsAppDelegate.m; sourceTree = "<group>"; };
+		D51626E213F86C7D00BDB710 /* Miscellany_News.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Miscellany_News.xcdatamodel; sourceTree = "<group>"; };
+		D51626E513F86C7D00BDB710 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		D51626E713F86C7D00BDB710 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		D51626E813F86C7D00BDB710 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		D51626EB13F86C7D00BDB710 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D51626C613F86C7D00BDB710 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D51626CE13F86C7D00BDB710 /* UIKit.framework in Frameworks */,
+				D51626D013F86C7D00BDB710 /* Foundation.framework in Frameworks */,
+				D51626D213F86C7D00BDB710 /* CoreGraphics.framework in Frameworks */,
+				D51626D413F86C7D00BDB710 /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D51626BE13F86C7D00BDB710 = {
+			isa = PBXGroup;
+			children = (
+				D51626D513F86C7D00BDB710 /* Miscellany News */,
+				D51626CC13F86C7D00BDB710 /* Frameworks */,
+				D51626CA13F86C7D00BDB710 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D51626CA13F86C7D00BDB710 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D51626C913F86C7D00BDB710 /* Miscellany News.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D51626CC13F86C7D00BDB710 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D51626CD13F86C7D00BDB710 /* UIKit.framework */,
+				D51626CF13F86C7D00BDB710 /* Foundation.framework */,
+				D51626D113F86C7D00BDB710 /* CoreGraphics.framework */,
+				D51626D313F86C7D00BDB710 /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D51626D513F86C7D00BDB710 /* Miscellany News */ = {
+			isa = PBXGroup;
+			children = (
+				D51626DE13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.h */,
+				D51626DF13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.m */,
+				D51626E413F86C7D00BDB710 /* MainWindow.xib */,
+				D51626E713F86C7D00BDB710 /* RootViewController.h */,
+				D51626E813F86C7D00BDB710 /* RootViewController.m */,
+				D51626EA13F86C7D00BDB710 /* RootViewController.xib */,
+				D51626E113F86C7D00BDB710 /* Miscellany_News.xcdatamodeld */,
+				D51626D613F86C7D00BDB710 /* Supporting Files */,
+			);
+			path = "Miscellany News";
+			sourceTree = "<group>";
+		};
+		D51626D613F86C7D00BDB710 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D51626D713F86C7D00BDB710 /* Miscellany News-Info.plist */,
+				D51626D813F86C7D00BDB710 /* InfoPlist.strings */,
+				D51626DB13F86C7D00BDB710 /* main.m */,
+				D51626DD13F86C7D00BDB710 /* Miscellany News-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D51626C813F86C7D00BDB710 /* Miscellany News */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D51626EF13F86C7D00BDB710 /* Build configuration list for PBXNativeTarget "Miscellany News" */;
+			buildPhases = (
+				D51626C513F86C7D00BDB710 /* Sources */,
+				D51626C613F86C7D00BDB710 /* Frameworks */,
+				D51626C713F86C7D00BDB710 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Miscellany News";
+			productName = "Miscellany News";
+			productReference = D51626C913F86C7D00BDB710 /* Miscellany News.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D51626C013F86C7D00BDB710 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Vassar College";
+			};
+			buildConfigurationList = D51626C313F86C7D00BDB710 /* Build configuration list for PBXProject "Miscellany News" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D51626BE13F86C7D00BDB710;
+			productRefGroup = D51626CA13F86C7D00BDB710 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D51626C813F86C7D00BDB710 /* Miscellany News */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D51626C713F86C7D00BDB710 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D51626DA13F86C7D00BDB710 /* InfoPlist.strings in Resources */,
+				D51626E613F86C7D00BDB710 /* MainWindow.xib in Resources */,
+				D51626EC13F86C7D00BDB710 /* RootViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D51626C513F86C7D00BDB710 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D51626DC13F86C7D00BDB710 /* main.m in Sources */,
+				D51626E013F86C7D00BDB710 /* Miscellany_NewsAppDelegate.m in Sources */,
+				D51626E313F86C7D00BDB710 /* Miscellany_News.xcdatamodeld in Sources */,
+				D51626E913F86C7D00BDB710 /* RootViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D51626D813F86C7D00BDB710 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D51626D913F86C7D00BDB710 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D51626E413F86C7D00BDB710 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D51626E513F86C7D00BDB710 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		D51626EA13F86C7D00BDB710 /* RootViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D51626EB13F86C7D00BDB710 /* en */,
+			);
+			name = RootViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D51626ED13F86C7D00BDB710 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		D51626EE13F86C7D00BDB710 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D51626F013F86C7D00BDB710 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Miscellany News/Miscellany News-Prefix.pch";
+				INFOPLIST_FILE = "Miscellany News/Miscellany News-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D51626F113F86C7D00BDB710 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Miscellany News/Miscellany News-Prefix.pch";
+				INFOPLIST_FILE = "Miscellany News/Miscellany News-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D51626C313F86C7D00BDB710 /* Build configuration list for PBXProject "Miscellany News" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D51626ED13F86C7D00BDB710 /* Debug */,
+				D51626EE13F86C7D00BDB710 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D51626EF13F86C7D00BDB710 /* Build configuration list for PBXNativeTarget "Miscellany News" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D51626F013F86C7D00BDB710 /* Debug */,
+				D51626F113F86C7D00BDB710 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D51626E113F86C7D00BDB710 /* Miscellany_News.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D51626E213F86C7D00BDB710 /* Miscellany_News.xcdatamodel */,
+			);
+			currentVersion = D51626E213F86C7D00BDB710 /* Miscellany_News.xcdatamodel */;
+			path = Miscellany_News.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = D51626C013F86C7D00BDB710 /* Project object */;
+}
