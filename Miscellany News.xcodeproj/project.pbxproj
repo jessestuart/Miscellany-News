@@ -19,6 +19,13 @@
 		D51626E913F86C7D00BDB710 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D51626E813F86C7D00BDB710 /* RootViewController.m */; };
 		D51626EC13F86C7D00BDB710 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D51626EA13F86C7D00BDB710 /* RootViewController.xib */; };
 		D516274013F88F9000BDB710 /* RSSEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D516273F13F88F9000BDB710 /* RSSEntry.m */; };
+		D516275813F8933000BDB710 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = D516274A13F8933000BDB710 /* GTMNSString+HTML.m */; };
+		D516275913F8933000BDB710 /* NSDate+InternetDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = D516274C13F8933000BDB710 /* NSDate+InternetDateTime.m */; };
+		D516275A13F8933000BDB710 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = D516274E13F8933000BDB710 /* NSString+HTML.m */; };
+		D516275B13F8933000BDB710 /* NSString+XMLEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = D516275013F8933000BDB710 /* NSString+XMLEntities.m */; };
+		D516275C13F8933000BDB710 /* MWFeedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D516275213F8933000BDB710 /* MWFeedInfo.m */; };
+		D516275D13F8933000BDB710 /* MWFeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D516275413F8933000BDB710 /* MWFeedItem.m */; };
+		D516275E13F8933000BDB710 /* MWFeedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D516275613F8933000BDB710 /* MWFeedParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +47,22 @@
 		D51626EB13F86C7D00BDB710 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
 		D516273E13F88F9000BDB710 /* RSSEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSSEntry.h; path = "Miscellany News/RSS Model/RSSEntry.h"; sourceTree = "<group>"; };
 		D516273F13F88F9000BDB710 /* RSSEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSSEntry.m; path = "Miscellany News/RSS Model/RSSEntry.m"; sourceTree = "<group>"; };
+		D516274813F8933000BDB710 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		D516274913F8933000BDB710 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
+		D516274A13F8933000BDB710 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		D516274B13F8933000BDB710 /* NSDate+InternetDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+InternetDateTime.h"; sourceTree = "<group>"; };
+		D516274C13F8933000BDB710 /* NSDate+InternetDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+InternetDateTime.m"; sourceTree = "<group>"; };
+		D516274D13F8933000BDB710 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		D516274E13F8933000BDB710 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
+		D516274F13F8933000BDB710 /* NSString+XMLEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XMLEntities.h"; sourceTree = "<group>"; };
+		D516275013F8933000BDB710 /* NSString+XMLEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMLEntities.m"; sourceTree = "<group>"; };
+		D516275113F8933000BDB710 /* MWFeedInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWFeedInfo.h; sourceTree = "<group>"; };
+		D516275213F8933000BDB710 /* MWFeedInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWFeedInfo.m; sourceTree = "<group>"; };
+		D516275313F8933000BDB710 /* MWFeedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWFeedItem.h; sourceTree = "<group>"; };
+		D516275413F8933000BDB710 /* MWFeedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWFeedItem.m; sourceTree = "<group>"; };
+		D516275513F8933000BDB710 /* MWFeedParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWFeedParser.h; sourceTree = "<group>"; };
+		D516275613F8933000BDB710 /* MWFeedParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWFeedParser.m; sourceTree = "<group>"; };
+		D516275713F8933000BDB710 /* MWFeedParser_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWFeedParser_Private.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +83,7 @@
 		D51626BE13F86C7D00BDB710 = {
 			isa = PBXGroup;
 			children = (
+				D516274613F8933000BDB710 /* MWFeedParser */,
 				D516271313F8867F00BDB710 /* RSS Model */,
 				D516271213F8867100BDB710 /* Views */,
 				D516271113F8865000BDB710 /* Controllers */,
@@ -145,6 +169,38 @@
 			name = "RSS Model";
 			sourceTree = "<group>";
 		};
+		D516274613F8933000BDB710 /* MWFeedParser */ = {
+			isa = PBXGroup;
+			children = (
+				D516274713F8933000BDB710 /* Categories */,
+				D516275113F8933000BDB710 /* MWFeedInfo.h */,
+				D516275213F8933000BDB710 /* MWFeedInfo.m */,
+				D516275313F8933000BDB710 /* MWFeedItem.h */,
+				D516275413F8933000BDB710 /* MWFeedItem.m */,
+				D516275513F8933000BDB710 /* MWFeedParser.h */,
+				D516275613F8933000BDB710 /* MWFeedParser.m */,
+				D516275713F8933000BDB710 /* MWFeedParser_Private.h */,
+			);
+			name = MWFeedParser;
+			path = "Miscellany News/MWFeedParser";
+			sourceTree = "<group>";
+		};
+		D516274713F8933000BDB710 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				D516274813F8933000BDB710 /* GTMDefines.h */,
+				D516274913F8933000BDB710 /* GTMNSString+HTML.h */,
+				D516274A13F8933000BDB710 /* GTMNSString+HTML.m */,
+				D516274B13F8933000BDB710 /* NSDate+InternetDateTime.h */,
+				D516274C13F8933000BDB710 /* NSDate+InternetDateTime.m */,
+				D516274D13F8933000BDB710 /* NSString+HTML.h */,
+				D516274E13F8933000BDB710 /* NSString+HTML.m */,
+				D516274F13F8933000BDB710 /* NSString+XMLEntities.h */,
+				D516275013F8933000BDB710 /* NSString+XMLEntities.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -213,6 +269,13 @@
 				D51626E313F86C7D00BDB710 /* Miscellany_News.xcdatamodeld in Sources */,
 				D51626E913F86C7D00BDB710 /* RootViewController.m in Sources */,
 				D516274013F88F9000BDB710 /* RSSEntry.m in Sources */,
+				D516275813F8933000BDB710 /* GTMNSString+HTML.m in Sources */,
+				D516275913F8933000BDB710 /* NSDate+InternetDateTime.m in Sources */,
+				D516275A13F8933000BDB710 /* NSString+HTML.m in Sources */,
+				D516275B13F8933000BDB710 /* NSString+XMLEntities.m in Sources */,
+				D516275C13F8933000BDB710 /* MWFeedInfo.m in Sources */,
+				D516275D13F8933000BDB710 /* MWFeedItem.m in Sources */,
+				D516275E13F8933000BDB710 /* MWFeedParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
