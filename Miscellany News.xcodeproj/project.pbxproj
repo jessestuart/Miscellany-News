@@ -18,7 +18,7 @@
 		D51626E613F86C7D00BDB710 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D51626E413F86C7D00BDB710 /* MainWindow.xib */; };
 		D51626E913F86C7D00BDB710 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D51626E813F86C7D00BDB710 /* RootViewController.m */; };
 		D51626EC13F86C7D00BDB710 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D51626EA13F86C7D00BDB710 /* RootViewController.xib */; };
-		D516271613F886B100BDB710 /* RSSEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D516271513F886B100BDB710 /* RSSEntry.m */; };
+		D516274013F88F9000BDB710 /* RSSEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D516273F13F88F9000BDB710 /* RSSEntry.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,8 +38,8 @@
 		D51626E713F86C7D00BDB710 /* RootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = "Miscellany News/RootViewController.h"; sourceTree = "<group>"; };
 		D51626E813F86C7D00BDB710 /* RootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = "Miscellany News/RootViewController.m"; sourceTree = "<group>"; };
 		D51626EB13F86C7D00BDB710 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
-		D516271413F886B100BDB710 /* RSSEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSEntry.h; sourceTree = "<group>"; };
-		D516271513F886B100BDB710 /* RSSEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSEntry.m; sourceTree = "<group>"; };
+		D516273E13F88F9000BDB710 /* RSSEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSSEntry.h; path = "Miscellany News/RSS Model/RSSEntry.h"; sourceTree = "<group>"; };
+		D516273F13F88F9000BDB710 /* RSSEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSSEntry.m; path = "Miscellany News/RSS Model/RSSEntry.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,8 +139,8 @@
 		D516271313F8867F00BDB710 /* RSS Model */ = {
 			isa = PBXGroup;
 			children = (
-				D516271413F886B100BDB710 /* RSSEntry.h */,
-				D516271513F886B100BDB710 /* RSSEntry.m */,
+				D516273E13F88F9000BDB710 /* RSSEntry.h */,
+				D516273F13F88F9000BDB710 /* RSSEntry.m */,
 			);
 			name = "RSS Model";
 			sourceTree = "<group>";
@@ -212,7 +212,7 @@
 				D51626E013F86C7D00BDB710 /* Miscellany_NewsAppDelegate.m in Sources */,
 				D51626E313F86C7D00BDB710 /* Miscellany_News.xcdatamodeld in Sources */,
 				D51626E913F86C7D00BDB710 /* RootViewController.m in Sources */,
-				D516271613F886B100BDB710 /* RSSEntry.m in Sources */,
+				D516274013F88F9000BDB710 /* RSSEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
