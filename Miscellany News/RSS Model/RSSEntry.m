@@ -10,21 +10,18 @@
 
 @implementation RSSEntry
 
-@synthesize blogTitle = _blogTitle;
 @synthesize articleTitle = _articleTitle;
 @synthesize articleUrl = _articleUrl;
 @synthesize articleDate = _articleDate;
 @synthesize articleText = _articleText;
 
-- (id)initWithBlogTitle:(NSString *)blogTitle 
-           articleTitle:(NSString *)articleTitle 
-             articleUrl:(NSString *)articleUrl 
-            articleDate:(NSDate *)articleDate 
-            articleText:(NSString *)articleText
+- (id)initWithArticleTitle:(NSString *)articleTitle 
+                articleUrl:(NSString *)articleUrl 
+               articleDate:(NSDate *)articleDate 
+               articleText:(NSString *)articleText
 {
     if ((self = [super init]))
     {
-        _blogTitle = [blogTitle copy];
         _articleTitle = [articleTitle copy];
         _articleUrl = [articleUrl copy];
         _articleDate = [articleDate copy];
@@ -36,8 +33,6 @@
 
 - (void)dealloc
 {
-    [_blogTitle release];
-    _blogTitle = nil;
     
     [_articleTitle release];
     _articleTitle = nil;

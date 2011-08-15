@@ -10,23 +10,20 @@
 
 @interface RSSEntry : NSObject
 {
-    NSString *_blogTitle;
     NSString *_articleTitle;
     NSString *_articleUrl;
     NSDate *_articleDate;
     NSString *_articleText;
 }
 
-@property (copy) NSString *blogTitle;
 @property (copy) NSString *articleTitle;
 @property (copy) NSString *articleUrl;
 @property (copy) NSDate *articleDate;
 @property (copy) NSString *articleText;
 
-- (id) initWithBlogTitle:(NSString *)blogTitle
-            articleTitle:(NSString *)articleTitle
-              articleUrl:(NSString *)articleUrl
-             articleDate:(NSDate *)articleDate
-             articleText:(NSString *)articleText;
+- (id) initWithArticleTitle:(NSString *)ArticleTitle
+                 articleUrl:(NSString *)articleUrl
+                articleDate:(NSDate *)articleDate
+                articleText:(NSString *)articleText;
 
 @end
