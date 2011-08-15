@@ -10,8 +10,9 @@
 #import "RSSEntry.h"
 #import "NSArray+Extras.h" 
 #import "MBProgressHUD.h"
+#import "RSSArticleParser.h"
 
-@interface RootViewController () 
+@interface RootViewController ()
     @property (retain) NSMutableArray *unsortedEntries;
 @end
 
@@ -20,6 +21,7 @@
 @synthesize unsortedEntries;
 @synthesize allEntries = _allEntries;
 @synthesize queue = _queue;
+@synthesize articleViewController = _articleViewController;
 
 @synthesize fetchedResultsController = __fetchedResultsController;
 @synthesize managedObjectContext = __managedObjectContext;
@@ -28,7 +30,7 @@
 
 - (void)parseFeed
 {
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+    [_queue addOperationWithBlock:^{
         // Create feed parser and pass the URL of the feed
         NSURL *feedURL = [NSURL URLWithString:@"feed://www.miscellanynews.com/se/1.38617"];
         MWFeedParser *feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
@@ -44,7 +46,7 @@
     }];
 }
 
-#pragma mark View Lifecycle
+#pragma mark View lifecycle
 
 - (void)viewDidLoad
 {
@@ -56,7 +58,6 @@
     self.queue = [[[NSOperationQueue alloc] init] autorelease];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [self parseFeed];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -79,6 +80,39 @@
 	[super viewDidDisappear:animated];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Relinquish ownership any cached data, images, etc that aren't in use.
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    
+    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
+    // For example: self.myOutlet = nil;
+}
+
+- (void)dealloc
+{
+    [__fetchedResultsController release];
+    [__managedObjectContext release];
+    
+    [_allEntries release];
+    _allEntries = nil;
+    
+    [_queue release];
+    _queue = nil;
+    
+    [_articleViewController release];
+    _articleViewController = nil;
+    
+    [super dealloc];
+}
+
 /*
  // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -87,6 +121,7 @@
 }
  */
 
+#pragma mark Table view configuration
 // Customize the number of sections in the table view.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -123,7 +158,6 @@
     cell.detailTextLabel.text = articleDateString;
     
     return cell;
-//    [self configureCell:cell atIndexPath:indexPath];
 }
 
 /*
@@ -166,6 +200,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // Load article view if unloaded
+    if (_articleViewController == nil) {
+        _articleViewController = [[[ArticleViewController alloc] initWithNibName:@"ArticleViewController" bundle:[NSBundle mainBundle]] retain];
+    }
+
+    _articleViewController.entry = [_allEntries objectAtIndex:indexPath.row];
+    [self.navigationController pushViewController:[_articleViewController retain] animated:YES];
+    
     /*
     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
     // ...
@@ -175,71 +217,59 @@
 	*/
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Relinquish ownership any cached data, images, etc that aren't in use.
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-
-    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-    // For example: self.myOutlet = nil;
-}
-
-- (void)dealloc
-{
-    [__fetchedResultsController release];
-    [__managedObjectContext release];
-    
-    [_allEntries release];
-    _allEntries = nil;
-    
-    [_queue release];
-    _queue = nil;
-    
-    [super dealloc];
-}
-
 #pragma mark MWFeedParser Delegate Methods
 
 -(void)feedParserDidStart:(MWFeedParser *)parser
 {
-    NSLog(@"Parsing begun.");
+//    NSLog(@"Parsing begun.");
 }
 
 -(void)feedParser:(MWFeedParser *)parser 
  didParseFeedItem:(MWFeedItem *)item
 {
-    NSLog(@"Parsing item with title %@", item.title);
+//    NSLog(@"Parsing item with title %@", item.title);
+    
     // Create RSSEntry from parsed item and add to array
     RSSEntry *entry = [[[RSSEntry alloc] initWithArticleTitle:item.title 
                                  articleUrl:item.link 
                                 articleDate:item.date 
                                 articleText:nil] autorelease];
+    
     [unsortedEntries addObject:entry];
 }
 
 -(void)feedParserDidFinish:(MWFeedParser *)parser
 {
-    NSLog(@"Parsing completed.");
-    for (RSSEntry *entry in unsortedEntries) 
-    {
-        // Sort by date
-        int insertIdx = [_allEntries indexForInsertingObject:entry sortedUsingBlock:^(id a, id b) {
-            RSSEntry *entry1 = (RSSEntry *) a;
-            RSSEntry *entry2 = (RSSEntry *) b;
-            return [entry1.articleDate compare:entry2.articleDate];
-        }];
-        // Add to array
-        [_allEntries insertObject:entry atIndex:insertIdx];
-        // Add to table view
-        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
-    }
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+//    NSLog(@"Parsing completed.");
+    
+    // UI depends on this, so we can hog the main thread
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        
+        for (RSSEntry *entry in unsortedEntries) 
+        {
+            // Sort by date
+            int insertIdx = [_allEntries indexForInsertingObject:entry 
+                                                sortedUsingBlock:^(id a, id b) {
+                RSSEntry *entry1 = (RSSEntry *) a;
+                RSSEntry *entry2 = (RSSEntry *) b;
+                return [entry1.articleDate compare:entry2.articleDate];
+            }];
+            
+            // Add to array
+            [_allEntries insertObject:entry atIndex:insertIdx];
+            
+            // Add to table view
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]] 
+                                  withRowAnimation:UITableViewRowAnimationRight];
+            
+            // Load article text in background
+            [_queue addOperationWithBlock:^{
+                RSSArticleParser *articleParser = [[[RSSArticleParser alloc] initWithRSSEntry:[entry retain]] autorelease];
+                [articleParser parseArticleText];
+            }];
+            
+        }
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    }];
 }
 @end

@@ -44,10 +44,10 @@
     }
     
     [self.entry setArticleText:[NSString stringWithString:text]];
-    [text release];
-    [htmlData release];
-    [xpathParser release];
-//    [paragraphs release];
+    NSLog(@"Finished parsing article entitled \"%@\"", _entry.articleTitle);
+//    [text release];
+//    [htmlData release];
+//    [xpathParser release];
 }
 
 - (void)dealloc

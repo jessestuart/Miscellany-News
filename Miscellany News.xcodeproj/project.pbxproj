@@ -33,6 +33,8 @@
 		D51627E513F8C2CE00BDB710 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D51627E413F8C2CE00BDB710 /* libxml2.2.dylib */; };
 		D51627EC13F8C80100BDB710 /* RSSArticleParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627EB13F8C80100BDB710 /* RSSArticleParser.m */; };
 		D51627EF13F8C9BD00BDB710 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627EE13F8C9BD00BDB710 /* MBProgressHUD.m */; };
+		D516280413F8E29600BDB710 /* ArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D516280213F8E29600BDB710 /* ArticleViewController.m */; };
+		D516280513F8E29600BDB710 /* ArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D516280313F8E29600BDB710 /* ArticleViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +85,9 @@
 		D51627EB13F8C80100BDB710 /* RSSArticleParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSSArticleParser.m; path = "Miscellany News/RSS Model/RSSArticleParser.m"; sourceTree = "<group>"; };
 		D51627ED13F8C9BD00BDB710 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		D51627EE13F8C9BD00BDB710 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		D516280113F8E29600BDB710 /* ArticleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleViewController.h; sourceTree = "<group>"; };
+		D516280213F8E29600BDB710 /* ArticleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArticleViewController.m; sourceTree = "<group>"; };
+		D516280313F8E29600BDB710 /* ArticleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ArticleViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +175,9 @@
 				D51626E713F86C7D00BDB710 /* RootViewController.h */,
 				D51626E813F86C7D00BDB710 /* RootViewController.m */,
 				D51626EA13F86C7D00BDB710 /* RootViewController.xib */,
+				D516280113F8E29600BDB710 /* ArticleViewController.h */,
+				D516280213F8E29600BDB710 /* ArticleViewController.m */,
+				D516280313F8E29600BDB710 /* ArticleViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -322,6 +330,7 @@
 				D51626DA13F86C7D00BDB710 /* InfoPlist.strings in Resources */,
 				D51626E613F86C7D00BDB710 /* MainWindow.xib in Resources */,
 				D51626EC13F86C7D00BDB710 /* RootViewController.xib in Resources */,
+				D516280513F8E29600BDB710 /* ArticleViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +359,7 @@
 				D51627E213F8C16D00BDB710 /* XPathQuery.m in Sources */,
 				D51627EC13F8C80100BDB710 /* RSSArticleParser.m in Sources */,
 				D51627EF13F8C9BD00BDB710 /* MBProgressHUD.m in Sources */,
+				D516280413F8E29600BDB710 /* ArticleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

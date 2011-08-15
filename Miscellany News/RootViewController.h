@@ -10,12 +10,16 @@
 
 #import <CoreData/CoreData.h>
 #import "MWFeedParser.h"
+#import "ArticleViewController.h"
 
 @interface RootViewController : UITableViewController <MWFeedParserDelegate>
 {
+    ArticleViewController *_articleViewController;
     NSMutableArray *_allEntries;
     NSOperationQueue *_queue;
 }
+
+@property (retain) ArticleViewController *articleViewController;
 
 @property (retain) NSMutableArray *allEntries;
 @property (retain) NSOperationQueue *queue;
