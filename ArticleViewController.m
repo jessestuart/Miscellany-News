@@ -11,8 +11,13 @@
 #import "MBProgressHUD.h"
 #import "RSSArticleParser.h"
 
+@interface ArticleViewController ()
+    @property BOOL _observing;
+@end
+
 @implementation ArticleViewController
 
+@synthesize _observing;
 @synthesize textView = _textView;
 @synthesize entry = _entry;
 
@@ -28,6 +33,7 @@
         // and register an observer so that textView can be updated when
         // parsing is complete
         [_entry addObserver:self forKeyPath:@"articleText" options:0 context:nil];
+        _observing = TRUE;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
 }
@@ -36,9 +42,7 @@
                        ofObject:(id)object
                          change:(NSDictionary *)change 
                         context:(void *)context 
-{
-    [_entry removeObserver:self forKeyPath:keyPath];
-    
+{    
     // Text updated: stop progress indicator & update textView
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -49,6 +53,12 @@
 - (void) viewWillDisappear:(BOOL)animated
 {
     [_entry release];
+    
+    if (_observing) {
+        [_entry removeObserver:self forKeyPath:@"articleText"];
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        _observing = FALSE;
+    }
 }
 
 #pragma mark View loading
@@ -75,6 +85,7 @@
 {
     [super viewDidLoad];
     
+    _observing = FALSE;
     _textView.editable = FALSE;
     _textView.directionalLockEnabled = TRUE;
     _textView.text = nil;
