@@ -9,8 +9,16 @@
 #import <UIKit/UIKit.h>
 
 #import <CoreData/CoreData.h>
+#import "MWFeedParser.h"
 
-@interface RootViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface RootViewController : UITableViewController <MWFeedParserDelegate>
+{
+    NSMutableArray *_allEntries;
+    NSOperationQueue *_queue;
+}
+
+@property (retain) NSMutableArray *allEntries;
+@property (retain) NSOperationQueue *queue;
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;

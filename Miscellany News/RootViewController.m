@@ -7,25 +7,53 @@
 //
 
 #import "RootViewController.h"
+#import "RSSEntry.h"
+#import "NSArray+Extras.h" 
 
-@interface RootViewController ()
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+@interface RootViewController () 
+    @property (retain) NSMutableArray *unsortedEntries;
+//- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
 @implementation RootViewController
 
+@synthesize unsortedEntries;
+@synthesize allEntries = _allEntries;
+@synthesize queue = _queue;
+
 @synthesize fetchedResultsController = __fetchedResultsController;
 @synthesize managedObjectContext = __managedObjectContext;
+
+#pragma mark Feed parsing
+
+- (void)parseFeed
+{
+    // Create feed parser and pass the URL of the feed
+    NSURL *feedURL = [NSURL URLWithString:@"feed://www.miscellanynews.com/se/1.38617"];
+    MWFeedParser *feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
+    // Delegate must conform to MWFeedParserDelegate
+    feedParser.delegate = self;
+    
+    // Parse the feeds info (title, link) and all feed items
+    feedParser.feedParseType = ParseTypeItemsOnly;
+    // Connection type
+    feedParser.connectionType = ConnectionTypeSynchronously;
+    // Begin parsing
+    [feedParser parse];
+}
+
+#pragma mark View Lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Set up the edit and add buttons.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    self.title = @"Miscellany News";    
+    self.allEntries = [NSMutableArray array];
+    self.unsortedEntries = [NSMutableArray array];
+    self.queue = [[[NSOperationQueue alloc] init] autorelease];
+    [self parseFeed];
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject)];
-    self.navigationItem.rightBarButtonItem = addButton;
-    [addButton release];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -59,13 +87,17 @@
 // Customize the number of sections in the table view.
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.fetchedResultsController sections] count];
+//    return [[self.fetchedResultsController sections] count];
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    return [_allEntries count];
+    /* @TODO core data
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
     return [sectionInfo numberOfObjects];
+     */
 }
 
 // Customize the appearance of table view cells.
@@ -75,12 +107,20 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
     }
 
     // Configure the cell.
-    [self configureCell:cell atIndexPath:indexPath];
+    RSSEntry *entry = [_allEntries objectAtIndex:indexPath.row];
+    NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    NSString *articleDateString = [dateFormatter stringFromDate:entry.articleDate];
+    
+    cell.textLabel.text = entry.articleTitle;
+    cell.detailTextLabel.text = articleDateString;
+    
     return cell;
+//    [self configureCell:cell atIndexPath:indexPath];
 }
 
 /*
@@ -152,147 +192,189 @@
 {
     [__fetchedResultsController release];
     [__managedObjectContext release];
+    
+    [_allEntries release];
+    _allEntries = nil;
+    
+    [_queue release];
+    _queue = nil;
+    
     [super dealloc];
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+//- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
+//    cell.textLabel.text = [[managedObject valueForKey:@"timeStamp"] description];
+//}
+//
+//- (void)insertNewObject
+//{
+//    // Create a new instance of the entity managed by the fetched results controller.
+//    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+//    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+//    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+//    
+//    // If appropriate, configure the new managed object.
+//    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
+//    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+//    
+//    // Save the context.
+//    NSError *error = nil;
+//    if (![context save:&error])
+//    {
+//        /*
+//         Replace this implementation with code to handle the error appropriately.
+//         
+//         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+//         */
+//        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+//        abort();
+//    }
+//}
+
+#pragma mark MWFeedParser Delegate Methods
+
+-(void)feedParserDidStart:(MWFeedParser *)parser
 {
-    NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[managedObject valueForKey:@"timeStamp"] description];
+    NSLog(@"Parsing begun");
 }
 
-- (void)insertNewObject
+-(void)feedParser:(MWFeedParser *)parser 
+ didParseFeedItem:(MWFeedItem *)item
 {
-    // Create a new instance of the entity managed by the fetched results controller.
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-    
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error])
+    NSLog(@"parsing item with title %@", item.title);
+    RSSEntry *entry = [[[RSSEntry alloc] initWithArticleTitle:item.title 
+                                 articleUrl:item.link 
+                                articleDate:item.date 
+                                articleText:nil] autorelease];
+    [unsortedEntries addObject:entry];
+}
+
+-(void)feedParserDidFinish:(MWFeedParser *)parser
+{
+    NSLog(@"parsing completed");
+    for (RSSEntry *entry in unsortedEntries) 
     {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-         */
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+        int insertIdx = [_allEntries indexForInsertingObject:entry sortedUsingBlock:^(id a, id b) {
+            RSSEntry *entry1 = (RSSEntry *) a;
+            RSSEntry *entry2 = (RSSEntry *) b;
+            return [entry1.articleDate compare:entry2.articleDate];
+        }];
+        
+        [_allEntries insertObject:entry atIndex:insertIdx];
+        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]] withRowAnimation:UITableViewRowAnimationRight];
     }
 }
 
-#pragma mark - Fetched results controller
-
-- (NSFetchedResultsController *)fetchedResultsController
-{
-    if (__fetchedResultsController != nil)
-    {
-        return __fetchedResultsController;
-    }
-    
-    /*
-     Set up the fetched results controller.
-    */
-    // Create the fetch request for the entity.
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    // Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
-    
-    // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
-    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    // Edit the section name key path and cache name if appropriate.
-    // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
-    
-    [aFetchedResultsController release];
-    [fetchRequest release];
-    [sortDescriptor release];
-    [sortDescriptors release];
-
-	NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error])
-        {
-	    /*
-	     Replace this implementation with code to handle the error appropriately.
-
-	     abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-	     */
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
-	}
-    
-    return __fetchedResultsController;
-}    
-
-#pragma mark - Fetched results controller delegate
-
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView beginUpdates];
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath
-{
-    UITableView *tableView = self.tableView;
-    
-    switch(type)
-    {
-            
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-            
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.tableView endUpdates];
-}
+//#pragma mark - Fetched results controller
+//- (NSFetchedResultsController *)fetchedResultsController
+//{
+//    if (__fetchedResultsController != nil)
+//    {
+//        return __fetchedResultsController;
+//    }
+//    
+//    /*
+//     Set up the fetched results controller.
+//    */
+//    // Create the fetch request for the entity.
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    // Edit the entity name as appropriate.
+//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+//    [fetchRequest setEntity:entity];
+//    
+//    // Set the batch size to a suitable number.
+//    [fetchRequest setFetchBatchSize:20];
+//    
+//    // Edit the sort key as appropriate.
+//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+//    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+//    
+//    [fetchRequest setSortDescriptors:sortDescriptors];
+//    
+//    // Edit the section name key path and cache name if appropriate.
+//    // nil for section name key path means "no sections".
+//    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
+//    aFetchedResultsController.delegate = self;
+//    self.fetchedResultsController = aFetchedResultsController;
+//    
+//    [aFetchedResultsController release];
+//    [fetchRequest release];
+//    [sortDescriptor release];
+//    [sortDescriptors release];
+//
+//	NSError *error = nil;
+//	if (![self.fetchedResultsController performFetch:&error])
+//        {
+//	    /*
+//	     Replace this implementation with code to handle the error appropriately.
+//
+//	     abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
+//	     */
+//	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+//	    abort();
+//	}
+//    
+//    return __fetchedResultsController;
+//}    
+//
+//#pragma mark - Fetched results controller delegate
+//
+//- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+//{
+//    [self.tableView beginUpdates];
+//}
+//
+//- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+//           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+//{
+//    switch(type)
+//    {
+//        case NSFetchedResultsChangeInsert:
+//            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//            
+//        case NSFetchedResultsChangeDelete:
+//            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//    }
+//}
+//
+//- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+//       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+//      newIndexPath:(NSIndexPath *)newIndexPath
+//{
+//    UITableView *tableView = self.tableView;
+//    
+//    switch(type)
+//    {
+//            
+//        case NSFetchedResultsChangeInsert:
+//            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//            
+//        case NSFetchedResultsChangeDelete:
+//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//            
+//        case NSFetchedResultsChangeUpdate:
+//            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+//            break;
+//            
+//        case NSFetchedResultsChangeMove:
+//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+//            break;
+//    }
+//}
+//
+//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+//{
+//    [self.tableView endUpdates];
+//}
+//
 
 /*
 // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
