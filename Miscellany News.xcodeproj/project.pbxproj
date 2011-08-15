@@ -27,6 +27,12 @@
 		D51627D313F8B9F100BDB710 /* MWFeedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627C913F8B9F100BDB710 /* MWFeedInfo.m */; };
 		D51627D413F8B9F100BDB710 /* MWFeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627CB13F8B9F100BDB710 /* MWFeedItem.m */; };
 		D51627D513F8B9F100BDB710 /* MWFeedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627CD13F8B9F100BDB710 /* MWFeedParser.m */; };
+		D51627E013F8C16D00BDB710 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627DB13F8C16D00BDB710 /* TFHpple.m */; };
+		D51627E113F8C16D00BDB710 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627DD13F8C16D00BDB710 /* TFHppleElement.m */; };
+		D51627E213F8C16D00BDB710 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627DF13F8C16D00BDB710 /* XPathQuery.m */; };
+		D51627E513F8C2CE00BDB710 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D51627E413F8C2CE00BDB710 /* libxml2.2.dylib */; };
+		D51627EC13F8C80100BDB710 /* RSSArticleParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627EB13F8C80100BDB710 /* RSSArticleParser.m */; };
+		D51627EF13F8C9BD00BDB710 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627EE13F8C9BD00BDB710 /* MBProgressHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +72,17 @@
 		D51627CC13F8B9F100BDB710 /* MWFeedParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWFeedParser.h; sourceTree = "<group>"; };
 		D51627CD13F8B9F100BDB710 /* MWFeedParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWFeedParser.m; sourceTree = "<group>"; };
 		D51627CE13F8B9F100BDB710 /* MWFeedParser_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWFeedParser_Private.h; sourceTree = "<group>"; };
+		D51627DA13F8C16D00BDB710 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		D51627DB13F8C16D00BDB710 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		D51627DC13F8C16D00BDB710 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		D51627DD13F8C16D00BDB710 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		D51627DE13F8C16D00BDB710 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		D51627DF13F8C16D00BDB710 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
+		D51627E413F8C2CE00BDB710 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		D51627EA13F8C80100BDB710 /* RSSArticleParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSSArticleParser.h; path = "Miscellany News/RSS Model/RSSArticleParser.h"; sourceTree = "<group>"; };
+		D51627EB13F8C80100BDB710 /* RSSArticleParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSSArticleParser.m; path = "Miscellany News/RSS Model/RSSArticleParser.m"; sourceTree = "<group>"; };
+		D51627ED13F8C9BD00BDB710 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		D51627EE13F8C9BD00BDB710 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D51627E513F8C2CE00BDB710 /* libxml2.2.dylib in Frameworks */,
 				D51626CE13F86C7D00BDB710 /* UIKit.framework in Frameworks */,
 				D51626D013F86C7D00BDB710 /* Foundation.framework in Frameworks */,
 				D51626D213F86C7D00BDB710 /* CoreGraphics.framework in Frameworks */,
@@ -86,7 +104,7 @@
 		D51626BE13F86C7D00BDB710 = {
 			isa = PBXGroup;
 			children = (
-				D51627BD13F8B9F100BDB710 /* MWFeedParser */,
+				D51627E313F8C17C00BDB710 /* Libraries */,
 				D516276913F8ACE300BDB710 /* Categories */,
 				D516271313F8867F00BDB710 /* RSS Model */,
 				D516271213F8867100BDB710 /* Views */,
@@ -167,6 +185,8 @@
 		D516271313F8867F00BDB710 /* RSS Model */ = {
 			isa = PBXGroup;
 			children = (
+				D51627EA13F8C80100BDB710 /* RSSArticleParser.h */,
+				D51627EB13F8C80100BDB710 /* RSSArticleParser.m */,
 				D516273E13F88F9000BDB710 /* RSSEntry.h */,
 				D516273F13F88F9000BDB710 /* RSSEntry.m */,
 			);
@@ -212,6 +232,41 @@
 				D51627C713F8B9F100BDB710 /* NSString+XMLEntities.m */,
 			);
 			path = Categories;
+			sourceTree = "<group>";
+		};
+		D51627D913F8C16D00BDB710 /* hpple */ = {
+			isa = PBXGroup;
+			children = (
+				D51627DA13F8C16D00BDB710 /* TFHpple.h */,
+				D51627DB13F8C16D00BDB710 /* TFHpple.m */,
+				D51627DC13F8C16D00BDB710 /* TFHppleElement.h */,
+				D51627DD13F8C16D00BDB710 /* TFHppleElement.m */,
+				D51627DE13F8C16D00BDB710 /* XPathQuery.h */,
+				D51627DF13F8C16D00BDB710 /* XPathQuery.m */,
+			);
+			name = hpple;
+			path = "Miscellany News/hpple";
+			sourceTree = "<group>";
+		};
+		D51627E313F8C17C00BDB710 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				D51627E613F8C60D00BDB710 /* MBProgressHUD */,
+				D51627D913F8C16D00BDB710 /* hpple */,
+				D51627BD13F8B9F100BDB710 /* MWFeedParser */,
+				D51627E413F8C2CE00BDB710 /* libxml2.2.dylib */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		D51627E613F8C60D00BDB710 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				D51627ED13F8C9BD00BDB710 /* MBProgressHUD.h */,
+				D51627EE13F8C9BD00BDB710 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			path = "Miscellany News/MBProgressHUD";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,6 +345,11 @@
 				D51627D313F8B9F100BDB710 /* MWFeedInfo.m in Sources */,
 				D51627D413F8B9F100BDB710 /* MWFeedItem.m in Sources */,
 				D51627D513F8B9F100BDB710 /* MWFeedParser.m in Sources */,
+				D51627E013F8C16D00BDB710 /* TFHpple.m in Sources */,
+				D51627E113F8C16D00BDB710 /* TFHppleElement.m in Sources */,
+				D51627E213F8C16D00BDB710 /* XPathQuery.m in Sources */,
+				D51627EC13F8C80100BDB710 /* RSSArticleParser.m in Sources */,
+				D51627EF13F8C9BD00BDB710 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +405,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				SDKROOT = iphoneos;
 			};
@@ -362,6 +423,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
