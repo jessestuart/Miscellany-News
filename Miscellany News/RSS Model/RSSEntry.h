@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const RSSArticleTextUnavailable;
+
 @interface RSSEntry : NSObject
 {
     NSString *_articleTitle;
