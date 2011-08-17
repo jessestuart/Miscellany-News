@@ -8,10 +8,14 @@
 
 #import "RSSArticleParser.h"
 #import "TFHpple.h"
+#import "NSString+HTML.h"
+#import "NSString+JDS.h"
+#import "RootViewController.h"
 
 @implementation RSSArticleParser
 
 @synthesize entry = _entry;
+@synthesize delegate = _delegate;
 
 - (id)initWithRSSEntry:(RSSEntry *)entry
 {
@@ -22,36 +26,46 @@
     return self;
 }
 
-- (void)parseArticleText
+- (NSString *)parseArticleText
 {
-    NSLog(@"Parsing article entitled \"%@\"", _entry.articleTitle);
-    NSMutableString *text = [[NSMutableString alloc] init];
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     // Load HTML data from article URL & parse with TFHpple
     NSError *error;
     NSString *htmlString = [NSString stringWithContentsOfURL:[NSURL URLWithString:[_entry articleUrl]] 
-                                                   encoding:NSUTF8StringEncoding 
-                                                      error:&error];
-    NSData *htmlData = [htmlString dataUsingEncoding:NSUTF8StringEncoding];
-    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
-    // Creates array of all the paragraphs in the article
-    NSArray *paragraphs  = [xpathParser search:@"//div[@class='text']//p"];
-    // Recreate nsstring by appending paragraphs together with linebreaks
-    for (id paragraph in paragraphs) 
-    {
-        NSString *content = [(TFHppleElement *) paragraph content];
-        [text appendString:[NSString stringWithFormat:@"%@\n\n", content]];
+                                                    encoding:NSUTF8StringEncoding 
+                                                       error:&error];
+    
+    // Article text starts here...
+    NSUInteger begin = [htmlString rangeOfString:@"<div class=\"text\">"].location;
+    // ...and ends here
+    NSUInteger end = [htmlString rangeOfString:@"<div id=" 
+                                       options:NSCaseInsensitiveSearch 
+                                         range:NSMakeRange(begin, [htmlString length]-begin)].location;
+    
+    // Cut out article text substring, flatten HTML tags, etc
+    NSString *s = [[[[htmlString substringWithRange:NSMakeRange(begin, end-begin)] 
+                     stringByFlatteningHTML] 
+                    stringByRemovingLeadingWhitespace] 
+                   stringByDecodingHTMLEntities];
+    
+    if (s == nil) {
+        _entry.articleText = RSSArticleTextUnavailable;
+        return RSSArticleTextUnavailable;
     }
     
-    [self.entry setArticleText:[NSString stringWithString:text]];
-    NSLog(@"Finished parsing article entitled \"%@\"", _entry.articleTitle);
-//    [text release];
-//    [htmlData release];
-//    [xpathParser release];
+    _entry.articleText = s; // copy
+    
+    [_delegate articleTextParsedForEntry:[_entry retain]];
+    
+    [pool drain];
+    
+    return _entry.articleText;
 }
 
 - (void)dealloc
 {
+    NSLog(@"RSSArticleParser dealloc");
     [super dealloc];
     [_entry release];
     _entry = nil;
