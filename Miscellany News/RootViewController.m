@@ -10,8 +10,8 @@
 #import "RSSEntry.h"
 #import "NSArray+Extras.h" 
 #import "MBProgressHUD.h"
-
 #import "UIView+JMNoise.h"
+#import "Constants.h"
 
 @interface RootViewController ()
     @property (retain) NSMutableArray *unsortedEntries;
@@ -29,11 +29,12 @@
 
 #pragma mark Feed parsing
 
+/**
+ *  Called when view is loaded. Pulls RSS feed information.
+ */
 - (void)parseFeed
 {
-    NSLog(@"parse feed");
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//    [_queue addOperationWithBlock:^{
         // Create feed parser and pass the URL of the feed
         NSURL *feedURL = [NSURL URLWithString:@"feed://www.miscellanynews.com/se/1.38617"];
         MWFeedParser *feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
@@ -49,10 +50,13 @@
     }];
 }
 
--(void)feedParser:(MWFeedParser *)parser 
- didParseFeedItem:(MWFeedItem *)item
+/**
+ *  MWFeedParserDelegate callback when an article is parsed. We use this
+ *  info to initialize a new RSSEntry, add it to an error, and fetch the
+ *  article's text in the background.
+ */
+-(void)feedParser:(MWFeedParser *)parser didParseFeedItem:(MWFeedItem *)item
 {
-    //    NSLog(@"did parse feed item");
     // Create RSSEntry from parsed item and add to array
     RSSEntry *entry = [[RSSEntry alloc] initWithArticleTitle:item.title
                                                   articleUrl:item.link 
@@ -61,22 +65,26 @@
     
     [unsortedEntries addObject:entry];
     
+    // Fetch article text in background
     [_queue addOperationWithBlock:^{
-        //        NSLog(@"parsing text for article %@", entry.articleTitle);
         RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
         articleParser.delegate = self;
         [articleParser parseArticleText];
-        //                NSLog(@"done parsing text for article %@", entry.articleTitle);
+//        [articleParser release];
     }];
 }
 
+/**
+ *  MWFeedParserDelegate callback when it feed has been fully parsed.
+ *  We sort the articles by date, add to allEntries and insert in table
+ *  view.
+ */
 -(void)feedParserDidFinish:(MWFeedParser *)parser
 {
     for (RSSEntry *entry in unsortedEntries) 
     {
-        [entry retain];
         // Sort by date
-        int insertIdx = [_allEntries indexForInsertingObject:entry
+        int insertIdx = [_allEntries indexForInsertingObject:[entry retain]
                                             sortedUsingBlock:^(id a, id b) {
                                                 RSSEntry *entry1 = (RSSEntry *) a;
                                                 RSSEntry *entry2 = (RSSEntry *) b;
@@ -84,54 +92,55 @@
                                             }];
         
         // Add to array
-        [_allEntries insertObject:entry atIndex:insertIdx]; // should be [entry retain
+        [_allEntries insertObject:entry atIndex:insertIdx];
+        [entry release];
         
         // Add to table view
-        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]] 
-                              withRowAnimation:UITableViewRowAnimationRight];            
+        NSArray *idxPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]];
+        [self.tableView insertRowsAtIndexPaths:idxPaths withRowAnimation:UITableViewRowAnimationRight];
     }
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 -(void)articleTextParsedForEntry:(RSSEntry *)entry
 {
-    //    NSLog(@"article text parsed for entry entitled: %@", entry.articleTitle);
+    // Do something
 }
 
 #pragma mark View lifecycle
 
 - (void)viewDidLoad
 {
-    NSLog(@"viewDidLoad");
     [super viewDidLoad];
     
     self.title = @"The Miscellany News";
+    
+    // Customize title bar
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.502 green:0.0 blue:0.0 alpha:1.];
-//    [self.navigationController.view applyNoise];
+    [self.navigationController.navigationBar applyNoiseWithOpacity:0.4];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 44)];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont fontWithName:@"Palatino-Bold" size:20.0];
     label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     label.textAlignment = UITextAlignmentCenter;
-    label.textColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.];
-    label.textColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.];
+    label.textColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0];
     label.text=self.title;
     self.navigationItem.titleView = label;
     [label release];
     
-    self.tableView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.];
-    [self.view.superview applyNoiseWithOpacity:0.5];
-//    [self.tableView applyNoise];
+    // Customize TableView background
+    self.tableView.backgroundColor = [Constants MN_BACKGROUND_COLOR];
+    [self.view applyNoiseWithOpacity:0.3];
     
-//    _allEntries = [[NSMutableArray alloc] init];
-//    unsortedEntries = [[NSMutableArray alloc] init];
-//    _queue = [[NSOperationQueue alloc] init];
+    // Allocate ivars
     self.allEntries = [NSMutableArray array];
     self.unsortedEntries = [NSMutableArray array];
     self.queue = [[[NSOperationQueue alloc] init] autorelease];
-//    self.queue.maxConcurrentOperationCount = 1;
 
+    // Show activity indicator
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    // Begin parsing RSS feed
     [self parseFeed];
 }
 
@@ -217,26 +226,28 @@
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"cellForRowAtIndexPath: %d", indexPath.row);
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+    if (cell == nil) 
+    {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle 
+                                       reuseIdentifier:CellIdentifier] autorelease];
     }
 
     // Configure the cell.
-    RSSEntry *entry = [[_allEntries objectAtIndex:indexPath.row] autorelease];
-    if (entry) {
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-        NSString *articleDateString = [dateFormatter stringFromDate:entry.articleDate];
-        [dateFormatter release];
-        
-        cell.textLabel.text = entry.articleTitle;
-        cell.detailTextLabel.text = articleDateString;
-    }
-    else NSLog(@"entry nil");
+    RSSEntry *entry = [[_allEntries objectAtIndex:indexPath.row] retain];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    NSString *articleDateString = [dateFormatter stringFromDate:entry.articleDate];
+    [dateFormatter release];
+    
+    cell.textLabel.text = entry.articleTitle;
+    cell.detailTextLabel.text = articleDateString;
+    [cell.backgroundView applyNoise];
+    
+    [entry release];
     
     return cell;
 }

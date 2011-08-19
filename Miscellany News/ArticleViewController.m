@@ -10,42 +10,29 @@
 #import "RSSEntry.h"
 #import "MBProgressHUD.h"
 #import "RSSArticleParser.h"
-
 #import "UIView+JMNoise.h"
-
-@interface ArticleViewController ()
-    @property BOOL _observing;
-@end
+#import "Constants.h"
 
 @implementation ArticleViewController
 
-@synthesize _observing;
 @synthesize textView = _textView;
 @synthesize entry = _entry;
 
 
 - (void) viewWillAppear:(BOOL)animated
 {
-    NSLog(@"view will appear");
-    
-    NSString *articleText = [_entry.articleText retain];
-    
-    if (articleText == nil) 
+    if (_entry.articleText == nil) 
     {
-        NSLog(@"article text is nil!");
         // If article text has yet to be parsed, show an activity indicator
-        // and register an observer so that textView can be updated when
-        // parsing is complete
-//        [_entry addObserver:self forKeyPath:@"articleText" options:0 context:nil];
-//        _observing = TRUE;
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     } 
-    else if ([articleText isEqualToString:RSSArticleTextUnavailable])
+    else if ([_entry.articleText isEqualToString:RSSArticleTextUnavailable])
     {
-        _textView.text = @"Sorry, the text for this article could not be retrieved.";
+        _textView.text = @"The text for this article could not be retrieved.";
     }
-    else {
-        _textView.text = articleText;  // (nonatomic, copy)  
+    else 
+    {
+        _textView.text = _entry.articleText;  /* (nonatomic, copy) */
     }
 }
 
@@ -61,12 +48,9 @@
 
 - (void) viewWillDisappear:(BOOL)animated
 {
+    // Removes progress indicator if found
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    //    if (_observing) {
-    //        [_entry removeObserver:self forKeyPath:@"articleText"];
-    //        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    //        _observing = FALSE;
-    //    }
+    _textView.text = nil;
 }
 
 //- (void) viewDidDisappear:(BOOL)animated
@@ -90,6 +74,7 @@
 - (void)didReceiveMemoryWarning
 {
     NSLog(@"did receive memory warning");
+    
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
@@ -102,23 +87,23 @@
 {
     [super viewDidLoad];
     
-    _observing = FALSE;
     _textView.editable = FALSE;
     _textView.text = nil;
 
     // Text view is clear on gray textured background
     _textView.backgroundColor = [UIColor clearColor];
-    _textView.superview.backgroundColor = [UIColor colorWithRed:0.941 green:0.941 blue:0.941 alpha:1.];
-    [_textView.superview applyNoise];
+    _textView.superview.backgroundColor = [Constants MN_BACKGROUND_COLOR];
+    [_textView.superview applyNoiseWithOpacity:0.3];
     _textView.font = [UIFont fontWithName:@"Palatino" size:17.0];
-//    _textView.textColor = [UIColor colorWithRed:0.1725 green:0.1764 blue:0.1960 alpha:1.0];
 }
 
 - (void)viewDidUnload
 {
-    NSLog(@"view did unload");
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
+    
+    // Release any retained subviews of the main 
+    // Why does this cause an error right before app termination?
+//    self.textView = nil;
     // e.g. self.myOutlet = nil;
 }
 
@@ -133,8 +118,6 @@
     [super dealloc];
     [_entry release];
     _entry = nil;
-//    [_textView release];
-//    _textView = nil;
 }
 
 @end
