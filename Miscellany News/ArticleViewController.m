@@ -55,10 +55,6 @@
 
 //- (void) viewDidDisappear:(BOOL)animated
 //{
-//    NSLog(@"before releasing");
-//    [_textView.text release];
-//    NSLog(@"after releasing");
-//    _textView.text = nil;
 //}
 
 #pragma mark View loading

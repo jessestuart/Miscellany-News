@@ -16,6 +16,8 @@
 
 @end
 
+extern NSString * const RSSArticleTextUnavailable;
+
 @interface RSSArticleParser : NSObject
 {
     IBOutlet RSSEntry *_entry;
@@ -26,6 +28,6 @@
 @property (assign) id delegate;
 
 - (id)initWithRSSEntry:(RSSEntry *)entry;
-- (NSString *)parseArticleText;
+- (void)parseArticleText;
 
 @end

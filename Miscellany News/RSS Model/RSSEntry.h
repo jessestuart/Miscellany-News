@@ -8,24 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const RSSArticleTextUnavailable;
-
 @interface RSSEntry : NSObject
 {
     NSString *_articleTitle;
     NSString *_articleUrl;
     NSDate *_articleDate;
+    NSString *_articleSummary;
     NSString *_articleText;
 }
 
 @property (copy) NSString *articleTitle;
 @property (copy) NSString *articleUrl;
 @property (copy) NSDate *articleDate;
-@property (copy) NSString *articleText;
+@property (copy) NSString *articleSummary;
+@property (retain) NSString *articleText;
 
-- (id) initWithArticleTitle:(NSString *)ArticleTitle
+- (id) initWithArticleTitle:(NSString *)articleTitle
                  articleUrl:(NSString *)articleUrl
                 articleDate:(NSDate *)articleDate
+             articleSummary:(NSString *)articleSummary
                 articleText:(NSString *)articleText;
 
 @end

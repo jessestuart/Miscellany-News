@@ -12,6 +12,8 @@
 #import "NSString+JDS.h"
 #import "RootViewController.h"
 
+NSString * const RSSArticleTextUnavailable = @"rss_article_text_unavailable";
+
 @implementation RSSArticleParser
 
 @synthesize entry = _entry;
@@ -26,7 +28,7 @@
     return self;
 }
 
-- (NSString *)parseArticleText
+- (void)parseArticleText
 {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
@@ -45,29 +47,29 @@
     
     // Cut out article text substring, flatten HTML tags, etc
     NSString *s = [[[[htmlString substringWithRange:NSMakeRange(begin, end-begin)] 
-                     stringByFlatteningHTML] 
-                    stringByRemovingLeadingWhitespace] 
+                     // remove html and tabs
+                     stringByStrippingMatchingRegex:@"<[^>]+>|\t"] 
+                    stringByRemovingLeadingWhitespace]
                    stringByDecodingHTMLEntities];
     
-    if (s == nil) {
+    if (s == nil) 
+    {
         _entry.articleText = RSSArticleTextUnavailable;
-        return RSSArticleTextUnavailable;
     }
     
-    _entry.articleText = s; // copy
+    _entry.articleText = s; // retain
     
-    [_delegate articleTextParsedForEntry:[_entry retain]];
+    [_delegate articleTextParsedForEntry:_entry];
     
     [pool drain];
-    
-    return _entry.articleText;
 }
 
 - (void)dealloc
 {
-    NSLog(@"RSSArticleParser dealloc");
     [super dealloc];
     [_entry release];
     _entry = nil;
+    
+    _delegate = nil;
 }
 @end

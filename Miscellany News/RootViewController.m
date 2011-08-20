@@ -12,6 +12,7 @@
 #import "MBProgressHUD.h"
 #import "UIView+JMNoise.h"
 #import "Constants.h"
+#import "NSString+JDS.h"
 
 @interface RootViewController ()
     @property (retain) NSMutableArray *unsortedEntries;
@@ -35,8 +36,8 @@
 - (void)parseFeed
 {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        // Create feed parser and pass the URL of the feed
-        NSURL *feedURL = [NSURL URLWithString:@"feed://www.miscellanynews.com/se/1.38617"];
+        // Create feed parser and pass the URL of the feed (defined in Constants.h)
+        NSURL *feedURL = [NSURL URLWithString:FEED_URL];
         MWFeedParser *feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
         // Delegate must conform to MWFeedParserDelegate
         feedParser.delegate = self;
@@ -47,6 +48,8 @@
         feedParser.connectionType = ConnectionTypeSynchronously;
         // Begin parsing
         [feedParser parse];
+        
+        [feedParser release];
     }];
 }
 
@@ -60,7 +63,8 @@
     // Create RSSEntry from parsed item and add to array
     RSSEntry *entry = [[RSSEntry alloc] initWithArticleTitle:item.title
                                                   articleUrl:item.link 
-                                                 articleDate:item.date 
+                                                 articleDate:item.date
+                                              articleSummary:[item.summary stringBetweenPTags]
                                                  articleText:nil];
     
     [unsortedEntries addObject:entry];
@@ -70,7 +74,7 @@
         RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
         articleParser.delegate = self;
         [articleParser parseArticleText];
-//        [articleParser release];
+        [articleParser release];
     }];
 }
 
@@ -128,9 +132,9 @@
     self.navigationItem.titleView = label;
     [label release];
     
-    // Customize TableView background
+    // Customize TableView
     self.tableView.backgroundColor = [Constants MN_BACKGROUND_COLOR];
-    [self.view applyNoiseWithOpacity:0.3];
+    self.tableView.rowHeight = 60;
     
     // Allocate ivars
     self.allEntries = [NSMutableArray array];
@@ -238,13 +242,17 @@
     // Configure the cell.
     RSSEntry *entry = [[_allEntries objectAtIndex:indexPath.row] retain];
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    NSString *articleDateString = [dateFormatter stringFromDate:entry.articleDate];
-    [dateFormatter release];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+//    NSString *articleDateString = [dateFormatter stringFromDate:entry.articleDate];
+//    [dateFormatter release];
     
+    cell.textLabel.font = [UIFont fontWithName:@"Palatino-Bold" size:16.0];
     cell.textLabel.text = entry.articleTitle;
-    cell.detailTextLabel.text = articleDateString;
+
+    cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+    cell.detailTextLabel.text = entry.articleSummary;
+    
     [cell.backgroundView applyNoise];
     
     [entry release];

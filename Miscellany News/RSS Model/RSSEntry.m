@@ -8,13 +8,12 @@
 
 #import "RSSEntry.h"
 
-NSString * const RSSArticleTextUnavailable = @"rss_article_text_unavailable";
-
 @implementation RSSEntry
 
 @synthesize articleTitle = _articleTitle;
 @synthesize articleUrl = _articleUrl;
 @synthesize articleDate = _articleDate;
+@synthesize articleSummary = _articleSummary;
 //@synthesize articleText = _articleText;
 
 - (NSString *)articleText
@@ -24,13 +23,14 @@ NSString * const RSSArticleTextUnavailable = @"rss_article_text_unavailable";
 
 - (void)setArticleText:(NSString *)articleText
 {
-    _articleText = [articleText copy];
-    NSLog(@"article text has been set for entry %@", _articleTitle);
+    _articleText = [articleText retain];
+//    NSLog(@"article text has been set for entry %@", _articleTitle);
 }
 
 - (id)initWithArticleTitle:(NSString *)articleTitle 
                 articleUrl:(NSString *)articleUrl 
                articleDate:(NSDate *)articleDate 
+            articleSummary:(NSString *)articleSummary 
                articleText:(NSString *)articleText
 {
 //    const RSSArticleTextUnavailable = 
@@ -40,8 +40,9 @@ NSString * const RSSArticleTextUnavailable = @"rss_article_text_unavailable";
         _articleTitle = [articleTitle copy];
         _articleUrl = [articleUrl copy];
         _articleDate = [articleDate copy];
+        _articleSummary = [articleSummary copy];
         // even if article text is nil
-        _articleText = [articleText copy];
+        _articleText = [articleText retain];
     }
     return self;
 }
