@@ -12,5 +12,7 @@
 
 - (NSString *)stringByFlatteningHTML;
 - (NSString *)stringByRemovingLeadingWhitespace;
+- (NSString *)stringByStrippingMatchingRegex:(NSString *)regex;
+- (NSString *)stringBetweenPTags;
 
 @end
