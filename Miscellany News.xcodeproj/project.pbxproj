@@ -38,6 +38,7 @@
 		D5AAE36413FC0FB10056EE4D /* ArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AAE36213FC0FB10056EE4D /* ArticleViewController.xib */; };
 		D5AAE36713FC11920056EE4D /* NSString+JDS.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AAE36613FC11920056EE4D /* NSString+JDS.m */; };
 		D5C20A9213FEBE0900420DFC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D5C20A9113FEBE0900420DFC /* Constants.m */; };
+		D5F06B8614003BB800C1BD77 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = D5F06B8514003BB800C1BD77 /* background.png */; };
 		D5F0B8CD13FBB2C20004D6F0 /* RSSArticleParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F0B8CC13FBB2C20004D6F0 /* RSSArticleParser.m */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +99,7 @@
 		D5AAE36613FC11920056EE4D /* NSString+JDS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+JDS.m"; path = "Miscellany News/NSString+JDS.m"; sourceTree = "<group>"; };
 		D5C20A9013FEBE0900420DFC /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = "Miscellany News/Constants.h"; sourceTree = "<group>"; };
 		D5C20A9113FEBE0900420DFC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = "Miscellany News/Constants.m"; sourceTree = "<group>"; };
+		D5F06B8514003BB800C1BD77 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = ../../../Downloads/background.png; sourceTree = "<group>"; };
 		D5F0B8CC13FBB2C20004D6F0 /* RSSArticleParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSSArticleParser.m; path = "Miscellany News/RSS Model/RSSArticleParser.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -178,6 +180,7 @@
 		D516270B13F884C100BDB710 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D5F06B8514003BB800C1BD77 /* background.png */,
 				D51626D713F86C7D00BDB710 /* Miscellany News-Info.plist */,
 				D51626D813F86C7D00BDB710 /* InfoPlist.strings */,
 			);
@@ -360,6 +363,7 @@
 				D51626E613F86C7D00BDB710 /* MainWindow.xib in Resources */,
 				D51626EC13F86C7D00BDB710 /* RootViewController.xib in Resources */,
 				D5AAE36413FC0FB10056EE4D /* ArticleViewController.xib in Resources */,
+				D5F06B8614003BB800C1BD77 /* background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

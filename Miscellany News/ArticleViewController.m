@@ -87,10 +87,15 @@
     _textView.text = nil;
 
     // Text view is clear on gray textured background
-    _textView.backgroundColor = [UIColor clearColor];
-    _textView.superview.backgroundColor = [Constants MN_BACKGROUND_COLOR];
-    [_textView.superview applyNoiseWithOpacity:0.3];
-    _textView.font = [UIFont fontWithName:@"Palatino" size:17.0];
+    _textView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+//    self.view.backgroundColor = [Constants MN_BACKGROUND_COLOR];
+//    [self.view applyNoiseWithOpacity:0.3];
+    _textView.font = [UIFont fontWithName:@"Helvetica" size:15.0];
+    _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
+    
+//    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(_textView.frame.origin.x+20, _textView.frame.origin.y+16, _textView.frame.size.width-40, 40)];
+//    [self.textView addSubview:title];
+    
 }
 
 - (void)viewDidUnload

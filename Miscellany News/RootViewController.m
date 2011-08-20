@@ -134,7 +134,7 @@
     
     // Customize TableView
     self.tableView.backgroundColor = [Constants MN_BACKGROUND_COLOR];
-    self.tableView.rowHeight = 60;
+    self.tableView.rowHeight = 80;
     
     // Allocate ivars
     self.allEntries = [NSMutableArray array];
@@ -249,11 +249,11 @@
     
     cell.textLabel.font = [UIFont fontWithName:@"Palatino-Bold" size:16.0];
     cell.textLabel.text = entry.articleTitle;
+    cell.textLabel.numberOfLines = 2;
 
-    cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:14.0];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:13.0];
     cell.detailTextLabel.text = entry.articleSummary;
-    
-    [cell.backgroundView applyNoise];
+    cell.detailTextLabel.numberOfLines = 2;
     
     [entry release];
     
