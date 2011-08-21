@@ -162,7 +162,6 @@
     [label release];
     
     // Customize TableView
-//    self.tableView.backgroundColor = [Constants MN_BACKGROUND_COLOR];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     self.tableView.rowHeight = 80;
     
@@ -281,7 +280,9 @@
     cell.textLabel.text = entry.articleTitle;
     cell.textLabel.numberOfLines = 2;
     
-    cell.imageView.image = entry.image;
+//    cell.imageView.image = entry.image;
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:entry.image];
+    cell.accessoryView = imageView;
 
     cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:13.0];
     cell.detailTextLabel.text = entry.articleSummary;
