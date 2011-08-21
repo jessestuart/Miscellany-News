@@ -7,6 +7,8 @@
 //
 
 #import "RSSEntry.h"
+#import "EGOCache.h"
+#import "UIImage+ProportionalFill.h"
 
 @implementation RSSEntry
 
@@ -14,18 +16,22 @@
 @synthesize articleUrl = _articleUrl;
 @synthesize articleDate = _articleDate;
 @synthesize articleSummary = _articleSummary;
-//@synthesize articleText = _articleText;
+@synthesize articleText = _articleText;
+@synthesize image = _image;
 
-- (NSString *)articleText
-{
-    return _articleText;
-}
+//- (UIImage *)image
+//{
+//    return self.image;
+//}
+//
+//- (void)setImage:(UIImage *)image
+//{
+//    NSLog(@"cropping image");
+//    self.image = [image imageCroppedToFitSize:CGSizeMake(60, 60)];
+//    NSLog(@"done cropping image");
+//}
 
-- (void)setArticleText:(NSString *)articleText
-{
-    _articleText = [articleText retain];
-//    NSLog(@"article text has been set for entry %@", _articleTitle);
-}
+
 
 - (id)initWithArticleTitle:(NSString *)articleTitle 
                 articleUrl:(NSString *)articleUrl 
@@ -33,8 +39,6 @@
             articleSummary:(NSString *)articleSummary 
                articleText:(NSString *)articleText
 {
-//    const RSSArticleTextUnavailable = 
-    
     if ((self = [super init]))
     {
         _articleTitle = [articleTitle copy];

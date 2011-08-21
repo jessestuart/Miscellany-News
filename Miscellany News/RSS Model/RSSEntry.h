@@ -15,6 +15,7 @@
     NSDate *_articleDate;
     NSString *_articleSummary;
     NSString *_articleText;
+    UIImage *_image;
 }
 
 @property (copy) NSString *articleTitle;
@@ -22,6 +23,7 @@
 @property (copy) NSDate *articleDate;
 @property (copy) NSString *articleSummary;
 @property (retain) NSString *articleText;
+@property (retain) UIImage *image;
 
 - (id) initWithArticleTitle:(NSString *)articleTitle
                  articleUrl:(NSString *)articleUrl
