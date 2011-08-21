@@ -14,6 +14,8 @@
 #import "Constants.h"
 #import "NSString+JDS.h"
 
+#import "EGOImageLoader.h"
+
 @interface RootViewController ()
     @property (retain) NSMutableArray *unsortedEntries;
 @end
@@ -60,22 +62,49 @@
  */
 -(void)feedParser:(MWFeedParser *)parser didParseFeedItem:(MWFeedItem *)item
 {
+//    NSLog(@"\nItem image URL: %@", [item.summary substringBetweenString:@"<img src=" andString:@">" regex:NO]);
+    
+    
+    
     // Create RSSEntry from parsed item and add to array
     RSSEntry *entry = [[RSSEntry alloc] initWithArticleTitle:item.title
                                                   articleUrl:item.link 
                                                  articleDate:item.date
-                                              articleSummary:[item.summary stringBetweenPTags]
+                                              articleSummary:[item.summary substringBetweenString:@"<p> " andString:@"</p>" regex:NO]
                                                  articleText:nil];
     
     [unsortedEntries addObject:entry];
     
-    // Fetch article text in background
+    NSString *imageURLString = [item.summary substringBetweenString:@"<img src=" andString:@">" regex:NO];
+    entry.image = [[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:imageURLString] shouldLoadWithObserver:nil];
+    
     [_queue addOperationWithBlock:^{
+        
+//        NSString *imageURLString = [item.summary substringBetweenString:@"<img src=" andString:@">" regex:NO];
+//        if (imageURLString) {
+//            NSLog(@"imageURLString length: %d", [imageURLString length]);
+//            NSLog(@"getting image for %@", item.title);
+//            NSURL *imageURL = [[NSURL alloc] initWithString:imageURLString];
+//            NSData *imageData = [[NSData alloc] initWithContentsOfURL:imageURL];
+//            UIImage *image = [[UIImage alloc] initWithData:imageData];
+//            entry.image = image;
+//            [imageURL release];
+//            [imageData release];
+//        }
+        
         RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
         articleParser.delegate = self;
         [articleParser parseArticleText];
-        [articleParser release];
+        [articleParser release];        
     }];
+    
+    // Fetch article text in background
+//    [_queue addOperationWithBlock:^{
+//        RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
+//        articleParser.delegate = self;
+//        [articleParser parseArticleText];
+//        [articleParser release];
+//    }];
 }
 
 /**
@@ -128,12 +157,13 @@
     label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     label.textAlignment = UITextAlignmentCenter;
     label.textColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0];
-    label.text=self.title;
+    label.text = self.title;
     self.navigationItem.titleView = label;
     [label release];
     
     // Customize TableView
-    self.tableView.backgroundColor = [Constants MN_BACKGROUND_COLOR];
+//    self.tableView.backgroundColor = [Constants MN_BACKGROUND_COLOR];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     self.tableView.rowHeight = 80;
     
     // Allocate ivars
@@ -250,12 +280,20 @@
     cell.textLabel.font = [UIFont fontWithName:@"Palatino-Bold" size:16.0];
     cell.textLabel.text = entry.articleTitle;
     cell.textLabel.numberOfLines = 2;
+    
+    cell.imageView.image = entry.image;
 
     cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:13.0];
     cell.detailTextLabel.text = entry.articleSummary;
     cell.detailTextLabel.numberOfLines = 2;
     
     [entry release];
+    
+//    if (indexPath.row == 0) {
+//        cell.imageView.image = [UIImage imageNamed:@"2623635910.JPG"];
+//    } else if (indexPath.row == 2) {
+//        cell.imageView.image = [UIImage imageNamed:@"221749802.jpg"];
+//    }
     
     return cell;
 }

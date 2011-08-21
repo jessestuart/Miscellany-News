@@ -10,6 +10,32 @@
 
 @implementation NSString (JDS)
 
+- (NSString *)substringBetweenString:(NSString *)substring1 andString:(NSString *)substring2 regex:(BOOL)regex
+{
+    NSString *s = [[self copy] autorelease];
+    NSRange beginRange, endRange;
+    NSUInteger beginIdx, endIdx;
+    
+    if (regex) 
+    {
+        beginRange = [s rangeOfString:substring1 options:NSRegularExpressionSearch];
+        beginIdx = beginRange.location + beginRange.length;
+        endRange = [s rangeOfString:substring2 options:NSRegularExpressionSearch];
+        endIdx = endRange.location;
+    }
+    else
+    {
+        beginRange = [s rangeOfString:substring1];
+        beginIdx = beginRange.location + beginRange.length;
+        endRange = [s rangeOfString:substring2];
+        endIdx = endRange.location;
+    }
+
+    NSString *res = [s substringWithRange:NSMakeRange(beginIdx, endIdx-beginIdx)];
+    
+    return ([res length] > 0) ? res : nil;
+}
+
 - (NSString *)stringBetweenPTags
 {
     NSString *s = [[self copy] autorelease];

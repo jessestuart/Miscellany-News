@@ -86,6 +86,7 @@
     _textView.editable = FALSE;
     _textView.text = nil;
 
+
     // Text view is clear on gray textured background
     _textView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 //    self.view.backgroundColor = [Constants MN_BACKGROUND_COLOR];
