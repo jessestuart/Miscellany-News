@@ -13,8 +13,8 @@
 #import "UIView+JMNoise.h"
 #import "Constants.h"
 #import "NSString+JDS.h"
-
 #import "EGOImageLoader.h"
+#import "UIImage+ProportionalFill.h"
 
 @interface RootViewController ()
     @property (retain) NSMutableArray *unsortedEntries;
@@ -62,10 +62,6 @@
  */
 -(void)feedParser:(MWFeedParser *)parser didParseFeedItem:(MWFeedItem *)item
 {
-//    NSLog(@"\nItem image URL: %@", [item.summary substringBetweenString:@"<img src=" andString:@">" regex:NO]);
-    
-    
-    
     // Create RSSEntry from parsed item and add to array
     RSSEntry *entry = [[RSSEntry alloc] initWithArticleTitle:item.title
                                                   articleUrl:item.link 
@@ -76,7 +72,9 @@
     [unsortedEntries addObject:entry];
     
     NSString *imageURLString = [item.summary substringBetweenString:@"<img src=" andString:@">" regex:NO];
-    entry.image = [[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:imageURLString] shouldLoadWithObserver:nil];
+    entry.image = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:imageURLString] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];
+    
+    
     
     [_queue addOperationWithBlock:^{
         
@@ -271,11 +269,6 @@
     // Configure the cell.
     RSSEntry *entry = [[_allEntries objectAtIndex:indexPath.row] retain];
     
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-//    NSString *articleDateString = [dateFormatter stringFromDate:entry.articleDate];
-//    [dateFormatter release];
-    
     cell.textLabel.font = [UIFont fontWithName:@"Palatino-Bold" size:16.0];
     cell.textLabel.text = entry.articleTitle;
     cell.textLabel.numberOfLines = 2;
@@ -283,6 +276,7 @@
 //    cell.imageView.image = entry.image;
     UIImageView *imageView = [[UIImageView alloc] initWithImage:entry.image];
     cell.accessoryView = imageView;
+    [imageView release];
 
     cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:13.0];
     cell.detailTextLabel.text = entry.articleSummary;
@@ -299,14 +293,12 @@
     return cell;
 }
 
-/*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
-*/
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {

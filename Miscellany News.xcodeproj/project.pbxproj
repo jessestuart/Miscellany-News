@@ -146,8 +146,6 @@
 		D51626BE13F86C7D00BDB710 = {
 			isa = PBXGroup;
 			children = (
-				D5C20A9013FEBE0900420DFC /* Constants.h */,
-				D5C20A9113FEBE0900420DFC /* Constants.m */,
 				D5204FAC13F9460A008974FF /* QuartzCore.framework */,
 				D51627E313F8C17C00BDB710 /* Libraries */,
 				D516276913F8ACE300BDB710 /* Categories */,
@@ -184,6 +182,8 @@
 		D516270913F884A300BDB710 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D5C20A9013FEBE0900420DFC /* Constants.h */,
+				D5C20A9113FEBE0900420DFC /* Constants.m */,
 				D51626DE13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.h */,
 				D51626DF13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.m */,
 			);

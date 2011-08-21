@@ -9,11 +9,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "Miscellany News/RootViewController.m"
-         timestampString = "335553001.822301"
+         timestampString = "335584747.270852"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "52"
-         endingLineNumber = "52"
+         startingLineNumber = "54"
+         endingLineNumber = "54"
          landmarkName = "-parseFeed"
          landmarkType = "5">
       </FileBreakpoint>
