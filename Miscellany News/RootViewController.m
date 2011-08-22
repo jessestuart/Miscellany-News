@@ -91,7 +91,7 @@
 //        }
         
         RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
-        articleParser.delegate = self;
+        articleParser.delegate = _articleViewController;
         [articleParser parseArticleText];
         [articleParser release];        
     }];
@@ -166,10 +166,14 @@
     // Allocate ivars
     self.allEntries = [NSMutableArray array];
     self.unsortedEntries = [NSMutableArray array];
-    self.queue = [[[NSOperationQueue alloc] init] autorelease];
+    self.queue = [[NSOperationQueue alloc] init];
 
     // Show activity indicator
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    if (_articleViewController == nil) {
+        _articleViewController = [[[ArticleViewController alloc] initWithNibName:@"ArticleViewController" bundle:[NSBundle mainBundle]] retain];
+    }
     
     // Begin parsing RSS feed
     [self parseFeed];
@@ -220,11 +224,11 @@
     [_allEntries release];
     _allEntries = nil;
     
+    [unsortedEntries release];
+    unsortedEntries = nil;
+    
     [_queue release];
     _queue = nil;
-    
-    [_articleViewController release];
-    _articleViewController = nil;
     
     [super dealloc];
 }

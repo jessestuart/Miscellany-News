@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RSSArticleParser.h"
 
 @class RSSEntry;
 
-@interface ArticleViewController : UIViewController
+@interface ArticleViewController : UIViewController <RSSArticleParserDelegate>
 {
     IBOutlet UITextView *_textView;
     RSSEntry *_entry;

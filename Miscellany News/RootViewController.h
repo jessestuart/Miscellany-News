@@ -13,7 +13,7 @@
 #import "ArticleViewController.h"
 #import "RSSArticleParser.h"
 
-@interface RootViewController : UITableViewController <MWFeedParserDelegate, RSSArticleParserDelegate>
+@interface RootViewController : UITableViewController <MWFeedParserDelegate>
 {
     ArticleViewController *_articleViewController;
     NSMutableArray *_allEntries;

@@ -9,7 +9,6 @@
 #import "ArticleViewController.h"
 #import "RSSEntry.h"
 #import "MBProgressHUD.h"
-#import "RSSArticleParser.h"
 #import "UIView+JMNoise.h"
 #import "Constants.h"
 
@@ -17,7 +16,6 @@
 
 @synthesize textView = _textView;
 @synthesize entry = _entry;
-
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -36,16 +34,6 @@
     }
 }
 
-//- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context 
-//{    
-//    // Text updated: stop progress indicator & update textView
-//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-//        NSLog(@"block");
-//        [MBProgressHUD hideHUDForView:self.view animated:YES];
-//        _textView.text = [object valueForKeyPath:keyPath];
-//    }];
-//}
-
 - (void) viewWillDisappear:(BOOL)animated
 {
     // Removes progress indicator if found
@@ -53,9 +41,17 @@
     _textView.text = nil;
 }
 
-//- (void) viewDidDisappear:(BOOL)animated
-//{
-//}
+- (void)articleTextParsedForEntry:(RSSEntry *)entry
+{
+    // Article text has just been set for currently selected article,
+    // so set textView's text and hide the activity indicator.
+    if (entry == self.entry) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES]; 
+            _textView.text = entry.articleText;
+        }];
+    }
+}
 
 #pragma mark View loading
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -83,20 +79,15 @@
 {
     [super viewDidLoad];
     
+//    UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 44, 320, 436)];
+//    [scroll addSubview:_textView];
+    
     _textView.editable = FALSE;
     _textView.text = nil;
 
-
-    // Text view is clear on gray textured background
     _textView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-//    self.view.backgroundColor = [Constants MN_BACKGROUND_COLOR];
-//    [self.view applyNoiseWithOpacity:0.3];
     _textView.font = [UIFont fontWithName:@"Helvetica" size:15.0];
     _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
-    
-//    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake(_textView.frame.origin.x+20, _textView.frame.origin.y+16, _textView.frame.size.width-40, 40)];
-//    [self.textView addSubview:title];
-    
 }
 
 - (void)viewDidUnload
@@ -104,8 +95,6 @@
     [super viewDidUnload];
     
     // Release any retained subviews of the main 
-    // Why does this cause an error right before app termination?
-//    self.textView = nil;
     // e.g. self.myOutlet = nil;
 }
 
