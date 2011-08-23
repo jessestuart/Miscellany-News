@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import <CoreData/CoreData.h>
-#import "MWFeedParser.h"
-#import "ArticleViewController.h"
-#import "RSSArticleParser.h"
 
-@interface RootViewController : UITableViewController <MWFeedParserDelegate>
+#import "ASIHTTPRequest.h"
+
+@class ArticleViewController;
+
+@interface RootViewController : UITableViewController <ASIHTTPRequestDelegate>
 {
     ArticleViewController *_articleViewController;
     NSMutableArray *_allEntries;
@@ -27,5 +27,7 @@
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+
+- (void)refreshFeed;
 
 @end

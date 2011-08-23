@@ -7,14 +7,27 @@
 //
 
 #import "RootViewController.h"
+#import "ArticleViewController.h"
+
+/* RSS */
 #import "RSSEntry.h"
+#import "RSSArticleParser.h"
+/* Sorting unsorted entries */
 #import "NSArray+Extras.h" 
+/* XML parsing */
+#import "TouchXML.h"
+#import "CXMLElement+(JDS).h"
+/* View */
 #import "MBProgressHUD.h"
 #import "UIView+JMNoise.h"
-#import "Constants.h"
-#import "NSString+JDS.h"
-#import "EGOImageLoader.h"
 #import "UIImage+ProportionalFill.h"
+/* Fetching and caching images */
+#import "EGOImageLoader.h"
+/* Miscellaneous convenience methods */
+#import "NSString+JDS.h"
+
+// WILL BE REMOVED
+#import "MWFeedParser.h"
 
 @interface RootViewController ()
     @property (retain) NSMutableArray *unsortedEntries;
@@ -32,6 +45,87 @@
 
 #pragma mark Feed parsing
 
+- (void)refreshFeed
+{
+    NSLog(@"refresh feed");
+    
+    // Pull feed URL from info plist, initialize ASIHTTP request, and add to queue
+    NSURL *feedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:kFeedURL]];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:feedURL];
+    request.delegate = self;
+    [_queue addOperation:request];
+    NSLog(@"after adding operation");
+}
+
+- (void)requestStarted:(ASIHTTPRequest *)request
+{
+    NSLog(@"request started");
+}
+
+- (void)requestFailed:(ASIHTTPRequest *)request
+{
+    NSLog(@"request failed");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network error" 
+                                                    message:@"Failed to retrieve feed." 
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"Close" 
+                                          otherButtonTitles:nil];
+    [alert show];
+    [alert release], alert = nil;
+}
+
+- (void)requestFinished:(ASIHTTPRequest *)request
+{
+    NSLog(@"request finished");
+    NSError *error = nil;
+    CXMLDocument *document = [[CXMLDocument alloc] initWithData:[request responseData] options:0 error:&error];
+    JSAssert(error == nil, @"Error creating document from feed");
+    
+    CXMLElement *root = [document rootElement];
+    CXMLElement *channel = [[root elementsForName:@"channel"] lastObject];
+    
+    NSDateFormatter *pubDateFormatter = [[NSDateFormatter alloc] init];
+    [pubDateFormatter setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease]];
+    [pubDateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
+    
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    for (CXMLElement *item in [channel elementsForName:@"item"])
+    {
+        RSSEntry *entry = [[RSSEntry alloc] initWithTitle:[[item elementForName:@"title"] stringByFlatteningHTML]
+                                                     link:[item elementForName:@"link"]
+                                                   author:[item elementForName:@"author"]
+                                                  summary:[[[item elementForName:@"description"] stringByRemovingLeadingWhitespace] stringByFlatteningHTML]
+                                                  pubDate:[pubDateFormatter dateFromString:[item elementForName:@"pubDate"]]
+                                                     guid:[item elementForName:@"guid"] 
+                                                 category:[item elementForName:@"category"]];
+        JSAssert(entry != nil, @"Error allocating entry");
+        [unsortedEntries addObject:entry];
+    }
+    
+    [pool drain];
+    
+    for (RSSEntry *entry in unsortedEntries) 
+    {
+        // Sort by date
+        int insertIdx = [_allEntries indexForInsertingObject:[entry retain]
+                                            sortedUsingBlock:^(id a, id b) {
+                                                RSSEntry *entry1 = (RSSEntry *) a;
+                                                RSSEntry *entry2 = (RSSEntry *) b;
+                                                return [entry1.articleDate compare:entry2.articleDate];
+                                            }];
+        
+        // Add to array
+        [_allEntries insertObject:entry atIndex:insertIdx];
+        [entry release];
+        
+        // Add to table view
+        NSArray *idxPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]];
+        [self.tableView insertRowsAtIndexPaths:idxPaths withRowAnimation:UITableViewRowAnimationRight];
+    }
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
 /**
  *  Called when view is loaded. Pulls RSS feed information.
  */
@@ -42,7 +136,7 @@
         NSURL *feedURL = [[[NSBundle mainBundle] infoDictionary] valueForKey:kFeedURL];
         MWFeedParser *feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
         // Delegate must conform to MWFeedParserDelegate
-        feedParser.delegate = self;
+//        feedParser.delegate = self;
         
         // Parse the feeds info (title, link) and all feed items
         feedParser.feedParseType = ParseTypeItemsOnly;
@@ -77,32 +171,11 @@
     
     
     [_queue addOperationWithBlock:^{
-        
-//        NSString *imageURLString = [item.summary substringBetweenString:@"<img src=" andString:@">" regex:NO];
-//        if (imageURLString) {
-//            NSLog(@"imageURLString length: %d", [imageURLString length]);
-//            NSLog(@"getting image for %@", item.title);
-//            NSURL *imageURL = [[NSURL alloc] initWithString:imageURLString];
-//            NSData *imageData = [[NSData alloc] initWithContentsOfURL:imageURL];
-//            UIImage *image = [[UIImage alloc] initWithData:imageData];
-//            entry.image = image;
-//            [imageURL release];
-//            [imageData release];
-//        }
-        
         RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
         articleParser.delegate = _articleViewController;
         [articleParser parseArticleText];
         [articleParser release];        
     }];
-    
-    // Fetch article text in background
-//    [_queue addOperationWithBlock:^{
-//        RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
-//        articleParser.delegate = self;
-//        [articleParser parseArticleText];
-//        [articleParser release];
-//    }];
 }
 
 /**
@@ -176,7 +249,8 @@
     }
     
     // Begin parsing RSS feed
-    [self parseFeed];
+    [self refreshFeed];
+//    [self parseFeed];
 }
 
 - (void)viewWillAppear:(BOOL)animated
