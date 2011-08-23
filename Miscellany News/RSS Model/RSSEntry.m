@@ -12,6 +12,8 @@
 
 @implementation RSSEntry
 
+@synthesize guid = _guid;
+@synthesize author = _author;
 @synthesize articleTitle = _articleTitle;
 @synthesize articleUrl = _articleUrl;
 @synthesize articleDate = _articleDate;
@@ -51,6 +53,27 @@
     return self;
 }
 
+- (id)initWithTitle:(NSString *)title 
+               link:(NSString *)link 
+             author:(NSString *)author 
+            summary:(NSString *)summary 
+            pubDate:(NSDate *)pubDate 
+               guid:(NSString *)guid 
+           category:(NSString *)category
+{
+    if ((self = [super init]))
+    {        
+        _articleTitle = [title copy];
+        _articleUrl = [link copy];
+        _author = [author copy];
+        _articleSummary = [summary copy];
+        _articleDate = [pubDate copy];
+        _guid = [guid copy];
+        _category = [category copy];
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     NSLog(@"dealloc RSSEntry: %@", _articleTitle);
@@ -67,6 +90,17 @@
     _articleText = nil;
     
     [super dealloc];
+}
+
+- (NSString *)description
+{
+    NSLog(@"Title: %@", _articleTitle);
+    NSLog(@"Link: %@", _articleUrl);
+    NSLog(@"Author: %@", _author);
+    NSLog(@"Summary: %@", _articleSummary);
+    NSLog(@"Date: %@", _articleDate);
+    NSLog(@"GUID: %@", _guid);
+    NSLog(@"Category: %@", _category);
 }
 
 @end

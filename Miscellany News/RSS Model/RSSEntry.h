@@ -10,14 +10,20 @@
 
 @interface RSSEntry : NSObject
 {
-    NSString *_articleTitle;
-    NSString *_articleUrl;
-    NSDate *_articleDate;
-    NSString *_articleSummary;
-    NSString *_articleText;
-    UIImage *_image;
+    NSString *_articleTitle; // title
+    NSString *_articleUrl; // link
+    NSString *_author;
+    NSString *_articleSummary; // summary
+    NSDate *_articleDate; // pubDate
+    NSString *_guid;
+    NSString *_category;
+
+    NSString *_articleText; //text
+    UIImage *_image; // thumbnail
 }
 
+@property (copy) NSString *guid;
+@property (copy) NSString *author;
 @property (copy) NSString *articleTitle;
 @property (copy) NSString *articleUrl;
 @property (copy) NSDate *articleDate;
@@ -30,5 +36,18 @@
                 articleDate:(NSDate *)articleDate
              articleSummary:(NSString *)articleSummary
                 articleText:(NSString *)articleText;
+
+- (id) initWithTitle:(NSString *)title
+                link:(NSString *)link
+              author:(NSString *)author 
+             summary:(NSString *)summary
+             pubDate:(NSDate *)pubDate
+                guid:(NSString *)guid
+            category:(NSString *)category;
+
+              
+               
+            
+            
 
 @end
