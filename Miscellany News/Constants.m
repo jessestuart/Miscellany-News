@@ -10,8 +10,6 @@
 
 @implementation Constants
 
-NSString * const FEED_URL = @"feed://www.miscellanynews.com/se/1.38617";
-
 + (UIColor *)MN_BACKGROUND_COLOR
 { 
     return [UIColor colorWithRed:0.941 green:0.941 blue:0.941 alpha:1.];

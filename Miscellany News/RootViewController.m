@@ -39,7 +39,7 @@
 {
     [[NSOperationQueue mainQueue] addOperationWithBlock:^{
         // Create feed parser and pass the URL of the feed (defined in Constants.h)
-        NSURL *feedURL = [NSURL URLWithString:FEED_URL];
+        NSURL *feedURL = [[[NSBundle mainBundle] infoDictionary] valueForKey:kFeedURL];
         MWFeedParser *feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
         // Delegate must conform to MWFeedParserDelegate
         feedParser.delegate = self;

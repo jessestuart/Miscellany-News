@@ -17,8 +17,6 @@
 
 @interface Constants : NSObject
 
-extern NSString * const FEED_URL;
-
 + (UIColor *)MN_BACKGROUND_COLOR;
 
 @end
