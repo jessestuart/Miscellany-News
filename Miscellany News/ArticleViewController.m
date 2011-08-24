@@ -14,8 +14,12 @@
 
 @implementation ArticleViewController
 
-@synthesize textView = _textView;
 @synthesize entry = _entry;
+@synthesize scrollView = _scrollView;
+@synthesize textView = _textView;
+@synthesize thumbnailView = _thumbnailView;
+@synthesize titleLabel = _titleLabel;
+@synthesize authorLabel = _authorLabel;
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -31,6 +35,19 @@
     else 
     {
         _textView.text = _entry.text;  /* (nonatomic, copy) */
+        _textView.backgroundColor = [UIColor clearColor];
+        _textView.editable = FALSE;
+        _textView.font = [UIFont fontWithName:@"Helvetica" size:15.0];
+        _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
+        [_scrollView addSubview:_textView];
+        
+        CGRect frame = _textView.frame;
+        frame.size.height = _textView.contentSize.height;
+        _textView.frame = frame;
+        _scrollView.contentSize = CGSizeMake(frame.size.width, frame.size.height + 143);
+        
+        [_textView setScrollEnabled:NO];
+        [_scrollView setScrollEnabled:YES];
     }
 }
 
@@ -79,15 +96,20 @@
 {
     [super viewDidLoad];
     
-//    UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 44, 320, 436)];
-//    [scroll addSubview:_textView];
+    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     
-    _textView.editable = FALSE;
-    _textView.text = nil;
-
-    _textView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-    _textView.font = [UIFont fontWithName:@"Helvetica" size:15.0];
-    _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(15.0, 150.0, 290.0, 266.0)];
+    _textView.backgroundColor = [UIColor clearColor];
+    
+    
+    
+    
+//    _textView.editable = FALSE;
+//    _textView.text = nil;
+//
+////    _textView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+//    _textView.font = [UIFont fontWithName:@"Helvetica" size:15.0];
+//    _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
 }
 
 - (void)viewDidUnload

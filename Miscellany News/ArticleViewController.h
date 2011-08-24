@@ -13,11 +13,19 @@
 
 @interface ArticleViewController : UIViewController <RSSArticleParserDelegate>
 {
-    IBOutlet UITextView *_textView;
     RSSEntry *_entry;
+    IBOutlet UIScrollView *_scrollView;
+    IBOutlet UITextView *_textView;
+    IBOutlet UIImageView *_thumbnailView;
+    IBOutlet UILabel *_titleLabel;
+    IBOutlet UILabel *_authorLabel;
 }
 
-@property (retain) UITextView *textView;
 @property (retain) RSSEntry *entry;
+@property (retain) UIScrollView *scrollView;
+@property (retain) UITextView *textView;
+@property (retain) UIImageView *thumbnailView;
+@property (retain) UILabel *titleLabel;
+@property (retain) UILabel *authorLabel;
 
 @end
