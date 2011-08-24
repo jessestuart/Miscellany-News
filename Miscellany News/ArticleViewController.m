@@ -11,15 +11,17 @@
 #import "MBProgressHUD.h"
 #import "UIView+JMNoise.h"
 #import "Constants.h"
+#import "EGOImageLoader.h"
+#import "UIImage+ProportionalFill.h"
 
 @implementation ArticleViewController
 
 @synthesize entry = _entry;
 @synthesize scrollView = _scrollView;
 @synthesize textView = _textView;
-@synthesize thumbnailView = _thumbnailView;
 @synthesize titleLabel = _titleLabel;
-@synthesize authorLabel = _authorLabel;
+@synthesize authorAndDateLabel = _authorAndDateLabel;
+@synthesize categoryLabel = _categoryLabel;
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -34,28 +36,30 @@
     }
     else 
     {
-        _textView.text = _entry.text;  /* (nonatomic, copy) */
-        _textView.backgroundColor = [UIColor clearColor];
-        _textView.editable = FALSE;
-        _textView.font = [UIFont fontWithName:@"Helvetica" size:15.0];
-        _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
-        [_scrollView addSubview:_textView];
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        df.dateStyle = NSDateFormatterMediumStyle;
         
+        self.textView.text = _entry.text;
+        self.titleLabel.text = _entry.title;
+        self.authorAndDateLabel.text = [NSString stringWithFormat:@"%@– %@", _entry.author, [df stringFromDate:_entry.pubDate]];
+        self.categoryLabel.text = _entry.category;
+        
+        [_textView setScrollEnabled:NO];
+        [_scrollView setScrollEnabled:YES];       
         CGRect frame = _textView.frame;
         frame.size.height = _textView.contentSize.height;
         _textView.frame = frame;
-        _scrollView.contentSize = CGSizeMake(frame.size.width, frame.size.height + 143);
+        _scrollView.contentSize = CGSizeMake(frame.size.width, frame.size.height + 50);
         
-        [_textView setScrollEnabled:NO];
-        [_scrollView setScrollEnabled:YES];
+        [_scrollView scrollRectToVisible:CGRectMake(0, 0, 320, 320) animated:NO];
     }
 }
 
-- (void) viewWillDisappear:(BOOL)animated
+-(void) viewDidDisappear:(BOOL)animated
 {
-    // Removes progress indicator if found
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     _textView.text = nil;
+    _scrollView.contentSize = CGSizeMake(320.0, 10.0);
 }
 
 - (void)articleTextParsedForEntry:(RSSEntry *)entry
@@ -98,18 +102,13 @@
     
     self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     
-    _textView = [[UITextView alloc] initWithFrame:CGRectMake(15.0, 150.0, 290.0, 266.0)];
     _textView.backgroundColor = [UIColor clearColor];
+    _textView.editable = FALSE;
+    _textView.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
+    _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
     
-    
-    
-    
-//    _textView.editable = FALSE;
-//    _textView.text = nil;
-//
-////    _textView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-//    _textView.font = [UIFont fontWithName:@"Helvetica" size:15.0];
-//    _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
+    _textView.editable = FALSE;
+    _textView.text = nil;
 }
 
 - (void)viewDidUnload

@@ -24,6 +24,7 @@
     UIImage *_thumbnail;
 }
 
+@property (copy) NSString *category;
 @property (copy) NSString *guid;
 @property (copy) NSString *author;
 @property (copy) NSString *title;

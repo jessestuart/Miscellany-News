@@ -21,6 +21,7 @@
 @synthesize text = _text;
 @synthesize thumbnail = _thumbnail;
 @synthesize thumbnailURL = _thumbnailURL;
+@synthesize category = _category;
 
 - (id)initWithArticleTitle:(NSString *)articleTitle 
                 articleUrl:(NSString *)articleUrl 

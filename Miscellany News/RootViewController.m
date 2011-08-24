@@ -96,14 +96,21 @@
     // Recurse over all the RSS items in the feed
     for (CXMLElement *item in [channel elementsForName:@"item"])
     {
+        /*
+         *  NOTE: lot of weird hackery in here to deal with the messy RSS
+         */
+        NSString *title = [[item elementForName:@"title"] stringByFlatteningHTML];
+        NSString *author = [[[[item elementForName:@"author"] substringFromIndex:1] 
+                             stringByReplacingOccurrencesOfString:@" and " withString:@" & "]
+                            stringByReplacingOccurrencesOfString:@"the " withString:@""];
+        NSString *link = [item elementForName:@"link"];
+        NSString *summary = [[[item elementForName:@"description"] stringByRemovingLeadingWhitespace] stringByFlatteningHTML];
+        NSDate *pubDate = [pubDateFormatter dateFromString:[item elementForName:@"pubDate"]];
+        NSString *guid = [item elementForName:@"guid"];
+        NSString *category = [item elementForName:@"category"];
+        
         // Allocate a new RSSEntry from feed info & add to unsorted entries
-        RSSEntry *entry = [[RSSEntry alloc] initWithTitle:[[item elementForName:@"title"] stringByFlatteningHTML]
-                                                     link:[item elementForName:@"link"]
-                                                   author:[item elementForName:@"author"]
-                                                  summary:[[[item elementForName:@"description"] stringByRemovingLeadingWhitespace] stringByFlatteningHTML]
-                                                  pubDate:[pubDateFormatter dateFromString:[item elementForName:@"pubDate"]]
-                                                     guid:[item elementForName:@"guid"] 
-                                                 category:[item elementForName:@"category"]];
+        RSSEntry *entry = [[RSSEntry alloc] initWithTitle:title link:link author:author summary:summary pubDate:pubDate guid:guid category:category];
         JSAssert(entry != nil, @"Error allocating entry");
         [unsortedEntries addObject:entry];
         

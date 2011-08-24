@@ -16,16 +16,16 @@
     RSSEntry *_entry;
     IBOutlet UIScrollView *_scrollView;
     IBOutlet UITextView *_textView;
-    IBOutlet UIImageView *_thumbnailView;
     IBOutlet UILabel *_titleLabel;
-    IBOutlet UILabel *_authorLabel;
+    IBOutlet UILabel *_authorAndDateLabel;
+    IBOutlet UILabel *_categoryLabel;
 }
 
 @property (retain) RSSEntry *entry;
 @property (retain) UIScrollView *scrollView;
 @property (retain) UITextView *textView;
-@property (retain) UIImageView *thumbnailView;
 @property (retain) UILabel *titleLabel;
-@property (retain) UILabel *authorLabel;
+@property (retain) UILabel *authorAndDateLabel;
+@property (retain) UILabel *categoryLabel;
 
 @end
