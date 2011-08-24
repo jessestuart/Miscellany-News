@@ -10,26 +10,29 @@
 
 @interface RSSEntry : NSObject
 {
-    NSString *_articleTitle; // title
-    NSString *_articleUrl; // link
+    // Set on initialization
+    NSString *_title;
+    NSString *_link;
     NSString *_author;
-    NSString *_articleSummary; // summary
-    NSDate *_articleDate; // pubDate
+    NSString *_summary;
+    NSDate *_pubDate;
     NSString *_guid;
     NSString *_category;
-
-    NSString *_articleText; //text
-    UIImage *_image; // thumbnail
+    // Set later
+    NSString *_text;
+    NSString *_thumbnailURL;
+    UIImage *_thumbnail;
 }
 
 @property (copy) NSString *guid;
 @property (copy) NSString *author;
-@property (copy) NSString *articleTitle;
-@property (copy) NSString *articleUrl;
-@property (copy) NSDate *articleDate;
-@property (copy) NSString *articleSummary;
-@property (retain) NSString *articleText;
-@property (retain) UIImage *image;
+@property (copy) NSString *title;
+@property (copy) NSString *link;
+@property (copy) NSDate *pubDate;
+@property (copy) NSString *summary;
+@property (retain) NSString *text;
+@property (retain) UIImage *thumbnail;
+@property (copy) NSString *thumbnailURL;
 
 - (id) initWithArticleTitle:(NSString *)articleTitle
                  articleUrl:(NSString *)articleUrl

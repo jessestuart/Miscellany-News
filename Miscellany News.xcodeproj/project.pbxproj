@@ -45,19 +45,16 @@
 		D51626E913F86C7D00BDB710 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D51626E813F86C7D00BDB710 /* RootViewController.m */; };
 		D51626EC13F86C7D00BDB710 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D51626EA13F86C7D00BDB710 /* RootViewController.xib */; };
 		D516274013F88F9000BDB710 /* RSSEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D516273F13F88F9000BDB710 /* RSSEntry.m */; };
-		D51627BC13F8B98A00BDB710 /* NSArray+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627BB13F8B98A00BDB710 /* NSArray+Extras.m */; };
-		D51627CF13F8B9F100BDB710 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627C113F8B9F100BDB710 /* GTMNSString+HTML.m */; };
-		D51627D013F8B9F100BDB710 /* NSDate+InternetDateTime.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627C313F8B9F100BDB710 /* NSDate+InternetDateTime.m */; };
-		D51627D113F8B9F100BDB710 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627C513F8B9F100BDB710 /* NSString+HTML.m */; };
-		D51627D213F8B9F100BDB710 /* NSString+XMLEntities.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627C713F8B9F100BDB710 /* NSString+XMLEntities.m */; };
-		D51627D313F8B9F100BDB710 /* MWFeedInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627C913F8B9F100BDB710 /* MWFeedInfo.m */; };
-		D51627D413F8B9F100BDB710 /* MWFeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627CB13F8B9F100BDB710 /* MWFeedItem.m */; };
-		D51627D513F8B9F100BDB710 /* MWFeedParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627CD13F8B9F100BDB710 /* MWFeedParser.m */; };
 		D51627E013F8C16D00BDB710 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627DB13F8C16D00BDB710 /* TFHpple.m */; };
 		D51627E113F8C16D00BDB710 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627DD13F8C16D00BDB710 /* TFHppleElement.m */; };
 		D51627E213F8C16D00BDB710 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627DF13F8C16D00BDB710 /* XPathQuery.m */; };
 		D51627E513F8C2CE00BDB710 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D51627E413F8C2CE00BDB710 /* libxml2.2.dylib */; };
 		D51627EF13F8C9BD00BDB710 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D51627EE13F8C9BD00BDB710 /* MBProgressHUD.m */; };
+		D517A45C1404B96400E8CD20 /* CXMLElement+JDS.m in Sources */ = {isa = PBXBuildFile; fileRef = D517A4531404B96400E8CD20 /* CXMLElement+JDS.m */; };
+		D517A45D1404B96400E8CD20 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = D517A4551404B96400E8CD20 /* GTMNSString+HTML.m */; };
+		D517A45E1404B96400E8CD20 /* NSArray+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = D517A4571404B96400E8CD20 /* NSArray+Extras.m */; };
+		D517A45F1404B96400E8CD20 /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = D517A4591404B96400E8CD20 /* NSString+HTML.m */; };
+		D517A4601404B96400E8CD20 /* NSString+JDS.m in Sources */ = {isa = PBXBuildFile; fileRef = D517A45B1404B96400E8CD20 /* NSString+JDS.m */; };
 		D5204FAD13F9460A008974FF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5204FAC13F9460A008974FF /* QuartzCore.framework */; };
 		D52F1540140173F000E5C1D2 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = D52F153B140173F000E5C1D2 /* background.png */; };
 		D52F1541140173F000E5C1D2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D52F153C140173F000E5C1D2 /* Default.png */; };
@@ -67,9 +64,7 @@
 		D5AAE35F13FC0F1F0056EE4D /* UIView+JMNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AAE35E13FC0F1F0056EE4D /* UIView+JMNoise.m */; };
 		D5AAE36313FC0FB10056EE4D /* ArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AAE36113FC0FB10056EE4D /* ArticleViewController.m */; };
 		D5AAE36413FC0FB10056EE4D /* ArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AAE36213FC0FB10056EE4D /* ArticleViewController.xib */; };
-		D5AAE36713FC11920056EE4D /* NSString+JDS.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AAE36613FC11920056EE4D /* NSString+JDS.m */; };
 		D5C20A9213FEBE0900420DFC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D5C20A9113FEBE0900420DFC /* Constants.m */; };
-		D5C20D1E1404492500AFBE34 /* CXMLElement+(JDS).m in Sources */ = {isa = PBXBuildFile; fileRef = D5C20D1D1404492500AFBE34 /* CXMLElement+(JDS).m */; };
 		D5F06BA314009CF400C1BD77 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F06B9714009CF400C1BD77 /* EGOCache.m */; };
 		D5F06BA514009CF400C1BD77 /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F06B9D14009CF400C1BD77 /* EGOImageLoadConnection.m */; };
 		D5F06BA614009CF400C1BD77 /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F06B9F14009CF400C1BD77 /* EGOImageLoader.m */; };
@@ -150,24 +145,6 @@
 		D51626EB13F86C7D00BDB710 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
 		D516273E13F88F9000BDB710 /* RSSEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSSEntry.h; path = "Miscellany News/RSS Model/RSSEntry.h"; sourceTree = "<group>"; };
 		D516273F13F88F9000BDB710 /* RSSEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSSEntry.m; path = "Miscellany News/RSS Model/RSSEntry.m"; sourceTree = "<group>"; };
-		D51627BA13F8B98A00BDB710 /* NSArray+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+Extras.h"; path = "Miscellany News/NSArray+Extras.h"; sourceTree = "<group>"; };
-		D51627BB13F8B98A00BDB710 /* NSArray+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Extras.m"; path = "Miscellany News/NSArray+Extras.m"; sourceTree = "<group>"; };
-		D51627BF13F8B9F100BDB710 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
-		D51627C013F8B9F100BDB710 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GTMNSString+HTML.h"; sourceTree = "<group>"; };
-		D51627C113F8B9F100BDB710 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GTMNSString+HTML.m"; sourceTree = "<group>"; };
-		D51627C213F8B9F100BDB710 /* NSDate+InternetDateTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+InternetDateTime.h"; sourceTree = "<group>"; };
-		D51627C313F8B9F100BDB710 /* NSDate+InternetDateTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+InternetDateTime.m"; sourceTree = "<group>"; };
-		D51627C413F8B9F100BDB710 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
-		D51627C513F8B9F100BDB710 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
-		D51627C613F8B9F100BDB710 /* NSString+XMLEntities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+XMLEntities.h"; sourceTree = "<group>"; };
-		D51627C713F8B9F100BDB710 /* NSString+XMLEntities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMLEntities.m"; sourceTree = "<group>"; };
-		D51627C813F8B9F100BDB710 /* MWFeedInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWFeedInfo.h; sourceTree = "<group>"; };
-		D51627C913F8B9F100BDB710 /* MWFeedInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWFeedInfo.m; sourceTree = "<group>"; };
-		D51627CA13F8B9F100BDB710 /* MWFeedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWFeedItem.h; sourceTree = "<group>"; };
-		D51627CB13F8B9F100BDB710 /* MWFeedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWFeedItem.m; sourceTree = "<group>"; };
-		D51627CC13F8B9F100BDB710 /* MWFeedParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWFeedParser.h; sourceTree = "<group>"; };
-		D51627CD13F8B9F100BDB710 /* MWFeedParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWFeedParser.m; sourceTree = "<group>"; };
-		D51627CE13F8B9F100BDB710 /* MWFeedParser_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWFeedParser_Private.h; sourceTree = "<group>"; };
 		D51627DA13F8C16D00BDB710 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		D51627DB13F8C16D00BDB710 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		D51627DC13F8C16D00BDB710 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -178,6 +155,16 @@
 		D51627EA13F8C80100BDB710 /* RSSArticleParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSSArticleParser.h; path = "Miscellany News/RSS Model/RSSArticleParser.h"; sourceTree = "<group>"; };
 		D51627ED13F8C9BD00BDB710 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		D51627EE13F8C9BD00BDB710 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		D517A4521404B96400E8CD20 /* CXMLElement+JDS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CXMLElement+JDS.h"; path = "Miscellany News/Categories/CXMLElement+JDS.h"; sourceTree = "<group>"; };
+		D517A4531404B96400E8CD20 /* CXMLElement+JDS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CXMLElement+JDS.m"; path = "Miscellany News/Categories/CXMLElement+JDS.m"; sourceTree = "<group>"; };
+		D517A4541404B96400E8CD20 /* GTMNSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GTMNSString+HTML.h"; path = "Miscellany News/Categories/GTMNSString+HTML.h"; sourceTree = "<group>"; };
+		D517A4551404B96400E8CD20 /* GTMNSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "GTMNSString+HTML.m"; path = "Miscellany News/Categories/GTMNSString+HTML.m"; sourceTree = "<group>"; };
+		D517A4561404B96400E8CD20 /* NSArray+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+Extras.h"; path = "Miscellany News/Categories/NSArray+Extras.h"; sourceTree = "<group>"; };
+		D517A4571404B96400E8CD20 /* NSArray+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Extras.m"; path = "Miscellany News/Categories/NSArray+Extras.m"; sourceTree = "<group>"; };
+		D517A4581404B96400E8CD20 /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+HTML.h"; path = "Miscellany News/Categories/NSString+HTML.h"; sourceTree = "<group>"; };
+		D517A4591404B96400E8CD20 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Miscellany News/Categories/NSString+HTML.m"; sourceTree = "<group>"; };
+		D517A45A1404B96400E8CD20 /* NSString+JDS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+JDS.h"; path = "Miscellany News/Categories/NSString+JDS.h"; sourceTree = "<group>"; };
+		D517A45B1404B96400E8CD20 /* NSString+JDS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+JDS.m"; path = "Miscellany News/Categories/NSString+JDS.m"; sourceTree = "<group>"; };
 		D5204FAC13F9460A008974FF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D52F153B140173F000E5C1D2 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = "Miscellany News/Images/background.png"; sourceTree = "<group>"; };
 		D52F153C140173F000E5C1D2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = "Miscellany News/Images/Default.png"; sourceTree = "<group>"; };
@@ -189,12 +176,8 @@
 		D5AAE36013FC0FB10056EE4D /* ArticleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArticleViewController.h; path = "Miscellany News/ArticleViewController.h"; sourceTree = "<group>"; };
 		D5AAE36113FC0FB10056EE4D /* ArticleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArticleViewController.m; path = "Miscellany News/ArticleViewController.m"; sourceTree = "<group>"; };
 		D5AAE36213FC0FB10056EE4D /* ArticleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ArticleViewController.xib; path = "Miscellany News/ArticleViewController.xib"; sourceTree = "<group>"; };
-		D5AAE36513FC11920056EE4D /* NSString+JDS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+JDS.h"; path = "Miscellany News/NSString+JDS.h"; sourceTree = "<group>"; };
-		D5AAE36613FC11920056EE4D /* NSString+JDS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+JDS.m"; path = "Miscellany News/NSString+JDS.m"; sourceTree = "<group>"; };
 		D5C20A9013FEBE0900420DFC /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = "Miscellany News/Constants.h"; sourceTree = "<group>"; };
 		D5C20A9113FEBE0900420DFC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = "Miscellany News/Constants.m"; sourceTree = "<group>"; };
-		D5C20D1C1404492500AFBE34 /* CXMLElement+(JDS).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CXMLElement+(JDS).h"; path = "Miscellany News/CXMLElement+(JDS).h"; sourceTree = "<group>"; };
-		D5C20D1D1404492500AFBE34 /* CXMLElement+(JDS).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CXMLElement+(JDS).m"; path = "Miscellany News/CXMLElement+(JDS).m"; sourceTree = "<group>"; };
 		D5F06B9614009CF400C1BD77 /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
 		D5F06B9714009CF400C1BD77 /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
 		D5F06B9C14009CF400C1BD77 /* EGOImageLoadConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageLoadConnection.h; sourceTree = "<group>"; };
@@ -429,46 +412,18 @@
 		D516276913F8ACE300BDB710 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				D5AAE36513FC11920056EE4D /* NSString+JDS.h */,
-				D5AAE36613FC11920056EE4D /* NSString+JDS.m */,
-				D51627BA13F8B98A00BDB710 /* NSArray+Extras.h */,
-				D51627BB13F8B98A00BDB710 /* NSArray+Extras.m */,
-				D5C20D1C1404492500AFBE34 /* CXMLElement+(JDS).h */,
-				D5C20D1D1404492500AFBE34 /* CXMLElement+(JDS).m */,
+				D517A4521404B96400E8CD20 /* CXMLElement+JDS.h */,
+				D517A4531404B96400E8CD20 /* CXMLElement+JDS.m */,
+				D517A4541404B96400E8CD20 /* GTMNSString+HTML.h */,
+				D517A4551404B96400E8CD20 /* GTMNSString+HTML.m */,
+				D517A4561404B96400E8CD20 /* NSArray+Extras.h */,
+				D517A4571404B96400E8CD20 /* NSArray+Extras.m */,
+				D517A4581404B96400E8CD20 /* NSString+HTML.h */,
+				D517A4591404B96400E8CD20 /* NSString+HTML.m */,
+				D517A45A1404B96400E8CD20 /* NSString+JDS.h */,
+				D517A45B1404B96400E8CD20 /* NSString+JDS.m */,
 			);
 			name = Categories;
-			sourceTree = "<group>";
-		};
-		D51627BD13F8B9F100BDB710 /* MWFeedParser */ = {
-			isa = PBXGroup;
-			children = (
-				D51627BE13F8B9F100BDB710 /* Categories */,
-				D51627C813F8B9F100BDB710 /* MWFeedInfo.h */,
-				D51627C913F8B9F100BDB710 /* MWFeedInfo.m */,
-				D51627CA13F8B9F100BDB710 /* MWFeedItem.h */,
-				D51627CB13F8B9F100BDB710 /* MWFeedItem.m */,
-				D51627CC13F8B9F100BDB710 /* MWFeedParser.h */,
-				D51627CD13F8B9F100BDB710 /* MWFeedParser.m */,
-				D51627CE13F8B9F100BDB710 /* MWFeedParser_Private.h */,
-			);
-			name = MWFeedParser;
-			path = "Miscellany News/MWFeedParser";
-			sourceTree = "<group>";
-		};
-		D51627BE13F8B9F100BDB710 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				D51627BF13F8B9F100BDB710 /* GTMDefines.h */,
-				D51627C013F8B9F100BDB710 /* GTMNSString+HTML.h */,
-				D51627C113F8B9F100BDB710 /* GTMNSString+HTML.m */,
-				D51627C213F8B9F100BDB710 /* NSDate+InternetDateTime.h */,
-				D51627C313F8B9F100BDB710 /* NSDate+InternetDateTime.m */,
-				D51627C413F8B9F100BDB710 /* NSString+HTML.h */,
-				D51627C513F8B9F100BDB710 /* NSString+HTML.m */,
-				D51627C613F8B9F100BDB710 /* NSString+XMLEntities.h */,
-				D51627C713F8B9F100BDB710 /* NSString+XMLEntities.m */,
-			);
-			path = Categories;
 			sourceTree = "<group>";
 		};
 		D51627D913F8C16D00BDB710 /* hpple */ = {
@@ -495,7 +450,6 @@
 				D5AAE35C13FC0F1F0056EE4D /* JMNoise */,
 				D51627E613F8C60D00BDB710 /* MBProgressHUD */,
 				D51627D913F8C16D00BDB710 /* hpple */,
-				D51627BD13F8B9F100BDB710 /* MWFeedParser */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -645,14 +599,6 @@
 				D51626E313F86C7D00BDB710 /* Miscellany_News.xcdatamodeld in Sources */,
 				D51626E913F86C7D00BDB710 /* RootViewController.m in Sources */,
 				D516274013F88F9000BDB710 /* RSSEntry.m in Sources */,
-				D51627BC13F8B98A00BDB710 /* NSArray+Extras.m in Sources */,
-				D51627CF13F8B9F100BDB710 /* GTMNSString+HTML.m in Sources */,
-				D51627D013F8B9F100BDB710 /* NSDate+InternetDateTime.m in Sources */,
-				D51627D113F8B9F100BDB710 /* NSString+HTML.m in Sources */,
-				D51627D213F8B9F100BDB710 /* NSString+XMLEntities.m in Sources */,
-				D51627D313F8B9F100BDB710 /* MWFeedInfo.m in Sources */,
-				D51627D413F8B9F100BDB710 /* MWFeedItem.m in Sources */,
-				D51627D513F8B9F100BDB710 /* MWFeedParser.m in Sources */,
 				D51627E013F8C16D00BDB710 /* TFHpple.m in Sources */,
 				D51627E113F8C16D00BDB710 /* TFHppleElement.m in Sources */,
 				D51627E213F8C16D00BDB710 /* XPathQuery.m in Sources */,
@@ -660,7 +606,6 @@
 				D5F0B8CD13FBB2C20004D6F0 /* RSSArticleParser.m in Sources */,
 				D5AAE35F13FC0F1F0056EE4D /* UIView+JMNoise.m in Sources */,
 				D5AAE36313FC0FB10056EE4D /* ArticleViewController.m in Sources */,
-				D5AAE36713FC11920056EE4D /* NSString+JDS.m in Sources */,
 				D5C20A9213FEBE0900420DFC /* Constants.m in Sources */,
 				D5F06BA314009CF400C1BD77 /* EGOCache.m in Sources */,
 				D5F06BA514009CF400C1BD77 /* EGOImageLoadConnection.m in Sources */,
@@ -689,7 +634,11 @@
 				D508934814040172001992B9 /* CXMLNode_PrivateExtensions.m in Sources */,
 				D508934914040172001992B9 /* CXMLNode_XPathExtensions.m in Sources */,
 				D508934A14040172001992B9 /* CTidy.m in Sources */,
-				D5C20D1E1404492500AFBE34 /* CXMLElement+(JDS).m in Sources */,
+				D517A45C1404B96400E8CD20 /* CXMLElement+JDS.m in Sources */,
+				D517A45D1404B96400E8CD20 /* GTMNSString+HTML.m in Sources */,
+				D517A45E1404B96400E8CD20 /* NSArray+Extras.m in Sources */,
+				D517A45F1404B96400E8CD20 /* NSString+HTML.m in Sources */,
+				D517A4601404B96400E8CD20 /* NSString+JDS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

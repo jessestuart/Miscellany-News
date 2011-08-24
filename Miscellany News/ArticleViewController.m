@@ -19,18 +19,18 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
-    if (_entry.articleText == nil) 
+    if (_entry.text == nil) 
     {
         // If article text has yet to be parsed, show an activity indicator
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     } 
-    else if ([_entry.articleText isEqualToString:RSSArticleTextUnavailable])
+    else if ([_entry.text isEqualToString:RSSArticleTextUnavailable])
     {
         _textView.text = @"The text for this article could not be retrieved.";
     }
     else 
     {
-        _textView.text = _entry.articleText;  /* (nonatomic, copy) */
+        _textView.text = _entry.text;  /* (nonatomic, copy) */
     }
 }
 
@@ -48,7 +48,7 @@
     if (entry == self.entry) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             [MBProgressHUD hideHUDForView:self.view animated:YES]; 
-            _textView.text = entry.articleText;
+            _textView.text = entry.text;
         }];
     }
 }

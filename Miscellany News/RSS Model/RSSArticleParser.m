@@ -34,7 +34,7 @@ NSString * const RSSArticleTextUnavailable = @"rss_article_text_unavailable";
     
     // Load HTML data from article URL & parse with TFHpple
     NSError *error;
-    NSString *htmlString = [NSString stringWithContentsOfURL:[NSURL URLWithString:[_entry articleUrl]] 
+    NSString *htmlString = [NSString stringWithContentsOfURL:[NSURL URLWithString:[_entry link]] 
                                                     encoding:NSUTF8StringEncoding 
                                                        error:&error];
     
@@ -54,10 +54,10 @@ NSString * const RSSArticleTextUnavailable = @"rss_article_text_unavailable";
     
     if (s == nil) 
     {
-        _entry.articleText = RSSArticleTextUnavailable;
+        _entry.text = RSSArticleTextUnavailable;
     }
     
-    _entry.articleText = s; // retain
+    [_entry setText:s]; // retain 
     
     [_delegate articleTextParsedForEntry:_entry];
     

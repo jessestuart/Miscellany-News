@@ -8,7 +8,6 @@
 
 #import "RootViewController.h"
 #import "ArticleViewController.h"
-
 /* RSS */
 #import "RSSEntry.h"
 #import "RSSArticleParser.h"
@@ -16,8 +15,8 @@
 #import "NSArray+Extras.h" 
 /* XML parsing */
 #import "TouchXML.h"
-#import "CXMLElement+(JDS).h"
-/* View */
+#import "CXMLElement+JDS.h"
+/* View & image */
 #import "MBProgressHUD.h"
 #import "UIView+JMNoise.h"
 #import "UIImage+ProportionalFill.h"
@@ -26,16 +25,15 @@
 /* Miscellaneous convenience methods */
 #import "NSString+JDS.h"
 
-// WILL BE REMOVED
-#import "MWFeedParser.h"
-
 @interface RootViewController ()
-    @property (retain) NSMutableArray *unsortedEntries;
+- (void)sortEntries:(NSMutableArray *)unsortedEntries;
+- (void)parseArticleTextForEntry:(RSSEntry *)entry;
+- (void)fetchThumbnailForEntry:(RSSEntry *)entry;
 @end
 
 @implementation RootViewController
 
-@synthesize unsortedEntries;
+//@synthesize unsortedEntries;
 @synthesize allEntries = _allEntries;
 @synthesize queue = _queue;
 @synthesize articleViewController = _articleViewController;
@@ -47,24 +45,15 @@
 
 - (void)refreshFeed
 {
-    NSLog(@"refresh feed");
-    
     // Pull feed URL from info plist, initialize ASIHTTP request, and add to queue
     NSURL *feedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:kFeedURL]];
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:feedURL];
     request.delegate = self;
     [_queue addOperation:request];
-    NSLog(@"after adding operation");
-}
-
-- (void)requestStarted:(ASIHTTPRequest *)request
-{
-    NSLog(@"request started");
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
-    NSLog(@"request failed");
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network error" 
                                                     message:@"Failed to retrieve feed." 
                                                    delegate:nil 
@@ -76,22 +65,29 @@
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    NSLog(@"request finished");
+    // Autorelease pool
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    // Working array for unsorted RSS entries
+    NSMutableArray *unsortedEntries = [[NSMutableArray alloc] init];
+    
+    // Initialize XML document with feed data
     NSError *error = nil;
     CXMLDocument *document = [[CXMLDocument alloc] initWithData:[request responseData] options:0 error:&error];
     JSAssert(error == nil, @"Error creating document from feed");
     
-    CXMLElement *root = [document rootElement];
-    CXMLElement *channel = [[root elementsForName:@"channel"] lastObject];
+    // We can use the channel element to get to all of the RSS items
+    CXMLElement *channel = [[[document rootElement] elementsForName:@"channel"] lastObject];
     
+    // Initialize date formatter. We'll use this to convert the pubDate into an NSDate object
     NSDateFormatter *pubDateFormatter = [[NSDateFormatter alloc] init];
-    [pubDateFormatter setLocale:[[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"] autorelease]];
+    NSLocale *USEnglishLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [pubDateFormatter setLocale:USEnglishLocale];
     [pubDateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
     
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
+    // Recurse over all the RSS items in the feed
     for (CXMLElement *item in [channel elementsForName:@"item"])
     {
+        // Allocate a new RSSEntry from feed info & add to unsorted entries
         RSSEntry *entry = [[RSSEntry alloc] initWithTitle:[[item elementForName:@"title"] stringByFlatteningHTML]
                                                      link:[item elementForName:@"link"]
                                                    author:[item elementForName:@"author"]
@@ -101,10 +97,42 @@
                                                  category:[item elementForName:@"category"]];
         JSAssert(entry != nil, @"Error allocating entry");
         [unsortedEntries addObject:entry];
+        
+        // Parse article text in background
+        [self parseArticleTextForEntry:entry];
+        // Fetch thumbnail for entry
+        NSString *urlString = [[[[item elementsForName:@"thumbnail"] lastObject] attributeForName:@"url"] stringValue];
+        entry.thumbnailURL = urlString;
+        entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:urlString] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];
+        
+        [entry release];
     }
     
-    [pool drain];
+    [self sortEntries:unsortedEntries];
     
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    [document release];
+    [USEnglishLocale release];
+    [pubDateFormatter release];
+    [unsortedEntries release]; 
+    [pool drain];
+}
+
+- (void)parseArticleTextForEntry:(RSSEntry *)entry
+{
+    RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
+    articleParser.delegate = _articleViewController;
+    
+    [_queue addOperationWithBlock:^{
+        [articleParser parseArticleText];
+        articleParser.delegate = nil;
+        [articleParser release];
+    }];
+}
+
+- (void)sortEntries:(NSMutableArray *)unsortedEntries
+{
     for (RSSEntry *entry in unsortedEntries) 
     {
         // Sort by date
@@ -112,9 +140,8 @@
                                             sortedUsingBlock:^(id a, id b) {
                                                 RSSEntry *entry1 = (RSSEntry *) a;
                                                 RSSEntry *entry2 = (RSSEntry *) b;
-                                                return [entry1.articleDate compare:entry2.articleDate];
+                                                return [entry1.pubDate compare:entry2.pubDate];
                                             }];
-        
         // Add to array
         [_allEntries insertObject:entry atIndex:insertIdx];
         [entry release];
@@ -123,7 +150,6 @@
         NSArray *idxPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]];
         [self.tableView insertRowsAtIndexPaths:idxPaths withRowAnimation:UITableViewRowAnimationRight];
     }
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 /**
@@ -131,22 +157,6 @@
  */
 - (void)parseFeed
 {
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        // Create feed parser and pass the URL of the feed (defined in Constants.h)
-        NSURL *feedURL = [[[NSBundle mainBundle] infoDictionary] valueForKey:kFeedURL];
-        MWFeedParser *feedParser = [[MWFeedParser alloc] initWithFeedURL:feedURL];
-        // Delegate must conform to MWFeedParserDelegate
-//        feedParser.delegate = self;
-        
-        // Parse the feeds info (title, link) and all feed items
-        feedParser.feedParseType = ParseTypeItemsOnly;
-        // Connection type
-        feedParser.connectionType = ConnectionTypeSynchronously;
-        // Begin parsing
-        [feedParser parse];
-        
-        [feedParser release];
-    }];
 }
 
 /**
@@ -156,26 +166,6 @@
  */
 -(void)feedParser:(MWFeedParser *)parser didParseFeedItem:(MWFeedItem *)item
 {
-    // Create RSSEntry from parsed item and add to array
-    RSSEntry *entry = [[RSSEntry alloc] initWithArticleTitle:item.title
-                                                  articleUrl:item.link 
-                                                 articleDate:item.date
-                                              articleSummary:[item.summary substringBetweenString:@"<p> " andString:@"</p>" regex:NO]
-                                                 articleText:nil];
-    
-    [unsortedEntries addObject:entry];
-    
-    NSString *imageURLString = [item.summary substringBetweenString:@"<img src=" andString:@">" regex:NO];
-    entry.image = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:imageURLString] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];
-    
-    
-    
-    [_queue addOperationWithBlock:^{
-        RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
-        articleParser.delegate = _articleViewController;
-        [articleParser parseArticleText];
-        [articleParser release];        
-    }];
 }
 
 /**
@@ -185,30 +175,6 @@
  */
 -(void)feedParserDidFinish:(MWFeedParser *)parser
 {
-    for (RSSEntry *entry in unsortedEntries) 
-    {
-        // Sort by date
-        int insertIdx = [_allEntries indexForInsertingObject:[entry retain]
-                                            sortedUsingBlock:^(id a, id b) {
-                                                RSSEntry *entry1 = (RSSEntry *) a;
-                                                RSSEntry *entry2 = (RSSEntry *) b;
-                                                return [entry1.articleDate compare:entry2.articleDate];
-                                            }];
-        
-        // Add to array
-        [_allEntries insertObject:entry atIndex:insertIdx];
-        [entry release];
-        
-        // Add to table view
-        NSArray *idxPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]];
-        [self.tableView insertRowsAtIndexPaths:idxPaths withRowAnimation:UITableViewRowAnimationRight];
-    }
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-}
-
--(void)articleTextParsedForEntry:(RSSEntry *)entry
-{
-    // Do something
 }
 
 #pragma mark View lifecycle
@@ -238,7 +204,6 @@
     
     // Allocate ivars
     self.allEntries = [NSMutableArray array];
-    self.unsortedEntries = [NSMutableArray array];
     self.queue = [[NSOperationQueue alloc] init];
 
     // Show activity indicator
@@ -298,9 +263,6 @@
     [_allEntries release];
     _allEntries = nil;
     
-    [unsortedEntries release];
-    unsortedEntries = nil;
-    
     [_queue release];
     _queue = nil;
     
@@ -348,16 +310,16 @@
     RSSEntry *entry = [[_allEntries objectAtIndex:indexPath.row] retain];
     
     cell.textLabel.font = [UIFont fontWithName:@"Palatino-Bold" size:16.0];
-    cell.textLabel.text = entry.articleTitle;
+    cell.textLabel.text = entry.title;
     cell.textLabel.numberOfLines = 2;
     
 //    cell.imageView.image = entry.image;
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:entry.image];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:entry.thumbnail];
     cell.accessoryView = imageView;
     [imageView release];
 
     cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:13.0];
-    cell.detailTextLabel.text = entry.articleSummary;
+    cell.detailTextLabel.text = entry.summary;
     cell.detailTextLabel.numberOfLines = 2;
     
     [entry release];
