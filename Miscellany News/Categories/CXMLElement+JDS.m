@@ -6,7 +6,7 @@
 //  Copyright 2011 Vassar College. All rights reserved.
 //
 
-#import "CXMLElement+(JDS).h"
+#import "CXMLElement+JDS.h"
 
 @implementation CXMLElement (JDS)
 

@@ -165,6 +165,7 @@
 		D517A4591404B96400E8CD20 /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+HTML.m"; path = "Miscellany News/Categories/NSString+HTML.m"; sourceTree = "<group>"; };
 		D517A45A1404B96400E8CD20 /* NSString+JDS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+JDS.h"; path = "Miscellany News/Categories/NSString+JDS.h"; sourceTree = "<group>"; };
 		D517A45B1404B96400E8CD20 /* NSString+JDS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+JDS.m"; path = "Miscellany News/Categories/NSString+JDS.m"; sourceTree = "<group>"; };
+		D517A4621404BBC700E8CD20 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMDefines.h; path = "Miscellany News/Categories/GTMDefines.h"; sourceTree = "<group>"; };
 		D5204FAC13F9460A008974FF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D52F153B140173F000E5C1D2 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = "Miscellany News/Images/background.png"; sourceTree = "<group>"; };
 		D52F153C140173F000E5C1D2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = "Miscellany News/Images/Default.png"; sourceTree = "<group>"; };
@@ -412,6 +413,7 @@
 		D516276913F8ACE300BDB710 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				D517A4621404BBC700E8CD20 /* GTMDefines.h */,
 				D517A4521404B96400E8CD20 /* CXMLElement+JDS.h */,
 				D517A4531404B96400E8CD20 /* CXMLElement+JDS.m */,
 				D517A4541404B96400E8CD20 /* GTMNSString+HTML.h */,

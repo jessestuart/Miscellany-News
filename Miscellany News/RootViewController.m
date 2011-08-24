@@ -16,7 +16,7 @@
 /* XML parsing */
 #import "TouchXML.h"
 #import "CXMLElement+JDS.h"
-/* View & image */
+/* View */
 #import "MBProgressHUD.h"
 #import "UIView+JMNoise.h"
 #import "UIImage+ProportionalFill.h"
@@ -25,10 +25,10 @@
 /* Miscellaneous convenience methods */
 #import "NSString+JDS.h"
 
+
 @interface RootViewController ()
 - (void)sortEntries:(NSMutableArray *)unsortedEntries;
 - (void)parseArticleTextForEntry:(RSSEntry *)entry;
-- (void)fetchThumbnailForEntry:(RSSEntry *)entry;
 @end
 
 @implementation RootViewController
@@ -43,6 +43,9 @@
 
 #pragma mark Feed parsing
 
+/**
+ *  Initialize an HTTP request for the RSS feed data
+ */
 - (void)refreshFeed
 {
     // Pull feed URL from info plist, initialize ASIHTTP request, and add to queue
@@ -52,6 +55,9 @@
     [_queue addOperation:request];
 }
 
+/**
+ *  ASIHTTPRequestDelegate callback. Display a "Failed to retrieve feed" alert view.
+ */
 - (void)requestFailed:(ASIHTTPRequest *)request
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network error" 
@@ -63,6 +69,9 @@
     [alert release], alert = nil;
 }
 
+/**
+ *  ASIHTTPRequestDelegate callback. 
+ */
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     // Autorelease pool
@@ -100,7 +109,7 @@
         
         // Parse article text in background
         [self parseArticleTextForEntry:entry];
-        // Fetch thumbnail for entry
+        // Fetch thumbnail
         NSString *urlString = [[[[item elementsForName:@"thumbnail"] lastObject] attributeForName:@"url"] stringValue];
         entry.thumbnailURL = urlString;
         entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:urlString] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];
@@ -150,31 +159,6 @@
         NSArray *idxPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]];
         [self.tableView insertRowsAtIndexPaths:idxPaths withRowAnimation:UITableViewRowAnimationRight];
     }
-}
-
-/**
- *  Called when view is loaded. Pulls RSS feed information.
- */
-- (void)parseFeed
-{
-}
-
-/**
- *  MWFeedParserDelegate callback when an article is parsed. We use this
- *  info to initialize a new RSSEntry, add it to an error, and fetch the
- *  article's text in the background.
- */
--(void)feedParser:(MWFeedParser *)parser didParseFeedItem:(MWFeedItem *)item
-{
-}
-
-/**
- *  MWFeedParserDelegate callback when it feed has been fully parsed.
- *  We sort the articles by date, add to allEntries and insert in table
- *  view.
- */
--(void)feedParserDidFinish:(MWFeedParser *)parser
-{
 }
 
 #pragma mark View lifecycle

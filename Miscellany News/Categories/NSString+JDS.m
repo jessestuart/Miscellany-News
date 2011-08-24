@@ -31,23 +31,14 @@
         endIdx = endRange.location;
     }
 
-    NSString *res = [s substringWithRange:NSMakeRange(beginIdx, endIdx-beginIdx)];
+    s = [s substringWithRange:NSMakeRange(beginIdx, endIdx-beginIdx)];
     
-    return ([res length] > 0) ? res : nil;
-}
-
-- (NSString *)stringBetweenPTags
-{
-    NSString *s = [[self copy] autorelease];
-    NSRange begin = [s rangeOfString:@"<p>"];
-    NSUInteger beginIdx = begin.location + begin.length + 1;
-    NSUInteger endIdx = [s rangeOfString:@"</p>"].location;
-    return [s substringWithRange:NSMakeRange(beginIdx, endIdx-beginIdx)];
+    return ([s length] > 0) ? s : nil;
 }
 
 - (NSString *)stringByRemovingLeadingWhitespace
 {
-    if ([self length] > 20) 
+    if ([self length] > 20) // hack to prevent weird error
     {
         NSString *s = [[self copy] autorelease];
         NSRange r = [s rangeOfString:@"[a-zA-Z0-9\"]" options:NSRegularExpressionSearch];
@@ -58,13 +49,7 @@
 
 - (NSString *)stringByFlatteningHTML
 {
-    NSRange r;
-    NSString *s = [[self copy] autorelease];
-    while((r = [s rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound)
-    {
-        s = [s stringByReplacingCharactersInRange:r withString:@""];
-    }
-    return s;
+    return [self stringByStrippingMatchingRegex:@"<[^>]+>"];
 }
 
 /**
