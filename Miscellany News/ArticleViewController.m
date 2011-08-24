@@ -106,8 +106,6 @@
     _textView.editable = FALSE;
     _textView.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
     _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
-    
-    _textView.editable = FALSE;
     _textView.text = nil;
 }
 
