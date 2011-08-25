@@ -33,14 +33,10 @@
 
 @implementation RootViewController
 
-//@synthesize unsortedEntries;
-@synthesize allEntries = _allEntries;
-@synthesize queue = _queue;
-@synthesize articleViewController = _articleViewController;
-
 @synthesize fetchedResultsController = __fetchedResultsController;
 @synthesize managedObjectContext = __managedObjectContext;
 
+#pragma mark -
 #pragma mark Feed parsing
 
 /**
@@ -96,9 +92,7 @@
     // Recurse over all the RSS items in the feed
     for (CXMLElement *item in [channel elementsForName:@"item"])
     {
-        /*
-         *  NOTE: lot of weird hackery in here to deal with the messy RSS
-         */
+        /* NOTE: lot of weird hackery in here to deal with the messy RSS */
         NSString *title = [[item elementForName:@"title"] stringByFlatteningHTML];
         NSString *author = [[[[item elementForName:@"author"] substringFromIndex:1] 
                              stringByReplacingOccurrencesOfString:@" and " withString:@" & "]
@@ -117,9 +111,8 @@
         // Parse article text in background
         [self parseArticleTextForEntry:entry];
         // Fetch thumbnail
-        NSString *urlString = [[[[item elementsForName:@"thumbnail"] lastObject] attributeForName:@"url"] stringValue];
-        entry.thumbnailURL = urlString;
-        entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:urlString] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];
+        entry.thumbnailURL = [[[[item elementsForName:@"thumbnail"] lastObject] attributeForName:@"url"] stringValue];
+        entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:entry.thumbnailURL] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];
         
         [entry release];
     }
@@ -138,9 +131,8 @@
 - (void)parseArticleTextForEntry:(RSSEntry *)entry
 {
     RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
-    articleParser.delegate = _articleViewController;
-    
     [_queue addOperationWithBlock:^{
+        articleParser.delegate = _articleViewController;
         [articleParser parseArticleText];
         articleParser.delegate = nil;
         [articleParser release];
@@ -168,6 +160,7 @@
     }
 }
 
+#pragma mark -
 #pragma mark View lifecycle
 
 - (void)viewDidLoad
@@ -194,40 +187,43 @@
     self.tableView.rowHeight = 80;
     
     // Allocate ivars
-    self.allEntries = [NSMutableArray array];
-    self.queue = [[NSOperationQueue alloc] init];
+    _allEntries = [[NSMutableArray alloc] init];
+    _queue = [[NSOperationQueue alloc] init];
 
     // Show activity indicator
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
-    if (_articleViewController == nil) {
+    /*
+     * Load ArticleViewController so it can be set as RSSArticleParser's delegate
+     */
+    if (_articleViewController == nil) 
+    {
         _articleViewController = [[[ArticleViewController alloc] initWithNibName:@"ArticleViewController" bundle:[NSBundle mainBundle]] retain];
     }
     
+    /*
+     * Load EGORefreshTableHeaderView
+     */
+    if (_refreshHeaderView == nil) 
+    {
+        EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height) arrowImageName:@"blackArrow.png" textColor:[UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0]];
+        view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+		view.delegate = self;
+		[self.tableView addSubview:view];
+		_refreshHeaderView = view;
+		[view release];
+	}
+    
+    // Update the last update date
+    [_refreshHeaderView refreshLastUpdatedDate];
+    
     // Begin parsing RSS feed
     [self refreshFeed];
-//    [self parseFeed];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
+#pragma mark -
+#pragma mark Memory management
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -240,7 +236,8 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    
+    _refreshHeaderView = nil;
+    _articleViewController = nil;
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
 }
@@ -256,6 +253,9 @@
     
     [_queue release];
     _queue = nil;
+    
+    _refreshHeaderView = nil;
+    _articleViewController = nil;
     
     [super dealloc];
 }
@@ -379,4 +379,63 @@
     [detailViewController release];
 	*/
 }
+
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource{
+	
+	//  should be calling your tableviews data source model to reload
+	//  put here just for demo
+	_reloading = YES;
+	
+}
+
+- (void)doneLoadingTableViewData{
+	
+	//  model should call this when its done loading
+	_reloading = NO;
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+	
+}
+
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{	
+	
+	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+	
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+	
+}
+
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+	
+	[self reloadTableViewDataSource];
+	[self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+	
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+	
+	return _reloading; // should return if data source model is reloading
+	
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+	
+	return [NSDate date]; // should return date data source was last changed
+	
+}
+
 @end

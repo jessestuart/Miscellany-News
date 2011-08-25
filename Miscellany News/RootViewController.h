@@ -10,20 +10,19 @@
 #import <CoreData/CoreData.h>
 
 #import "ASIHTTPRequest.h"
+#import "EGORefreshTableHeaderView.h"
 
 @class ArticleViewController;
 
-@interface RootViewController : UITableViewController <ASIHTTPRequestDelegate>
+@interface RootViewController : UITableViewController <ASIHTTPRequestDelegate, EGORefreshTableHeaderDelegate>
 {
+    EGORefreshTableHeaderView *_refreshHeaderView;
     ArticleViewController *_articleViewController;
     NSMutableArray *_allEntries;
     NSOperationQueue *_queue;
+    
+    BOOL _reloading;
 }
-
-@property (retain) ArticleViewController *articleViewController;
-
-@property (retain) NSMutableArray *allEntries;
-@property (retain) NSOperationQueue *queue;
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
