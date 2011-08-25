@@ -23,24 +23,6 @@
 @synthesize thumbnailURL = _thumbnailURL;
 @synthesize category = _category;
 
-- (id)initWithArticleTitle:(NSString *)articleTitle 
-                articleUrl:(NSString *)articleUrl 
-               articleDate:(NSDate *)articleDate 
-            articleSummary:(NSString *)articleSummary 
-               articleText:(NSString *)articleText
-{
-    if ((self = [super init]))
-    {
-        _title = [articleTitle copy];
-        _link = [articleUrl copy];
-        _pubDate = [articleDate copy];
-        _summary = [articleSummary copy];
-        // even if article text is nil
-        _text = [articleText retain];
-    }
-    return self;
-}
-
 - (id)initWithTitle:(NSString *)title 
                link:(NSString *)link 
              author:(NSString *)author 
@@ -64,18 +46,16 @@
 
 - (void)dealloc
 {
-    NSLog(@"dealloc RSSEntry: %@", _title);
-    [_title release];
-    _title = nil;
-    
-    [_link release];
-    _link = nil;
-    
-    [_pubDate release];
-    _pubDate = nil;
-    
-    [_text release];
-    _text = nil;
+    [_title release], _title = nil;
+    [_link release], _link = nil;
+    [_author release], _author = nil;
+    [_summary release], _summary = nil;
+    [_pubDate release], _pubDate = nil;
+    [_guid release], _guid = nil;
+    [_category release], _category = nil;
+    [_text release], _text = nil;
+    [_thumbnailURL release], _thumbnailURL = nil;
+    [_thumbnail release], _thumbnail = nil;
     
     [super dealloc];
 }
