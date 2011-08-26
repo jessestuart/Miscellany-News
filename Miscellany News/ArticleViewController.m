@@ -13,15 +13,64 @@
 #import "Constants.h"
 #import "EGOImageLoader.h"
 #import "UIImage+ProportionalFill.h"
+#import "SHK.h"
 
 @implementation ArticleViewController
 
-@synthesize entry = _entry;
-@synthesize scrollView = _scrollView;
-@synthesize textView = _textView;
-@synthesize titleLabel = _titleLabel;
-@synthesize authorAndDateLabel = _authorAndDateLabel;
-@synthesize categoryLabel = _categoryLabel;
+@synthesize entry = _entry,
+            scrollView = _scrollView,
+            textView = _textView,
+            titleLabel = _titleLabel,
+            authorAndDateLabel = _authorAndDateLabel,
+            categoryLabel = _categoryLabel;
+
+#pragma mark -
+#pragma mark ShareKit
+
+- (void)shareArticle
+{
+    // Create the item to share (in this example, a url)
+	NSURL *url = [NSURL URLWithString:_entry.link];
+	SHKItem *item = [SHKItem URL:url title:@"Share article"];
+    
+	// Get the ShareKit action sheet
+	SHKActionSheet *actionSheet = [SHKActionSheet actionSheetForItem:item];
+    
+	// Display the action sheet
+	[actionSheet showFromToolbar:self.navigationController.toolbar];
+}
+
+#pragma mark -
+#pragma mark RSSArticleParser delegate methods
+
+- (void)articleTextParsedForEntry:(RSSEntry *)entry
+{
+    // Article text has just been set for currently selected article,
+    // so set textView's text and hide the activity indicator.
+    if (entry == self.entry) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [MBProgressHUD hideHUDForView:self.view animated:YES]; 
+            _textView.text = entry.text;
+        }];
+    }
+}
+
+#pragma mark -
+#pragma mark View loading
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+
+
+#pragma mark -
+#pragma mark - View lifecycle
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -62,26 +111,40 @@
     _scrollView.contentSize = CGSizeMake(320.0, 10.0);
 }
 
-- (void)articleTextParsedForEntry:(RSSEntry *)entry
+- (void)viewDidLoad
 {
-    // Article text has just been set for currently selected article,
-    // so set textView's text and hide the activity indicator.
-    if (entry == self.entry) {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            [MBProgressHUD hideHUDForView:self.view animated:YES]; 
-            _textView.text = entry.text;
-        }];
-    }
+    [super viewDidLoad];
+    
+    _scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
+    
+    _textView.backgroundColor = [UIColor clearColor];
+    _textView.editable = FALSE;
+    _textView.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
+    _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
+    _textView.text = nil;
+    
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareArticle)];
+    self.navigationItem.rightBarButtonItem = shareButton;
+    [shareButton release];
 }
 
-#pragma mark View loading
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
+#pragma mark -
+#pragma mark Memory management
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // TODO
+    
+    // Release any retained subviews of the main 
+    // e.g. self.myOutlet = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,35 +155,6 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
-}
-
-#pragma mark - View lifecycle
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
-    
-    _textView.backgroundColor = [UIColor clearColor];
-    _textView.editable = FALSE;
-    _textView.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
-    _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
-    _textView.text = nil;
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    
-    // Release any retained subviews of the main 
-    // e.g. self.myOutlet = nil;
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)dealloc

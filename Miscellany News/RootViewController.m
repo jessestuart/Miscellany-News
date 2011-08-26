@@ -33,8 +33,8 @@
 
 @implementation RootViewController
 
-@synthesize fetchedResultsController = __fetchedResultsController;
-@synthesize managedObjectContext = __managedObjectContext;
+@synthesize fetchedResultsController = __fetchedResultsController,
+            managedObjectContext = __managedObjectContext;
 
 #pragma mark -
 #pragma mark Feed parsing
@@ -45,8 +45,8 @@
 - (void)refreshFeed
 {
     // Pull feed URL from info plist, initialize ASIHTTP request, and add to queue
-    NSURL *feedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:kFeedURL]];
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:feedURL];
+    NSURL *miscFeedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:feedURL]];
+    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:miscFeedURL];
     request.delegate = self;
     [_queue addOperation:request];
 }
@@ -170,8 +170,9 @@
     self.title = @"The Miscellany News";
     
     // Customize title bar
-    self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:0.502 green:0.0 blue:0.0 alpha:1.];
-    [self.navigationController.navigationBar applyNoiseWithOpacity:0.4];
+    UINavigationBar *navBar = self.navigationController.navigationBar;
+    navBar.tintColor = [UIColor colorWithRed:0.502 green:0.0 blue:0.0 alpha:1.];
+    [navBar applyNoiseWithOpacity:0.5];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 44)];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont fontWithName:@"Palatino-Bold" size:20.0];
@@ -304,7 +305,7 @@
     cell.textLabel.text = entry.title;
     cell.textLabel.numberOfLines = 2;
     
-//    cell.imageView.image = entry.image;
+//    cell.imageView.image = entry.thumbnail;
     UIImageView *imageView = [[UIImageView alloc] initWithImage:entry.thumbnail];
     cell.accessoryView = imageView;
     [imageView release];
