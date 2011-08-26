@@ -49,6 +49,7 @@
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:miscFeedURL];
     request.delegate = self;
     [_queue addOperation:request];
+    [request release];
 }
 
 /**
@@ -71,7 +72,7 @@
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     // Autorelease pool
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+//    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     // Working array for unsorted RSS entries
     NSMutableArray *unsortedEntries = [[NSMutableArray alloc] init];
     
@@ -92,6 +93,8 @@
     // Recurse over all the RSS items in the feed
     for (CXMLElement *item in [channel elementsForName:@"item"])
     {
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        
         /* NOTE: lot of weird hackery in here to deal with the messy RSS */
         NSString *title = [[item elementForName:@"title"] stringByFlatteningHTML];
         NSString *author = [[[[item elementForName:@"author"] substringFromIndex:1] 
@@ -102,6 +105,8 @@
         NSDate *pubDate = [pubDateFormatter dateFromString:[item elementForName:@"pubDate"]];
         NSString *guid = [item elementForName:@"guid"];
         NSString *category = [item elementForName:@"category"];
+        
+        NSLog(@"category: %@", category);
         
         // Allocate a new RSSEntry from feed info & add to unsorted entries
         RSSEntry *entry = [[RSSEntry alloc] initWithTitle:title link:link author:author summary:summary pubDate:pubDate guid:guid category:category];
@@ -115,6 +120,8 @@
         entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:entry.thumbnailURL] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];
         
         [entry release];
+        
+        [pool drain];
     }
     
     [self sortEntries:unsortedEntries];
@@ -125,7 +132,7 @@
     [USEnglishLocale release];
     [pubDateFormatter release];
     [unsortedEntries release]; 
-    [pool drain];
+//    [pool drain];
 }
 
 - (void)parseArticleTextForEntry:(RSSEntry *)entry

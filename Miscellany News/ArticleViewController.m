@@ -85,12 +85,10 @@
     }
     else 
     {
-        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-        df.dateStyle = NSDateFormatterMediumStyle;
         
         self.textView.text = _entry.text;
         self.titleLabel.text = _entry.title;
-        self.authorAndDateLabel.text = [NSString stringWithFormat:@"%@– %@", _entry.author, [df stringFromDate:_entry.pubDate]];
+        self.authorAndDateLabel.text = [NSString stringWithFormat:@"%@– %@", _entry.author, [_df stringFromDate:_entry.pubDate]];
         self.categoryLabel.text = _entry.category;
         
         [_textView setScrollEnabled:NO];
@@ -126,6 +124,9 @@
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareArticle)];
     self.navigationItem.rightBarButtonItem = shareButton;
     [shareButton release];
+    
+    _df = [[NSDateFormatter alloc] init];
+    _df.dateStyle = NSDateFormatterMediumStyle;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -160,8 +161,8 @@
 - (void)dealloc
 {
     [super dealloc];
-    [_entry release];
-    _entry = nil;
+    [_entry release], _entry = nil;
+    [_df release], _df = nil;
 }
 
 @end

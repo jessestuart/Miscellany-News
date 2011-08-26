@@ -19,6 +19,8 @@
     IBOutlet UILabel *_titleLabel;
     IBOutlet UILabel *_authorAndDateLabel;
     IBOutlet UILabel *_categoryLabel;
+    
+    NSDateFormatter *_df;
 }
 
 @property (retain) RSSEntry *entry;
