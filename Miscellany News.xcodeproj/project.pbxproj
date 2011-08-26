@@ -128,9 +128,9 @@
 		D535B3A71406F15800215FB7 /* SHKOAuthView.m in Sources */ = {isa = PBXBuildFile; fileRef = D535B3661406F15800215FB7 /* SHKOAuthView.m */; };
 		D535B3A81406F15800215FB7 /* SHKShareMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D535B3681406F15800215FB7 /* SHKShareMenu.m */; };
 		D535B3A91406F15800215FB7 /* SHKViewControllerWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D535B36A1406F15800215FB7 /* SHKViewControllerWrapper.m */; };
-		D535B3AD1406F1A800215FB7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D535B3AC1406F1A800215FB7 /* Reachability.m */; };
 		D535B3AF1406F1CC00215FB7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D535B3AE1406F1CC00215FB7 /* Security.framework */; };
 		D535B3B11406F1D100215FB7 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D535B3B01406F1D100215FB7 /* MessageUI.framework */; };
+		D535B3B41408467F00215FB7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D535B3B31408467F00215FB7 /* Reachability.m */; };
 		D5AAE35F13FC0F1F0056EE4D /* UIView+JMNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AAE35E13FC0F1F0056EE4D /* UIView+JMNoise.m */; };
 		D5AAE36313FC0FB10056EE4D /* ArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AAE36113FC0FB10056EE4D /* ArticleViewController.m */; };
 		D5AAE36413FC0FB10056EE4D /* ArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AAE36213FC0FB10056EE4D /* ArticleViewController.xib */; };
@@ -373,10 +373,10 @@
 		D535B3681406F15800215FB7 /* SHKShareMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHKShareMenu.m; sourceTree = "<group>"; };
 		D535B3691406F15800215FB7 /* SHKViewControllerWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHKViewControllerWrapper.h; sourceTree = "<group>"; };
 		D535B36A1406F15800215FB7 /* SHKViewControllerWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHKViewControllerWrapper.m; sourceTree = "<group>"; };
-		D535B3AB1406F1A800215FB7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		D535B3AC1406F1A800215FB7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		D535B3AE1406F1CC00215FB7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D535B3B01406F1D100215FB7 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		D535B3B21408467F00215FB7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = Reachability/Reachability.h; sourceTree = "<group>"; };
+		D535B3B31408467F00215FB7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = Reachability/Reachability.m; sourceTree = "<group>"; };
 		D5AAE35D13FC0F1F0056EE4D /* UIView+JMNoise.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JMNoise.h"; sourceTree = "<group>"; };
 		D5AAE35E13FC0F1F0056EE4D /* UIView+JMNoise.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JMNoise.m"; sourceTree = "<group>"; };
 		D5AAE36013FC0FB10056EE4D /* ArticleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArticleViewController.h; path = "Miscellany News/ArticleViewController.h"; sourceTree = "<group>"; };
@@ -423,7 +423,8 @@
 		D50892FF14040172001992B9 /* ASIHTTPRequest */ = {
 			isa = PBXGroup;
 			children = (
-				D535B3AA1406F1A800215FB7 /* Reachability */,
+				D535B3B21408467F00215FB7 /* Reachability.h */,
+				D535B3B31408467F00215FB7 /* Reachability.m */,
 				D508930014040172001992B9 /* ASIAuthenticationDialog.h */,
 				D508930114040172001992B9 /* ASIAuthenticationDialog.m */,
 				D508930214040172001992B9 /* ASICacheDelegate.h */,
@@ -1032,15 +1033,6 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
-		D535B3AA1406F1A800215FB7 /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				D535B3AB1406F1A800215FB7 /* Reachability.h */,
-				D535B3AC1406F1A800215FB7 /* Reachability.m */,
-			);
-			path = Reachability;
-			sourceTree = "<group>";
-		};
 		D5AAE35C13FC0F1F0056EE4D /* JMNoise */ = {
 			isa = PBXGroup;
 			children = (
@@ -1284,7 +1276,7 @@
 				D535B3A71406F15800215FB7 /* SHKOAuthView.m in Sources */,
 				D535B3A81406F15800215FB7 /* SHKShareMenu.m in Sources */,
 				D535B3A91406F15800215FB7 /* SHKViewControllerWrapper.m in Sources */,
-				D535B3AD1406F1A800215FB7 /* Reachability.m in Sources */,
+				D535B3B41408467F00215FB7 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
