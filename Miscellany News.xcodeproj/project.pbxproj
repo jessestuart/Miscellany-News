@@ -134,7 +134,6 @@
 		D5AAE35F13FC0F1F0056EE4D /* UIView+JMNoise.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AAE35E13FC0F1F0056EE4D /* UIView+JMNoise.m */; };
 		D5AAE36313FC0FB10056EE4D /* ArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AAE36113FC0FB10056EE4D /* ArticleViewController.m */; };
 		D5AAE36413FC0FB10056EE4D /* ArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AAE36213FC0FB10056EE4D /* ArticleViewController.xib */; };
-		D5C20A9213FEBE0900420DFC /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = D5C20A9113FEBE0900420DFC /* Constants.m */; };
 		D5F06BA314009CF400C1BD77 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F06B9714009CF400C1BD77 /* EGOCache.m */; };
 		D5F06BA514009CF400C1BD77 /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F06B9D14009CF400C1BD77 /* EGOImageLoadConnection.m */; };
 		D5F06BA614009CF400C1BD77 /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D5F06B9F14009CF400C1BD77 /* EGOImageLoader.m */; };
@@ -382,8 +381,6 @@
 		D5AAE36013FC0FB10056EE4D /* ArticleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArticleViewController.h; path = "Miscellany News/ArticleViewController.h"; sourceTree = "<group>"; };
 		D5AAE36113FC0FB10056EE4D /* ArticleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArticleViewController.m; path = "Miscellany News/ArticleViewController.m"; sourceTree = "<group>"; };
 		D5AAE36213FC0FB10056EE4D /* ArticleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ArticleViewController.xib; path = "Miscellany News/ArticleViewController.xib"; sourceTree = "<group>"; };
-		D5C20A9013FEBE0900420DFC /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = "Miscellany News/Constants.h"; sourceTree = "<group>"; };
-		D5C20A9113FEBE0900420DFC /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Constants.m; path = "Miscellany News/Constants.m"; sourceTree = "<group>"; };
 		D5F06B9614009CF400C1BD77 /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
 		D5F06B9714009CF400C1BD77 /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
 		D5F06B9C14009CF400C1BD77 /* EGOImageLoadConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageLoadConnection.h; sourceTree = "<group>"; };
@@ -504,11 +501,6 @@
 		D51626BE13F86C7D00BDB710 = {
 			isa = PBXGroup;
 			children = (
-				D535B3B01406F1D100215FB7 /* MessageUI.framework */,
-				D535B3AE1406F1CC00215FB7 /* Security.framework */,
-				D535B12B1406EFD200215FB7 /* SystemConfiguration.framework */,
-				D535B1291406ECD100215FB7 /* MessageUI.framework */,
-				D535B1271406ECC200215FB7 /* Security.framework */,
 				D51627E313F8C17C00BDB710 /* Libraries */,
 				D516276913F8ACE300BDB710 /* Categories */,
 				D516271313F8867F00BDB710 /* RSS Model */,
@@ -533,6 +525,11 @@
 		D51626CC13F86C7D00BDB710 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D535B3B01406F1D100215FB7 /* MessageUI.framework */,
+				D535B3AE1406F1CC00215FB7 /* Security.framework */,
+				D535B12B1406EFD200215FB7 /* SystemConfiguration.framework */,
+				D535B1291406ECD100215FB7 /* MessageUI.framework */,
+				D535B1271406ECC200215FB7 /* Security.framework */,
 				D50892A71403FEF1001992B9 /* libz.1.1.3.dylib */,
 				D51627E413F8C2CE00BDB710 /* libxml2.2.dylib */,
 				D50892A11403FEDD001992B9 /* CFNetwork.framework */,
@@ -550,8 +547,6 @@
 		D516270913F884A300BDB710 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				D5C20A9013FEBE0900420DFC /* Constants.h */,
-				D5C20A9113FEBE0900420DFC /* Constants.m */,
 				D51626DE13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.h */,
 				D51626DF13F86C7D00BDB710 /* Miscellany_NewsAppDelegate.m */,
 			);
@@ -1184,7 +1179,6 @@
 				D5F0B8CD13FBB2C20004D6F0 /* RSSArticleParser.m in Sources */,
 				D5AAE35F13FC0F1F0056EE4D /* UIView+JMNoise.m in Sources */,
 				D5AAE36313FC0FB10056EE4D /* ArticleViewController.m in Sources */,
-				D5C20A9213FEBE0900420DFC /* Constants.m in Sources */,
 				D5F06BA314009CF400C1BD77 /* EGOCache.m in Sources */,
 				D5F06BA514009CF400C1BD77 /* EGOImageLoadConnection.m in Sources */,
 				D5F06BA614009CF400C1BD77 /* EGOImageLoader.m in Sources */,
