@@ -10,7 +10,6 @@
 #import "RSSEntry.h"
 #import "MBProgressHUD.h"
 #import "UIView+JMNoise.h"
-#import "Constants.h"
 #import "EGOImageLoader.h"
 #import "UIImage+ProportionalFill.h"
 #import "SHK.h"
