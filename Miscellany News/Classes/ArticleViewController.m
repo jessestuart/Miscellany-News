@@ -80,8 +80,6 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
-    NSLog(@"entry text: %@", _entry.text);
-    
     if (_entry.text == nil) 
     {
         // If article text has yet to be parsed, show an activity indicator

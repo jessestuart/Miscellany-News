@@ -117,8 +117,7 @@
             [self parseArticleTextForEntry:entry];
             // Fetch thumbnail
             entry.thumbnailURL = [[[[item elementsForName:@"thumbnail"] lastObject] attributeForName:@"url"] stringValue];
-            entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:entry.thumbnailURL] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];
-            
+            entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:entry.thumbnailURL] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];   
         }
     }
     
@@ -137,7 +136,6 @@
     [_queue addOperationWithBlock:^{
         [articleParser parseArticleText];
         articleParser.delegate = nil;
-//        NSLog(@"Done parsing article text for entry: %@", entry.title);
     }];
 }
 
