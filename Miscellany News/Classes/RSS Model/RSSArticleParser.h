@@ -21,11 +21,11 @@ extern NSString * const RSSArticleTextUnavailable;
 @interface RSSArticleParser : NSObject
 {
     IBOutlet RSSEntry *_entry;
-    id <RSSArticleParserDelegate> _delegate;
+    id <RSSArticleParserDelegate> __unsafe_unretained _delegate;
 }
 
-@property (retain) RSSEntry *entry;
-@property (assign) id delegate;
+@property (strong) RSSEntry *entry;
+@property (unsafe_unretained) NSObject *delegate;
 
 - (id)initWithRSSEntry:(RSSEntry *)entry;
 - (void)parseArticleText;

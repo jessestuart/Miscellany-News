@@ -24,6 +24,7 @@
 #import "EGOImageLoader.h"
 /* Miscellaneous convenience methods */
 #import "NSString+JDS.h"
+#import "NSString+HTML.h"
 
 
 @interface RootViewController ()
@@ -49,7 +50,6 @@
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:miscFeedURL];
     request.delegate = self;
     [_queue addOperation:request];
-    [request release];
 }
 
 /**
@@ -63,7 +63,6 @@
                                           cancelButtonTitle:@"Close" 
                                           otherButtonTitles:nil];
     [alert show];
-    [alert release], alert = nil;
 }
 
 /**
@@ -93,56 +92,52 @@
     // Recurse over all the RSS items in the feed
     for (CXMLElement *item in [channel elementsForName:@"item"])
     {
-        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-        
-        /* NOTE: lot of weird hackery in here to deal with the messy RSS */
-        NSString *title = [[item elementForName:@"title"] stringByFlatteningHTML];
-        NSString *author = [[[[item elementForName:@"author"] substringFromIndex:1] 
-                             stringByReplacingOccurrencesOfString:@" and " withString:@" & "]
-                            stringByReplacingOccurrencesOfString:@"the " withString:@""];
-        NSString *link = [item elementForName:@"link"];
-        NSString *summary = [[[item elementForName:@"description"] stringByRemovingLeadingWhitespace] stringByFlatteningHTML];
-        NSDate *pubDate = [pubDateFormatter dateFromString:[item elementForName:@"pubDate"]];
-        NSString *guid = [item elementForName:@"guid"];
-        NSString *category = [item elementForName:@"category"];
-        
-        NSLog(@"category: %@", category);
-        
-        // Allocate a new RSSEntry from feed info & add to unsorted entries
-        RSSEntry *entry = [[RSSEntry alloc] initWithTitle:title link:link author:author summary:summary pubDate:pubDate guid:guid category:category];
-        JSAssert(entry != nil, @"Error allocating entry");
-        [unsortedEntries addObject:entry];
-        
-        // Parse article text in background
-        [self parseArticleTextForEntry:entry];
-        // Fetch thumbnail
-        entry.thumbnailURL = [[[[item elementsForName:@"thumbnail"] lastObject] attributeForName:@"url"] stringValue];
-        entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:entry.thumbnailURL] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];
-        
-        [entry release];
-        
-        [pool drain];
+        @autoreleasepool 
+        {
+            
+            /* NOTE: lot of weird hackery in here to deal with the messy RSS */
+            NSString *title = [[item elementForName:@"title"] stringByFlatteningHTML];
+            NSString *author = [[[[item elementForName:@"author"] substringFromIndex:1] 
+                                 stringByReplacingOccurrencesOfString:@" and " withString:@" & "]
+                                stringByReplacingOccurrencesOfString:@"the " withString:@""];
+            NSString *link = [item elementForName:@"link"];
+            NSString *summary = [[[[item elementForName:@"description"] stringByRemovingLeadingWhitespace] stringByFlatteningHTML] stringByDecodingHTMLEntities];
+            NSDate *pubDate = [pubDateFormatter dateFromString:[item elementForName:@"pubDate"]];
+            NSString *guid = [item elementForName:@"guid"];
+            NSString *category = [item elementForName:@"category"];
+            
+            NSLog(@"category: %@", category);
+            
+            // Allocate a new RSSEntry from feed info & add to unsorted entries
+            RSSEntry *entry = [[RSSEntry alloc] initWithTitle:title link:link author:author summary:summary pubDate:pubDate guid:guid category:category];
+            JSAssert(entry != nil, @"Error allocating entry");
+            [unsortedEntries addObject:entry];
+            
+            // Parse article text in background
+            [self parseArticleTextForEntry:entry];
+            // Fetch thumbnail
+            entry.thumbnailURL = [[[[item elementsForName:@"thumbnail"] lastObject] attributeForName:@"url"] stringValue];
+            entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:entry.thumbnailURL] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];
+            
+        }
     }
     
     [self sortEntries:unsortedEntries];
     
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
-    [document release];
-    [USEnglishLocale release];
-    [pubDateFormatter release];
-    [unsortedEntries release]; 
 //    [pool drain];
 }
 
 - (void)parseArticleTextForEntry:(RSSEntry *)entry
 {
     RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
+    articleParser.delegate = _articleViewController;
+    
     [_queue addOperationWithBlock:^{
-        articleParser.delegate = _articleViewController;
         [articleParser parseArticleText];
         articleParser.delegate = nil;
-        [articleParser release];
+//        NSLog(@"Done parsing article text for entry: %@", entry.title);
     }];
 }
 
@@ -151,7 +146,7 @@
     for (RSSEntry *entry in unsortedEntries) 
     {
         // Sort by date
-        int insertIdx = [_allEntries indexForInsertingObject:[entry retain]
+        int insertIdx = [_allEntries indexForInsertingObject:entry
                                             sortedUsingBlock:^(id a, id b) {
                                                 RSSEntry *entry1 = (RSSEntry *) a;
                                                 RSSEntry *entry2 = (RSSEntry *) b;
@@ -159,7 +154,6 @@
                                             }];
         // Add to array
         [_allEntries insertObject:entry atIndex:insertIdx];
-        [entry release];
         
         // Add to table view
         NSArray *idxPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]];
@@ -188,7 +182,6 @@
     label.textColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0];
     label.text = self.title;
     self.navigationItem.titleView = label;
-    [label release];
     
     // Customize TableView
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
@@ -206,7 +199,7 @@
      */
     if (_articleViewController == nil) 
     {
-        _articleViewController = [[[ArticleViewController alloc] initWithNibName:@"ArticleViewController" bundle:[NSBundle mainBundle]] retain];
+        _articleViewController = [[ArticleViewController alloc] initWithNibName:@"ArticleViewController" bundle:[NSBundle mainBundle]];
     }
     
     /*
@@ -219,7 +212,6 @@
 		view.delegate = self;
 		[self.tableView addSubview:view];
 		_refreshHeaderView = view;
-		[view release];
 	}
     
     // Update the last update date
@@ -248,24 +240,6 @@
     _articleViewController = nil;
     // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
     // For example: self.myOutlet = nil;
-}
-
-- (void)dealloc
-{
-    NSLog(@"dealloc");
-    [__fetchedResultsController release];
-    [__managedObjectContext release];
-    
-    [_allEntries release];
-    _allEntries = nil;
-    
-    [_queue release];
-    _queue = nil;
-    
-    _refreshHeaderView = nil;
-    _articleViewController = nil;
-    
-    [super dealloc];
 }
 
 /*
@@ -301,12 +275,12 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) 
     {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle 
-                                       reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle 
+                                       reuseIdentifier:CellIdentifier];
     }
 
     // Configure the cell.
-    RSSEntry *entry = [[_allEntries objectAtIndex:indexPath.row] retain];
+    RSSEntry *entry = [_allEntries objectAtIndex:indexPath.row];
     
     cell.textLabel.font = [UIFont fontWithName:@"Palatino-Bold" size:16.0];
     cell.textLabel.text = entry.title;
@@ -315,13 +289,10 @@
 //    cell.imageView.image = entry.thumbnail;
     UIImageView *imageView = [[UIImageView alloc] initWithImage:entry.thumbnail];
     cell.accessoryView = imageView;
-    [imageView release];
 
     cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:13.0];
     cell.detailTextLabel.text = entry.summary;
     cell.detailTextLabel.numberOfLines = 2;
-    
-    [entry release];
     
 //    if (indexPath.row == 0) {
 //        cell.imageView.image = [UIImage imageNamed:@"2623635910.JPG"];
@@ -373,11 +344,11 @@
 {
     // Load article view if unloaded
     if (_articleViewController == nil) {
-        _articleViewController = [[[ArticleViewController alloc] initWithNibName:@"ArticleViewController" bundle:[NSBundle mainBundle]] retain];
+        _articleViewController = [[ArticleViewController alloc] initWithNibName:@"ArticleViewController" bundle:[NSBundle mainBundle]];
     }
 
     _articleViewController.entry = [_allEntries objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:[_articleViewController retain] animated:YES];
+    [self.navigationController pushViewController:_articleViewController animated:YES];
     
     /*
     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];

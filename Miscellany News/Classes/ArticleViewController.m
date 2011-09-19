@@ -48,8 +48,15 @@
     // so set textView's text and hide the activity indicator.
     if (entry == self.entry) {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            _textView.text = entry.text;;
+            CGRect frame = _textView.frame;
+            frame.size.height = _textView.contentSize.height;
+            _textView.frame = frame;
+            _scrollView.contentSize = CGSizeMake(frame.size.width, frame.size.height + 50);
+            
+            [_scrollView scrollRectToVisible:CGRectMake(0, 0, 320, 320) animated:NO];
+            
             [MBProgressHUD hideHUDForView:self.view animated:YES]; 
-            _textView.text = entry.text;
         }];
     }
 }
@@ -73,6 +80,8 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
+    NSLog(@"entry text: %@", _entry.text);
+    
     if (_entry.text == nil) 
     {
         // If article text has yet to be parsed, show an activity indicator
@@ -82,16 +91,10 @@
     {
         _textView.text = @"The text for this article could not be retrieved.";
     }
-    else 
+    else
     {
-        
+        // If article text is available, set text view's text and adjust scroll view to fit
         self.textView.text = _entry.text;
-        self.titleLabel.text = _entry.title;
-        self.authorAndDateLabel.text = [NSString stringWithFormat:@"%@– %@", _entry.author, [_df stringFromDate:_entry.pubDate]];
-        self.categoryLabel.text = _entry.category;
-        
-        [_textView setScrollEnabled:NO];
-        [_scrollView setScrollEnabled:YES];       
         CGRect frame = _textView.frame;
         frame.size.height = _textView.contentSize.height;
         _textView.frame = frame;
@@ -99,12 +102,27 @@
         
         [_scrollView scrollRectToVisible:CGRectMake(0, 0, 320, 320) animated:NO];
     }
+    
+    // Confirm that entry isn't nil
+    JSAssert(_entry != nil, @"Error: entry is nil before article view will appear");
+    
+    self.titleLabel.text = _entry.title;
+    self.authorAndDateLabel.text = [NSString stringWithFormat:@"%@- %@", _entry.author, [_df stringFromDate:_entry.pubDate]];
+    self.categoryLabel.text = _entry.category;
 }
 
 -(void) viewDidDisappear:(BOOL)animated
 {
+    // Hide progress indicator, if it was shown
     [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    // Clear all text fields
     _textView.text = nil;
+    _titleLabel.text = nil;
+    _authorAndDateLabel.text = nil;
+    _categoryLabel.text = nil;
+    
+    // Reset scroll view content size
     _scrollView.contentSize = CGSizeMake(320.0, 10.0);
 }
 
@@ -112,18 +130,30 @@
 {
     [super viewDidLoad];
     
+    // Set scroll view background to that cool paper pattern image
     _scrollView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
     
+    // Scroll view can scroll, but not text view. This way, everything will scroll together.
+    _scrollView.scrollEnabled = YES;
+    _textView.scrollEnabled = NO;
+    
+    // Configure text view
     _textView.backgroundColor = [UIColor clearColor];
     _textView.editable = FALSE;
     _textView.font = [UIFont fontWithName:@"Helvetica Neue" size:15.0];
     _textView.textColor = [UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
-    _textView.text = nil;
     
+    // Clear all text fields (just in case)
+    _textView.text = nil;
+    _titleLabel.text = nil;
+    _authorAndDateLabel.text = nil;
+    _categoryLabel.text = nil;
+    
+    // Add right bar button item for sharing articles
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareArticle)];
     self.navigationItem.rightBarButtonItem = shareButton;
-    [shareButton release];
     
+    // Initialize date formatter for later
     _df = [[NSDateFormatter alloc] init];
     _df.dateStyle = NSDateFormatterMediumStyle;
 }
@@ -155,13 +185,6 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
-}
-
-- (void)dealloc
-{
-    [super dealloc];
-    [_entry release], _entry = nil;
-    [_df release], _df = nil;
 }
 
 @end

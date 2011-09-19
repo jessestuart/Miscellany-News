@@ -44,20 +44,4 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [_title release], _title = nil;
-    [_link release], _link = nil;
-    [_author release], _author = nil;
-    [_summary release], _summary = nil;
-    [_pubDate release], _pubDate = nil;
-    [_guid release], _guid = nil;
-    [_category release], _category = nil;
-    [_text release], _text = nil;
-    [_thumbnailURL release], _thumbnailURL = nil;
-    [_thumbnail release], _thumbnail = nil;
-    
-    [super dealloc];
-}
-
 @end
