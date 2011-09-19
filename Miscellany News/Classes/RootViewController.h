@@ -24,8 +24,8 @@
     BOOL _reloading;
 }
 
-@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+//@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+//@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 - (void)refreshFeed;
 

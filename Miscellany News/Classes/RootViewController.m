@@ -34,8 +34,8 @@
 
 @implementation RootViewController
 
-@synthesize fetchedResultsController = __fetchedResultsController,
-            managedObjectContext = __managedObjectContext;
+//@synthesize fetchedResultsController = __fetchedResultsController,
+//            managedObjectContext = __managedObjectContext;
 
 #pragma mark -
 #pragma mark Feed parsing
