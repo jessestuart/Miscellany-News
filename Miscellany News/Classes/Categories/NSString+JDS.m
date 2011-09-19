@@ -12,7 +12,7 @@
 
 - (NSString *)substringBetweenString:(NSString *)substring1 andString:(NSString *)substring2 regex:(BOOL)regex
 {
-    NSString *s = [[self copy] autorelease];
+    NSString *s = [self copy];
     NSRange beginRange, endRange;
     NSUInteger beginIdx, endIdx;
     
@@ -38,13 +38,13 @@
 
 - (NSString *)stringByRemovingLeadingWhitespace
 {
-    if ([self length] > 20) // hack to prevent weird error
-    {
-        NSString *s = [[self copy] autorelease];
-        NSRange r = [s rangeOfString:@"[a-zA-Z0-9\"]" options:NSRegularExpressionSearch];
-        return [s substringFromIndex:r.location];
-    }
-    else return nil;
+//    if ([self length] > 20) // hack to prevent weird error
+//    {
+    NSString *s = [self copy];
+    NSRange r = [s rangeOfString:@"[a-zA-Z0-9\"]" options:NSRegularExpressionSearch];
+    return (r.location != NSNotFound) ? [s substringFromIndex:r.location] : nil;
+//    }
+//    else return nil;
 }
 
 - (NSString *)stringByFlatteningHTML
@@ -58,7 +58,7 @@
 - (NSString *)stringByStrippingMatchingRegex:(NSString *)regex
 {
     NSRange r;
-    NSString *s = [[self copy] autorelease];
+    NSString *s = [self copy];
     while((r = [s rangeOfString:regex options:NSRegularExpressionSearch]).location != NSNotFound)
     {
         s = [s stringByReplacingCharactersInRange:r withString:@""];
