@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
-#import "RSSFeedLoader.h"
+#import "ASIHTTPRequest.h"
 #import "EGORefreshTableHeaderView.h"
+#import "RSSFeedLoader.h"
 
 @class ArticleViewController;
 
-@interface RootViewController : UITableViewController <EGORefreshTableHeaderDelegate, RSSFeedLoaderDelegate>
+@interface RootViewController : UITableViewController <RSSFeedLoaderDelegate, EGORefreshTableHeaderDelegate>
 {
+    __strong RSSFeedLoader *_feedLoader;
     EGORefreshTableHeaderView *_refreshHeaderView;
     ArticleViewController *_articleViewController;
     NSMutableArray *_allEntries;

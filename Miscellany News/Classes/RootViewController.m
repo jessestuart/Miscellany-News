@@ -33,29 +33,11 @@
 
 @implementation RootViewController
 
-//@synthesize fetchedResultsController = __fetchedResultsController,
-//            managedObjectContext = __managedObjectContext;
-
 #pragma mark -
 #pragma mark Feed parsing
 
-/**
- *  Initialize an HTTP request for the RSS feed data
- */
-//- (void)refreshFeed
-//{
-//    // Pull feed URL from info plist, initialize ASIHTTP request, and add to queue
-//    NSURL *miscFeedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:jFeedURL]];
-//    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:miscFeedURL];
-//    request.delegate = self;
-//    [_queue addOperation:request];
-//}
-
-
-
 - (void)feedLoaderDidLoadEntry:(RSSEntry *)entry
 {
-    NSLog(@"feedLoaderDidLoadEntry: %@", entry.title);
     RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
     articleParser.delegate = _articleViewController;
     
@@ -107,7 +89,7 @@
     [navBar applyNoiseWithOpacity:0.5];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 44)];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"Diploma" size:24.0];
+    label.font = [UIFont fontWithName:@"Diploma" size:24];
     label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     label.textAlignment = UITextAlignmentCenter;
     label.textColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0];
@@ -144,13 +126,15 @@
 		[self.tableView addSubview:view];
 		_refreshHeaderView = view;
 	}
+    
     // Update the last update date
     [_refreshHeaderView refreshLastUpdatedDate];
     
     // Begin parsing RSS feed
     NSURL *miscFeedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:jFeedURL]];
-    RSSFeedLoader *feedLoader = [[RSSFeedLoader alloc] initWithFeedURL:miscFeedURL];
-    [feedLoader refreshFeed];
+    _feedLoader = [[RSSFeedLoader alloc] initWithFeedURL:miscFeedURL];
+    _feedLoader.delegate = self;
+    [_feedLoader refreshFeed];
 }
 
 #pragma mark -
@@ -226,12 +210,6 @@
     cell.detailTextLabel.text = entry.summary;
     cell.detailTextLabel.numberOfLines = 2;
     
-//    if (indexPath.row == 0) {
-//        cell.imageView.image = [UIImage imageNamed:@"2623635910.JPG"];
-//    } else if (indexPath.row == 2) {
-//        cell.imageView.image = [UIImage imageNamed:@"221749802.jpg"];
-//    }
-    
     return cell;
 }
 
@@ -242,29 +220,10 @@
     return NO;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    NSLog(@"weird method");
-//    if (editingStyle == UITableViewCellEditingStyleDelete)
-//    {
-//        // Delete the managed object for the given index path
-//        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-//        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-//        
-//        // Save the context.
-//        NSError *error = nil;
-//        if (![context save:&error])
-//        {
-//            /*
-//             Replace this implementation with code to handle the error appropriately.
-//             
-//             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-//             */
-//            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//            abort();
-//        }
-//    }   
-}
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//
+//}
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {

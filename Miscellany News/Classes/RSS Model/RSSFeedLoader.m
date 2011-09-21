@@ -38,18 +38,10 @@
 - (void)refreshFeed
 {
     // Pull feed URL from info plist, initialize ASIHTTP request, and add to queue
-    NSString *feedString = [[[NSBundle mainBundle] infoDictionary] valueForKey:jFeedURL];
-    NSLog(@"feedString: %@", feedString);
-    NSURL *miscFeedURL = [NSURL URLWithString:feedString];
-//    NSURL *miscFeedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:jFeedURL]];
+    NSURL *miscFeedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:jFeedURL]];
     ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:miscFeedURL];
     request.delegate = self;
-    [[NSOperationQueue mainQueue] addOperation:request];
-
-//    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:_feedURL];
-//    request.delegate = self;
-//    [_queue addOperation:request];
-    NSLog(@"added request to queue");
+    [_queue addOperation:request];
 }
 
 #pragma mark -
@@ -72,7 +64,6 @@
  */
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-    NSLog(@"request finished");
     // Working array for unsorted RSS entries
     NSMutableArray *unsortedEntries = [[NSMutableArray alloc] init];
     
@@ -107,7 +98,7 @@
             NSString *guid = [item elementForName:@"guid"];
             NSString *category = [item elementForName:@"category"];
             
-            NSLog(@"category: %@", category);
+//            NSLog(@"category: %@", category);
             
             // Allocate a new RSSEntry from feed info & add to unsorted entries
             RSSEntry *entry = [[RSSEntry alloc] initWithTitle:title link:link author:author summary:summary pubDate:pubDate guid:guid category:category];
@@ -126,9 +117,9 @@
     [_delegate feedLoaderFinishedLoadingEntries:unsortedEntries];
     
     
-//    [self sortEntries:unsortedEntries];
+    //    [self sortEntries:unsortedEntries];
     
-//    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    //    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 @end
