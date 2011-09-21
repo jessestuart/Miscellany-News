@@ -136,11 +136,13 @@
 		D59A66D0140F3D5000C1EEC4 /* ArticleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D59A66CE140F3D5000C1EEC4 /* ArticleViewController.m */; };
 		D59A66D1140F3D5000C1EEC4 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D59A66CF140F3D5000C1EEC4 /* RootViewController.m */; };
 		D59A66D4140F3D5E00C1EEC4 /* ArticleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D59A66D2140F3D5E00C1EEC4 /* ArticleViewController.xib */; };
-		D59A66D7140F3D7400C1EEC4 /* Miscellany_NewsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D59A66D6140F3D7400C1EEC4 /* Miscellany_NewsAppDelegate.m */; };
 		D59A66DD140F3DC700C1EEC4 /* RSSArticleParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D59A66DA140F3DC700C1EEC4 /* RSSArticleParser.m */; };
 		D59A66DE140F3DC700C1EEC4 /* RSSEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = D59A66DC140F3DC700C1EEC4 /* RSSEntry.m */; };
 		D5E8085714297F8E00116292 /* RSSFeedLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D5E8085614297F8E00116292 /* RSSFeedLoader.m */; };
 		D5E8085A1429806200116292 /* diploma.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D5E808591429806200116292 /* diploma.ttf */; };
+		D5E8087D1429892600116292 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5E8087B1429892600116292 /* MainTabBarController.m */; };
+		D5E8088114298AF600116292 /* ArticleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D5E8088014298AF600116292 /* ArticleListController.m */; };
+		D5E808841429920600116292 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D5E808831429920600116292 /* AppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -386,8 +388,6 @@
 		D59A66CE140F3D5000C1EEC4 /* ArticleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArticleViewController.m; path = "Miscellany News/Classes/ArticleViewController.m"; sourceTree = "<group>"; };
 		D59A66CF140F3D5000C1EEC4 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootViewController.m; path = "Miscellany News/Classes/RootViewController.m"; sourceTree = "<group>"; };
 		D59A66D3140F3D5E00C1EEC4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "Miscellany News/en.lproj/ArticleViewController.xib"; sourceTree = "<group>"; };
-		D59A66D5140F3D7400C1EEC4 /* Miscellany_NewsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Miscellany_NewsAppDelegate.h; path = "Miscellany News/Classes/Miscellany_NewsAppDelegate.h"; sourceTree = "<group>"; };
-		D59A66D6140F3D7400C1EEC4 /* Miscellany_NewsAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Miscellany_NewsAppDelegate.m; path = "Miscellany News/Classes/Miscellany_NewsAppDelegate.m"; sourceTree = "<group>"; };
 		D59A66D9140F3DC700C1EEC4 /* RSSArticleParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSArticleParser.h; sourceTree = "<group>"; };
 		D59A66DA140F3DC700C1EEC4 /* RSSArticleParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSArticleParser.m; sourceTree = "<group>"; };
 		D59A66DB140F3DC700C1EEC4 /* RSSEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSEntry.h; sourceTree = "<group>"; };
@@ -395,6 +395,12 @@
 		D5E8085514297F8E00116292 /* RSSFeedLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSFeedLoader.h; sourceTree = "<group>"; };
 		D5E8085614297F8E00116292 /* RSSFeedLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSFeedLoader.m; sourceTree = "<group>"; };
 		D5E808591429806200116292 /* diploma.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = diploma.ttf; path = "Miscellany News/diploma.ttf"; sourceTree = "<group>"; };
+		D5E808791429892600116292 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTabBarController.h; path = "Miscellany News/Classes/MainTabBarController.h"; sourceTree = "<group>"; };
+		D5E8087B1429892600116292 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTabBarController.m; path = "Miscellany News/Classes/MainTabBarController.m"; sourceTree = "<group>"; };
+		D5E8087F14298AF600116292 /* ArticleListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ArticleListController.h; path = "Miscellany News/Classes/ArticleListController.h"; sourceTree = "<group>"; };
+		D5E8088014298AF600116292 /* ArticleListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ArticleListController.m; path = "Miscellany News/Classes/ArticleListController.m"; sourceTree = "<group>"; };
+		D5E808821429920600116292 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = "Miscellany News/Classes/AppDelegate.h"; sourceTree = "<group>"; };
+		D5E808831429920600116292 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = "Miscellany News/Classes/AppDelegate.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -493,14 +499,18 @@
 		D516271113F8865000BDB710 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D5E8087F14298AF600116292 /* ArticleListController.h */,
+				D5E8088014298AF600116292 /* ArticleListController.m */,
+				D5E808791429892600116292 /* MainTabBarController.h */,
+				D5E8087B1429892600116292 /* MainTabBarController.m */,
 				D59A66CC140F3D5000C1EEC4 /* ArticleViewController.h */,
 				D59A66CE140F3D5000C1EEC4 /* ArticleViewController.m */,
 				D59A66D2140F3D5E00C1EEC4 /* ArticleViewController.xib */,
 				D59A66CD140F3D5000C1EEC4 /* RootViewController.h */,
 				D59A66CF140F3D5000C1EEC4 /* RootViewController.m */,
 				D51626EA13F86C7D00BDB710 /* RootViewController.xib */,
-				D59A66D5140F3D7400C1EEC4 /* Miscellany_NewsAppDelegate.h */,
-				D59A66D6140F3D7400C1EEC4 /* Miscellany_NewsAppDelegate.m */,
+				D5E808821429920600116292 /* AppDelegate.h */,
+				D5E808831429920600116292 /* AppDelegate.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1268,10 +1278,12 @@
 				D59A66CB140F3D2F00C1EEC4 /* NSString+JDS.m in Sources */,
 				D59A66D0140F3D5000C1EEC4 /* ArticleViewController.m in Sources */,
 				D59A66D1140F3D5000C1EEC4 /* RootViewController.m in Sources */,
-				D59A66D7140F3D7400C1EEC4 /* Miscellany_NewsAppDelegate.m in Sources */,
 				D59A66DD140F3DC700C1EEC4 /* RSSArticleParser.m in Sources */,
 				D59A66DE140F3DC700C1EEC4 /* RSSEntry.m in Sources */,
 				D5E8085714297F8E00116292 /* RSSFeedLoader.m in Sources */,
+				D5E8087D1429892600116292 /* MainTabBarController.m in Sources */,
+				D5E8088114298AF600116292 /* ArticleListController.m in Sources */,
+				D5E808841429920600116292 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

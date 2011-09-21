@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Miscellany_NewsAppDelegate.h"
+#import "AppDelegate.h"
 
 int main(int argc, char *argv[])
 {
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([Miscellany_NewsAppDelegate class]));
+    @autoreleasepool 
+    {
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }

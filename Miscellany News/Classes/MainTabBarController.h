@@ -12,10 +12,11 @@
 
 @interface MainTabBarController : UITabBarController <UITabBarControllerDelegate>
 {
-//    ArticleListController *allArticlesController;
-//    ArticleListController *sportsArticlesController;
-//    ArticleListController *opinionArticlesController;
-//    ArticleListController *artArticlesController;
+    ArticleListController *newsArticlesController;
+    ArticleListController *featuresArticlesController;
+    ArticleListController *sportsArticlesController;
+    ArticleListController *opinionArticlesController;
+    ArticleListController *artArticlesController;
 }
 
 @end

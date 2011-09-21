@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Miscellany_NewsAppDelegate : NSObject <UIApplicationDelegate>
+@interface AppDelegate : NSObject <UIApplicationDelegate>
 
-@property (nonatomic, strong) NSArray *entries;
+//@property (nonatomic, strong) NSArray *entries;
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, strong) IBOutlet UINavigationController *navigationController;

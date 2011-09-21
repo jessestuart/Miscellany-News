@@ -7,16 +7,16 @@
 //
 
 #import "MainTabBarController.h"
-#import "Miscellany_NewsAppDelegate.h"
+#import "AppDelegate.h"
+#import "ArticleListController.h"
 
 @implementation MainTabBarController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
     if (([super init])) 
     {
-        
-        // Custom initialization
+//        newsArticlesController = [ArticleListController alloc] 
     }
     return self;
 }

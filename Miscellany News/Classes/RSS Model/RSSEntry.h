@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum {
+    MNNewsCategory,
+    MNFeaturesCategory,
+    MNOpinionsCategory,
+    MNSportsCategory,
+    MNArtsCategory
+} MNEntryCategory;
+
 @interface RSSEntry : NSObject
 
 @property (readonly, copy) NSString *category;
