@@ -43,7 +43,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>feedURL</key>
+	<key>jFeedURL</key>
 	<string>feed://www.miscellanynews.com/se/1.38617</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>diploma.ttf</string>
+	</array>
 </dict>
 </plist>
