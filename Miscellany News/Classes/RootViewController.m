@@ -29,7 +29,6 @@
 
 @interface RootViewController ()
 - (void)sortEntries:(NSMutableArray *)unsortedEntries;
-- (void)parseArticleTextForEntry:(RSSEntry *)entry;
 @end
 
 @implementation RootViewController
@@ -43,93 +42,20 @@
 /**
  *  Initialize an HTTP request for the RSS feed data
  */
-- (void)refreshFeed
-{
-    // Pull feed URL from info plist, initialize ASIHTTP request, and add to queue
-    NSURL *miscFeedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:feedURL]];
-    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:miscFeedURL];
-    request.delegate = self;
-    [_queue addOperation:request];
-}
+//- (void)refreshFeed
+//{
+//    // Pull feed URL from info plist, initialize ASIHTTP request, and add to queue
+//    NSURL *miscFeedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:jFeedURL]];
+//    ASIHTTPRequest *request = [[ASIHTTPRequest alloc] initWithURL:miscFeedURL];
+//    request.delegate = self;
+//    [_queue addOperation:request];
+//}
 
-/**
- *  ASIHTTPRequestDelegate callback. Display a "Failed to retrieve feed" alert view.
- */
-- (void)requestFailed:(ASIHTTPRequest *)request
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network error" 
-                                                    message:@"Failed to retrieve feed." 
-                                                   delegate:nil 
-                                          cancelButtonTitle:@"Close" 
-                                          otherButtonTitles:nil];
-    [alert show];
-}
 
-/**
- *  ASIHTTPRequestDelegate callback. 
- */
-- (void)requestFinished:(ASIHTTPRequest *)request
-{
-    // Autorelease pool
-//    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    // Working array for unsorted RSS entries
-    NSMutableArray *unsortedEntries = [[NSMutableArray alloc] init];
-    
-    // Initialize XML document with feed data
-    NSError *error = nil;
-    CXMLDocument *document = [[CXMLDocument alloc] initWithData:[request responseData] options:0 error:&error];
-    JSAssert(error == nil, @"Error creating document from feed");
-    
-    // We can use the channel element to get to all of the RSS items
-    CXMLElement *channel = [[[document rootElement] elementsForName:@"channel"] lastObject];
-    
-    // Initialize date formatter. We'll use this to convert the pubDate into an NSDate object
-    NSDateFormatter *pubDateFormatter = [[NSDateFormatter alloc] init];
-    NSLocale *USEnglishLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [pubDateFormatter setLocale:USEnglishLocale];
-    [pubDateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
-    
-    // Recurse over all the RSS items in the feed
-    for (CXMLElement *item in [channel elementsForName:@"item"])
-    {
-        @autoreleasepool 
-        {
-            
-            /* NOTE: lot of weird hackery in here to deal with the messy RSS */
-            NSString *title = [[item elementForName:@"title"] stringByFlatteningHTML];
-            NSString *author = [[[[item elementForName:@"author"] substringFromIndex:1] 
-                                 stringByReplacingOccurrencesOfString:@" and " withString:@" & "]
-                                stringByReplacingOccurrencesOfString:@"the " withString:@""];
-            NSString *link = [item elementForName:@"link"];
-            NSString *summary = [[[[item elementForName:@"description"] stringByRemovingLeadingWhitespace] stringByFlatteningHTML] stringByDecodingHTMLEntities];
-            NSDate *pubDate = [pubDateFormatter dateFromString:[item elementForName:@"pubDate"]];
-            NSString *guid = [item elementForName:@"guid"];
-            NSString *category = [item elementForName:@"category"];
-            
-            NSLog(@"category: %@", category);
-            
-            // Allocate a new RSSEntry from feed info & add to unsorted entries
-            RSSEntry *entry = [[RSSEntry alloc] initWithTitle:title link:link author:author summary:summary pubDate:pubDate guid:guid category:category];
-            JSAssert(entry != nil, @"Error allocating entry");
-            [unsortedEntries addObject:entry];
-            
-            // Parse article text in background
-            [self parseArticleTextForEntry:entry];
-            // Fetch thumbnail
-            entry.thumbnailURL = [[[[item elementsForName:@"thumbnail"] lastObject] attributeForName:@"url"] stringValue];
-            entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:entry.thumbnailURL] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];   
-        }
-    }
-    
-    [self sortEntries:unsortedEntries];
-    
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
-    
-//    [pool drain];
-}
 
-- (void)parseArticleTextForEntry:(RSSEntry *)entry
+- (void)feedLoaderDidLoadEntry:(RSSEntry *)entry
 {
+    NSLog(@"feedLoaderDidLoadEntry: %@", entry.title);
     RSSArticleParser *articleParser = [[RSSArticleParser alloc] initWithRSSEntry:entry];
     articleParser.delegate = _articleViewController;
     
@@ -138,6 +64,13 @@
         articleParser.delegate = nil;
     }];
 }
+
+- (void)feedLoaderFinishedLoadingEntries:(NSMutableArray *)entries
+{
+    [self sortEntries:entries];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
 
 - (void)sortEntries:(NSMutableArray *)unsortedEntries
 {
@@ -174,7 +107,7 @@
     [navBar applyNoiseWithOpacity:0.5];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 400, 44)];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"Palatino-Bold" size:20.0];
+    label.font = [UIFont fontWithName:@"Diploma" size:24.0];
     label.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
     label.textAlignment = UITextAlignmentCenter;
     label.textColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0];
@@ -211,12 +144,13 @@
 		[self.tableView addSubview:view];
 		_refreshHeaderView = view;
 	}
-    
     // Update the last update date
     [_refreshHeaderView refreshLastUpdatedDate];
     
     // Begin parsing RSS feed
-    [self refreshFeed];
+    NSURL *miscFeedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:jFeedURL]];
+    RSSFeedLoader *feedLoader = [[RSSFeedLoader alloc] initWithFeedURL:miscFeedURL];
+    [feedLoader refreshFeed];
 }
 
 #pragma mark -

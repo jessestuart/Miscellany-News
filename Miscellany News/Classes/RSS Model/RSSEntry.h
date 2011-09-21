@@ -9,20 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface RSSEntry : NSObject
-{
-    /* Set on initialization */
-    NSString *_title;
-    NSString *_link;
-    NSString *_author;
-    NSString *_summary;
-    NSDate *_pubDate;
-    NSString *_guid;
-    NSString *_category;
-    /* Set later */
-    NSString *_text;
-    NSString *_thumbnailURL;
-    UIImage *_thumbnail;
-}
 
 @property (readonly, copy) NSString *category;
 @property (readonly, copy) NSString *guid;
@@ -42,10 +28,5 @@
              pubDate:(NSDate *)pubDate
                 guid:(NSString *)guid
             category:(NSString *)category;
-
-              
-               
-            
-            
 
 @end

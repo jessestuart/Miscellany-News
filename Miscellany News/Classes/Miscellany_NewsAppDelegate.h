@@ -10,16 +10,10 @@
 
 @interface Miscellany_NewsAppDelegate : NSObject <UIApplicationDelegate>
 
+@property (nonatomic, strong) NSArray *entries;
+
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-
-//@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
-//@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
-//@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
-//- (void)saveContext;
-//- (NSURL *)applicationDocumentsDirectory;
-
 @property (nonatomic, strong) IBOutlet UINavigationController *navigationController;
-@property (nonatomic, strong) IBOutlet UITabBarController *tabBarController;
+//@property (nonatomic, strong) IBOutlet UITabBarController *tabBarController;
 
 @end

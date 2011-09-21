@@ -7,14 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreData/CoreData.h>
 
-#import "ASIHTTPRequest.h"
+#import "RSSFeedLoader.h"
 #import "EGORefreshTableHeaderView.h"
 
 @class ArticleViewController;
 
-@interface RootViewController : UITableViewController <ASIHTTPRequestDelegate, EGORefreshTableHeaderDelegate>
+@interface RootViewController : UITableViewController <EGORefreshTableHeaderDelegate, RSSFeedLoaderDelegate>
 {
     EGORefreshTableHeaderView *_refreshHeaderView;
     ArticleViewController *_articleViewController;
@@ -23,10 +22,5 @@
     
     BOOL _reloading;
 }
-
-//@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
-//@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-
-- (void)refreshFeed;
 
 @end

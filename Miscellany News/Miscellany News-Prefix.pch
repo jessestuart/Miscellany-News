@@ -16,8 +16,8 @@
     #define ALog(...) NSLog(__VA_ARGS__)
 #endif
 
-#ifndef __IPHONE_3_0
-#warning "This project uses features only available in iPhone SDK 3.0 and later."
+#ifndef __IPHONE_4_0
+    #warning "This project uses features only available in iPhone SDK 4.0 and later."
 #endif
 
 #ifdef __OBJC__
@@ -28,4 +28,4 @@
 
 #define JSAssert(condition, ...) do { if (!(condition)) { ALog(__VA_ARGS__); }} while(0)
 
-#define feedURL @"feedURL"
+#define jFeedURL @"jFeedURL"

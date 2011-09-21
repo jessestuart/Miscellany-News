@@ -7,20 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ASIHTTPRequest.h"
 
+@class RSSEntry;
+
+@interface RSSFeedLoader : NSObject <ASIHTTPRequestDelegate>
+
+@property (unsafe_unretained) id delegate;
+@property (strong) NSOperationQueue *queue;
+@property (strong) NSURL *feedURL;
+
+- (id)initWithFeedURL:(NSURL *)feedURL;
+- (void)refreshFeed;
+
+@end
+
+// Protocol definition
 @protocol RSSFeedLoaderDelegate <NSObject>
 @optional
 - (void)feedLoaderDidStart;
-
-@required
 - (void)feedLoaderDidFailWithError:(NSError *)error;
-- (void)feedLoaderDidLoadEntries:(NSArray *)entries;
-@end
-
-@interface RSSFeedLoader : NSObject
-
-@property (strong) NSArray *entries;
-
-- (id)initWithFeedURL:(NSURL *)feedURL;
-
+- (void)feedLoaderDidLoadEntry:(RSSEntry *)entry;
+@required
+- (void)feedLoaderFinishedLoadingEntries:(NSMutableArray *)entries;
 @end

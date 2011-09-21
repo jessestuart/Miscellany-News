@@ -12,12 +12,10 @@
 
 @implementation Miscellany_NewsAppDelegate
 
+@synthesize entries = _entries;
 @synthesize window = _window;
-//@synthesize managedObjectContext = __managedObjectContext;
-//@synthesize managedObjectModel = __managedObjectModel;
-//@synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize navigationController = _navigationController;
-@synthesize tabBarController = _tabBarController;
+//@synthesize tabBarController = _tabBarController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
