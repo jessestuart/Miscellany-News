@@ -22,6 +22,7 @@
 @synthesize thumbnail = _thumbnail;
 @synthesize thumbnailURL = _thumbnailURL;
 @synthesize category = _category;
+@synthesize categoryID = _categoryID;
 
 - (id)initWithTitle:(NSString *)title 
                link:(NSString *)link 
@@ -30,6 +31,7 @@
             pubDate:(NSDate *)pubDate 
                guid:(NSString *)guid 
            category:(NSString *)category
+         categoryID:(int)categoryID
 {
     if ((self = [super init]))
     {        
@@ -40,6 +42,7 @@
         _pubDate = [pubDate copy];
         _guid = [guid copy];
         _category = [category copy];
+        _categoryID = categoryID;
     }
     return self;
 }

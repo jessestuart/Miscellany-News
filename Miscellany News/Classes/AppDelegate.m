@@ -9,20 +9,39 @@
 #import "AppDelegate.h"
 
 #import "RootViewController.h"
+#import "RSSArticleParser.h"
+#import "ArticleViewController.h"
+#import "MainTabBarController.h"
 
 @implementation AppDelegate
 
-//@synthesize entries = _entries;
+@synthesize queue = _queue;
+@synthesize feedLoader = _feedLoader;
+@synthesize entries = _entries;
+
 @synthesize window;
 @synthesize navigationController;
-//@synthesize tabBarController = _tabBarController;
+@synthesize tabBarController;
+@synthesize articleViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    navigationController = [[UINavigationController alloc] init];
+    tabBarController = [[MainTabBarController alloc] init];
+    navigationController.viewControllers = [NSArray arrayWithObject:tabBarController];
+    
     window.rootViewController = navigationController;
     [window makeKeyAndVisible];
+    
+    if (articleViewController == nil) 
+    {
+        articleViewController = [[ArticleViewController alloc] init];
+    }
+    
     return YES;
 }
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

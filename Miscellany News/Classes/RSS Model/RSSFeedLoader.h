@@ -18,7 +18,7 @@
 @property (strong) NSURL *feedURL;
 
 - (id)initWithFeedURL:(NSURL *)feedURL;
-- (void)refreshFeed;
+- (void)loadFeed;
 
 @end
 

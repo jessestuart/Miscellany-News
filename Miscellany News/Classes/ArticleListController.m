@@ -12,31 +12,54 @@
 #import "ArticleViewController.h"
 #import "RootViewController.h"
 #import "AppDelegate.h"
+#import "NSArray+Extras.h"
+
+@interface ArticleListController ()
+- (void)sortEntriesAndAddToTableView:(NSMutableArray *)unsortedEntries;
+@end
 
 @implementation ArticleListController
 
+//@synthesize entries = _entries;
 @synthesize tableView = _tableView;
 @synthesize refreshHeaderView = _refreshHeaderView;
 @synthesize articleViewController = _articleViewController;
-@synthesize allEntries = _allEntries;
 
-- (id)initWithCategoryFilter:(int)category
+- (id)init
 {
     if ((self = [super init])) 
     {
-        _category = category;
+        _entries = [NSMutableArray array];
         
-        
+        AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+        _navigationController = appDelegate.navigationController;
     }
     return self;
 }
 
-- (void)didReceiveMemoryWarning
+- (void)loadEntries:(NSMutableArray *)entries
 {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+    [self sortEntriesAndAddToTableView:entries];
+}
+
+ - (void)sortEntriesAndAddToTableView:(NSMutableArray *)unsortedEntries
+{
+    for (RSSEntry *entry in unsortedEntries) 
+    {
+        // Sort by date
+        int insertIdx = [_entries indexForInsertingObject:entry
+                                            sortedUsingBlock:^(id a, id b) {
+                                                RSSEntry *entry1 = (RSSEntry *) a;
+                                                RSSEntry *entry2 = (RSSEntry *) b;
+                                                return [entry1.pubDate compare:entry2.pubDate];
+                                            }];
+        // Add to array
+        [_entries insertObject:entry atIndex:insertIdx];
+        
+        // Add to table view
+        NSArray *idxPaths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:insertIdx inSection:0]];
+        [self.tableView insertRowsAtIndexPaths:idxPaths withRowAnimation:UITableViewRowAnimationRight];
+    }
 }
 
 #pragma mark - View lifecycle
@@ -44,13 +67,16 @@
 // Implement loadView to create a view hierarchy programmatically, without using a nib.
 - (void)loadView
 {
+    NSLog(@"Loading article list controller ");
     [super loadView];
     
     _tableView = [[UITableView alloc] initWithFrame:[[self view] bounds] style:UITableViewStylePlain];
     [_tableView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     [_tableView setDelegate:self];
     [_tableView setDataSource:self];
-    [self.view addSubview:_tableView];
+    [_tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
+    [_tableView setRowHeight:80.0];
+
 
     /*
      * Load EGORefreshTableHeaderView
@@ -60,7 +86,6 @@
         EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height) arrowImageName:@"blackArrow.png" textColor:[UIColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0]];
         view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]];
 		view.delegate = self;
-		[[self tableView] addSubview:view];
 		_refreshHeaderView = view;
 	}
     
@@ -68,13 +93,14 @@
     [_refreshHeaderView refreshLastUpdatedDate];
 }
 
-/*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.view addSubview:_tableView];
+    [self.tableView addSubview:_refreshHeaderView];
 }
-*/
 
 - (void)viewDidUnload
 {
@@ -99,7 +125,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_allEntries count];
+    return [_entries count];
 }
 
 // Customize the appearance of table view cells.
@@ -115,7 +141,7 @@
     }
     
     // Configure the cell.
-    RSSEntry *entry = [_allEntries objectAtIndex:indexPath.row];
+    RSSEntry *entry = [_entries objectAtIndex:indexPath.row];
     
     cell.textLabel.font = [UIFont fontWithName:@"Palatino-Bold" size:16.0];
     cell.textLabel.text = entry.title;
@@ -132,27 +158,20 @@
     return cell;
 }
 
-// Don't allow any editing
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return NO;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // The table view should not be re-orderable.
-    return NO;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     // Load article view if unloaded
-    if (_articleViewController == nil) {
-        _articleViewController = [[ArticleViewController alloc] initWithNibName:@"ArticleViewController" bundle:[NSBundle mainBundle]];
+    if (_articleViewController == nil) 
+    {
+        AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
+        _articleViewController = appDelegate.articleViewController;
     }
     
-    _articleViewController.entry = [_allEntries objectAtIndex:indexPath.row];
-    [self.navigationController pushViewController:_articleViewController animated:YES];
+    _articleViewController.entry = [_entries objectAtIndex:indexPath.row];
+    
+    [_navigationController pushViewController:_articleViewController animated:YES];
 }
 
 #pragma mark -

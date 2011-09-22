@@ -134,7 +134,7 @@
     NSURL *miscFeedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:jFeedURL]];
     _feedLoader = [[RSSFeedLoader alloc] initWithFeedURL:miscFeedURL];
     _feedLoader.delegate = self;
-    [_feedLoader refreshFeed];
+    [_feedLoader loadFeed];
 }
 
 #pragma mark -

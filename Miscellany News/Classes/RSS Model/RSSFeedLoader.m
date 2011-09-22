@@ -16,6 +16,10 @@
 #import "NSString+JDS.h"
 #import "NSString+HTML.h"
 
+@interface RSSFeedLoader ()
+- (MNEntryCategory)categoryIDForCategory:(NSString *)category;
+@end
+
 @implementation RSSFeedLoader
 
 @synthesize delegate = _delegate;
@@ -35,7 +39,7 @@
 /**
  *  Initialize an HTTP request for the RSS feed data
  */
-- (void)refreshFeed
+- (void)loadFeed
 {
     // Pull feed URL from info plist, initialize ASIHTTP request, and add to queue
     NSURL *miscFeedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:jFeedURL]];
@@ -86,7 +90,6 @@
     {
         @autoreleasepool 
         {
-            
             /* NOTE: lot of weird hackery in here to deal with the messy RSS */
             NSString *title = [[item elementForName:@"title"] stringByFlatteningHTML];
             NSString *author = [[[[item elementForName:@"author"] substringFromIndex:1] 
@@ -97,11 +100,13 @@
             NSDate *pubDate = [pubDateFormatter dateFromString:[item elementForName:@"pubDate"]];
             NSString *guid = [item elementForName:@"guid"];
             NSString *category = [item elementForName:@"category"];
+            int categoryID = [self categoryIDForCategory:category];
+            
             
 //            NSLog(@"category: %@", category);
             
             // Allocate a new RSSEntry from feed info & add to unsorted entries
-            RSSEntry *entry = [[RSSEntry alloc] initWithTitle:title link:link author:author summary:summary pubDate:pubDate guid:guid category:category];
+            RSSEntry *entry = [[RSSEntry alloc] initWithTitle:title link:link author:author summary:summary pubDate:pubDate guid:guid category:category categoryID:categoryID];
             JSAssert(entry != nil, @"Error allocating entry");
             [unsortedEntries addObject:entry];
             
@@ -115,11 +120,43 @@
     }
     
     [_delegate feedLoaderFinishedLoadingEntries:unsortedEntries];
-    
-    
-    //    [self sortEntries:unsortedEntries];
-    
-    //    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
+
+- (MNEntryCategory)categoryIDForCategory:(NSString *)category
+{
+    // News category
+    if ([category isEqualToString:@"News"])
+    {
+        return MNNewsCategory;
+    }
+    // Features category (plus unfiled)
+    else if ([category isEqualToString:@"Features"] || 
+             [category isEqualToString:@"The Miscellany News"] ||
+             [category isEqualToString:@"Meet Vassar College"])
+    {
+        return MNFeaturesCategory;
+    }
+    // Opinions category
+    else if ([category isEqualToString:@"Opinions"])
+    {
+        return MNOpinionsCategory;
+    }
+    // Arts category
+    else if ([category isEqualToString:@"Arts"])
+    {
+        return MNArtsCategory;
+    }
+    // Sports category
+    else if ([category isEqualToString:@"Sports"])
+    {
+        return MNSportsCategory;
+    }
+    // Unrecognized
+    else
+    {
+        NSLog(@"Unrecognized category: %@", category);
+        return -1;
+    }
 }
 
 @end

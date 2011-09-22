@@ -7,16 +7,27 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RSSFeedLoader.h"
 
 @class ArticleListController;
 
-@interface MainTabBarController : UITabBarController <UITabBarControllerDelegate>
+@interface MainTabBarController : UIViewController <UITabBarControllerDelegate, RSSFeedLoaderDelegate>
 {
-    ArticleListController *newsArticlesController;
-    ArticleListController *featuresArticlesController;
-    ArticleListController *sportsArticlesController;
-    ArticleListController *opinionArticlesController;
-    ArticleListController *artArticlesController;
+    __strong RSSFeedLoader *_feedLoader;
+    NSOperationQueue *_queue;
+    
+    UITabBarController *tabBarController;
+    
+    ArticleListController *news;
+    ArticleListController *features;
+    ArticleListController *opinions;
+    ArticleListController *arts;
+    ArticleListController *sports;
 }
+
+@property (nonatomic, strong) NSMutableArray *allEntries;
+
+//- (id)initWithEntries:(NSMutableArray *)entries;
+- (void)refreshFeed;
 
 @end

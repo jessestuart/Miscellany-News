@@ -18,6 +18,7 @@ typedef enum {
 
 @interface RSSEntry : NSObject
 
+@property (readonly) int categoryID;
 @property (readonly, copy) NSString *category;
 @property (readonly, copy) NSString *guid;
 @property (readonly, copy) NSString *author;
@@ -35,6 +36,7 @@ typedef enum {
              summary:(NSString *)summary
              pubDate:(NSDate *)pubDate
                 guid:(NSString *)guid
-            category:(NSString *)category;
+            category:(NSString *)category
+          categoryID:(int)categoryID;
 
 @end

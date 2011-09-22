@@ -20,6 +20,8 @@
 		D51626EC13F86C7D00BDB710 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D51626EA13F86C7D00BDB710 /* RootViewController.xib */; };
 		D51627E513F8C2CE00BDB710 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D51627E413F8C2CE00BDB710 /* libxml2.2.dylib */; };
 		D5204FAD13F9460A008974FF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5204FAC13F9460A008974FF /* QuartzCore.framework */; };
+		D52DAA67142A7BB100582D05 /* 08-chat.png in Resources */ = {isa = PBXBuildFile; fileRef = D52DAA65142A7BB100582D05 /* 08-chat.png */; };
+		D52DAA68142A7BB100582D05 /* 28-star.png in Resources */ = {isa = PBXBuildFile; fileRef = D52DAA66142A7BB100582D05 /* 28-star.png */; };
 		D52F1540140173F000E5C1D2 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = D52F153B140173F000E5C1D2 /* background.png */; };
 		D52F1541140173F000E5C1D2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D52F153C140173F000E5C1D2 /* Default.png */; };
 		D52F1542140173F000E5C1D2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D52F153D140173F000E5C1D2 /* Default@2x.png */; };
@@ -36,6 +38,9 @@
 		D535B12C1406EFD200215FB7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D535B12B1406EFD200215FB7 /* SystemConfiguration.framework */; };
 		D535B3AF1406F1CC00215FB7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D535B3AE1406F1CC00215FB7 /* Security.framework */; };
 		D535B3B11406F1D100215FB7 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D535B3B01406F1D100215FB7 /* MessageUI.framework */; };
+		D5601E8C142A6A5800F692D9 /* 33-cabinet.png in Resources */ = {isa = PBXBuildFile; fileRef = D5601E87142A6A5800F692D9 /* 33-cabinet.png */; };
+		D5601E8F142A6A5800F692D9 /* 98-palette.png in Resources */ = {isa = PBXBuildFile; fileRef = D5601E8A142A6A5800F692D9 /* 98-palette.png */; };
+		D5601E91142A6B9100F692D9 /* 89-dumbell.png in Resources */ = {isa = PBXBuildFile; fileRef = D5601E90142A6B9100F692D9 /* 89-dumbell.png */; };
 		D59A665F140F3D2200C1EEC4 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D59A6578140F3D2200C1EEC4 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D59A6660140F3D2200C1EEC4 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D59A657B140F3D2200C1EEC4 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D59A6661140F3D2200C1EEC4 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D59A657D140F3D2200C1EEC4 /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -163,6 +168,8 @@
 		D51626EB13F86C7D00BDB710 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/RootViewController.xib; sourceTree = "<group>"; };
 		D51627E413F8C2CE00BDB710 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		D5204FAC13F9460A008974FF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D52DAA65142A7BB100582D05 /* 08-chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "08-chat.png"; sourceTree = "<group>"; };
+		D52DAA66142A7BB100582D05 /* 28-star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "28-star.png"; sourceTree = "<group>"; };
 		D52F153B140173F000E5C1D2 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = "Miscellany News/Images/background.png"; sourceTree = "<group>"; };
 		D52F153C140173F000E5C1D2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = "Miscellany News/Images/Default.png"; sourceTree = "<group>"; };
 		D52F153D140173F000E5C1D2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Miscellany News/Images/Default@2x.png"; sourceTree = "<group>"; };
@@ -181,6 +188,9 @@
 		D535B12B1406EFD200215FB7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D535B3AE1406F1CC00215FB7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		D535B3B01406F1D100215FB7 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		D5601E87142A6A5800F692D9 /* 33-cabinet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "33-cabinet.png"; sourceTree = "<group>"; };
+		D5601E8A142A6A5800F692D9 /* 98-palette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "98-palette.png"; sourceTree = "<group>"; };
+		D5601E90142A6B9100F692D9 /* 89-dumbell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "89-dumbell.png"; sourceTree = "<group>"; };
 		D59A6577140F3D2200C1EEC4 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		D59A6578140F3D2200C1EEC4 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		D59A6579140F3D2200C1EEC4 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -483,6 +493,7 @@
 		D516270B13F884C100BDB710 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D5601E85142A6A5800F692D9 /* TabBar icons */,
 				D5E808591429806200116292 /* diploma.ttf */,
 				D535B0281405B3E400215FB7 /* EGOTableViewPullRefresh */,
 				D52F153B140173F000E5C1D2 /* background.png */,
@@ -537,6 +548,19 @@
 			);
 			name = EGOTableViewPullRefresh;
 			path = "Miscellany News/Images/EGOTableViewPullRefresh";
+			sourceTree = "<group>";
+		};
+		D5601E85142A6A5800F692D9 /* TabBar icons */ = {
+			isa = PBXGroup;
+			children = (
+				D52DAA65142A7BB100582D05 /* 08-chat.png */,
+				D52DAA66142A7BB100582D05 /* 28-star.png */,
+				D5601E90142A6B9100F692D9 /* 89-dumbell.png */,
+				D5601E87142A6A5800F692D9 /* 33-cabinet.png */,
+				D5601E8A142A6A5800F692D9 /* 98-palette.png */,
+			);
+			name = "TabBar icons";
+			path = "Miscellany News/Images/TabBar icons";
 			sourceTree = "<group>";
 		};
 		D59A6575140F3D2200C1EEC4 /* Libraries */ = {
@@ -1171,6 +1195,11 @@
 				D59A6692140F3D2200C1EEC4 /* FBConnect.bundle in Resources */,
 				D59A66D4140F3D5E00C1EEC4 /* ArticleViewController.xib in Resources */,
 				D5E8085A1429806200116292 /* diploma.ttf in Resources */,
+				D5601E8C142A6A5800F692D9 /* 33-cabinet.png in Resources */,
+				D5601E8F142A6A5800F692D9 /* 98-palette.png in Resources */,
+				D5601E91142A6B9100F692D9 /* 89-dumbell.png in Resources */,
+				D52DAA67142A7BB100582D05 /* 08-chat.png in Resources */,
+				D52DAA68142A7BB100582D05 /* 28-star.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
