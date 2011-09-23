@@ -15,6 +15,7 @@
 #import "UIImage+ProportionalFill.h"
 #import "NSString+JDS.h"
 #import "NSString+HTML.h"
+#import "MBProgressHUD.h"
 
 @interface RSSFeedLoader ()
 - (MNEntryCategory)categoryIDForCategory:(NSString *)category;
@@ -61,6 +62,8 @@
                                           cancelButtonTitle:@"Close" 
                                           otherButtonTitles:nil];
     [alert show];
+    
+    [self.delegate feedLoaderDidFailWithError:nil];
 }
 
 /**
@@ -91,12 +94,12 @@
         @autoreleasepool 
         {
             // NOTE: lot of weird hackery in here to deal with the messy RSS
-            NSString *title = [[item elementForName:@"title"] stringByFlatteningHTML];
+            NSString *title = [[[item elementForName:@"title"] stringByStrippingTags] stringByTrimmingDuplicateSpaces];
             NSString *author = [[[[item elementForName:@"author"] substringFromIndex:1] 
                                  stringByReplacingOccurrencesOfString:@" and " withString:@" & "]
                                 stringByReplacingOccurrencesOfString:@"the " withString:@""];
             NSString *link = [item elementForName:@"link"];
-            NSString *summary = [[[[item elementForName:@"description"] stringByRemovingLeadingWhitespace] stringByFlatteningHTML] stringByDecodingHTMLEntities];
+            NSString *summary = [[[[[item elementForName:@"description"] stringByFlatteningHTML] stringByDecodingHTMLEntities] stringByStrippingMatchingRegex:@"[\t\r\n]"] stringByRemovingLeadingWhitespace];
             NSDate *pubDate = [pubDateFormatter dateFromString:[item elementForName:@"pubDate"]];
             NSString *guid = [item elementForName:@"guid"];
             NSString *category = [item elementForName:@"category"];
@@ -128,7 +131,7 @@
 }
 
 - (MNEntryCategory)categoryIDForCategory:(NSString *)category
-{
+{    
     // News category
     if ([category isEqualToString:@"News"])
     {

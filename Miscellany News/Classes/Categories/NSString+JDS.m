@@ -10,41 +10,48 @@
 
 @implementation NSString (JDS)
 
-- (NSString *)substringBetweenString:(NSString *)substring1 andString:(NSString *)substring2 regex:(BOOL)regex
+- (NSString *)stringByTrimmingDuplicateSpaces
 {
     NSString *s = [self copy];
+    NSRange r;
+    while((r = [s rangeOfString:@"  " options:NSRegularExpressionSearch]).location != NSNotFound)
+    {
+        s = [s stringByReplacingCharactersInRange:r withString:@" "];
+    }
+    return s;
+}
+
+- (NSString *)substringBetweenString:(NSString *)substring1 andString:(NSString *)substring2 regex:(BOOL)regex
+{
+    NSString *s = self;
     NSRange beginRange, endRange;
     NSUInteger beginIdx, endIdx;
     
-    if (regex) 
-    {
-        beginRange = [s rangeOfString:substring1 options:NSRegularExpressionSearch];
-        beginIdx = beginRange.location + beginRange.length;
-        endRange = [s rangeOfString:substring2 options:NSRegularExpressionSearch];
-        endIdx = endRange.location;
-    }
-    else
-    {
-        beginRange = [s rangeOfString:substring1];
-        beginIdx = beginRange.location + beginRange.length;
-        endRange = [s rangeOfString:substring2];
-        endIdx = endRange.location;
-    }
-
-    s = [s substringWithRange:NSMakeRange(beginIdx, endIdx-beginIdx)];
+    beginRange = [s rangeOfString:substring1 options:(regex ? NSRegularExpressionSearch : NSCaseInsensitiveSearch)];
+    beginIdx = beginRange.location + beginRange.length;
+    endRange = [s rangeOfString:substring2 options:NSRegularExpressionSearch];
+    endIdx = endRange.location;
     
-    return ([s length] > 0) ? s : nil;
+    beginRange = [s rangeOfString:substring1];
+    beginIdx = beginRange.location + beginRange.length;
+    endRange = [s rangeOfString:substring2];
+    endIdx = endRange.location;
+    
+    // Make sure neither search returned NSNotFound
+    if (beginRange.location == NSNotFound || endRange.location == NSNotFound) 
+    {
+        NSLog(@"error: string not found");
+        return nil;
+    }
+    
+    return [s substringWithRange:NSMakeRange(beginIdx, endIdx-beginIdx)];
 }
 
 - (NSString *)stringByRemovingLeadingWhitespace
 {
-//    if ([self length] > 20) // hack to prevent weird error
-//    {
     NSString *s = [self copy];
     NSRange r = [s rangeOfString:@"[a-zA-Z0-9\"]" options:NSRegularExpressionSearch];
-    return (r.location != NSNotFound) ? [s substringFromIndex:r.location] : nil;
-//    }
-//    else return nil;
+    return (r.location != NSNotFound) ? [s substringFromIndex:r.location] : s;
 }
 
 - (NSString *)stringByFlatteningHTML
@@ -57,8 +64,8 @@
  */
 - (NSString *)stringByStrippingMatchingRegex:(NSString *)regex
 {
-    NSRange r;
     NSString *s = [self copy];
+    NSRange r;
     while((r = [s rangeOfString:regex options:NSRegularExpressionSearch]).location != NSNotFound)
     {
         s = [s stringByReplacingCharactersInRange:r withString:@""];

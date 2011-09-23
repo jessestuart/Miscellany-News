@@ -13,6 +13,7 @@
 - (NSString *)stringByFlatteningHTML;
 - (NSString *)stringByRemovingLeadingWhitespace;
 - (NSString *)stringByStrippingMatchingRegex:(NSString *)regex;
+- (NSString *)stringByTrimmingDuplicateSpaces;
 - (NSString *)substringBetweenString:(NSString *)substring1 
                            andString:(NSString *)substring2 
                                regex:(BOOL)regex;

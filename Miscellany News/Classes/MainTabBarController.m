@@ -35,6 +35,11 @@
     int fromIdx = tabBarController.selectedIndex;
     int toIdx = [tabBarController.viewControllers indexOfObject:viewController];
     
+    if (fromIdx == toIdx)
+    {
+        return YES;   
+    }
+    
     // Get views. controllerIndex is passed in as the controller we want to go to. 
     UIView * fromView = [[tabBarController.viewControllers objectAtIndex:fromIdx] view];
     UIView * toView = [[tabBarController.viewControllers objectAtIndex:toIdx] view];
@@ -118,6 +123,11 @@
     [arts loadEntries:artsEntries];
     [sports loadEntries:sportsEntries];
     
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+}
+
+- (void)feedLoaderDidFailWithError:(NSError *)error
+{
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
 }
 

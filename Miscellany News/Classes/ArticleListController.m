@@ -14,10 +14,6 @@
 #import "AppDelegate.h"
 #import "NSArray+Extras.h"
 
-@interface ArticleListController ()
-- (void)sortEntriesAndAddToTableView:(NSMutableArray *)unsortedEntries;
-@end
-
 @implementation ArticleListController
 
 @synthesize entries = _entries,

@@ -486,7 +486,6 @@
 		D516270A13F884B700BDB710 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				D51626E413F86C7D00BDB710 /* MainWindow.xib */,
 				D51626DB13F86C7D00BDB710 /* main.m */,
 				D51626DD13F86C7D00BDB710 /* Miscellany News-Prefix.pch */,
 				D51626D713F86C7D00BDB710 /* Miscellany News-Info.plist */,
@@ -520,10 +519,8 @@
 				D5E8087B1429892600116292 /* MainTabBarController.m */,
 				D59A66CC140F3D5000C1EEC4 /* ArticleViewController.h */,
 				D59A66CE140F3D5000C1EEC4 /* ArticleViewController.m */,
-				D59A66D2140F3D5E00C1EEC4 /* ArticleViewController.xib */,
 				D59A66CD140F3D5000C1EEC4 /* RootViewController.h */,
 				D59A66CF140F3D5000C1EEC4 /* RootViewController.m */,
-				D51626EA13F86C7D00BDB710 /* RootViewController.xib */,
 				D5E808821429920600116292 /* AppDelegate.h */,
 				D5E808831429920600116292 /* AppDelegate.m */,
 			);
@@ -533,6 +530,9 @@
 		D516271213F8867100BDB710 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D51626E413F86C7D00BDB710 /* MainWindow.xib */,
+				D51626EA13F86C7D00BDB710 /* RootViewController.xib */,
+				D59A66D2140F3D5E00C1EEC4 /* ArticleViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
