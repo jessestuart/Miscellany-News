@@ -20,10 +20,10 @@
 
 @implementation ArticleListController
 
-//@synthesize entries = _entries;
-@synthesize tableView = _tableView;
-@synthesize refreshHeaderView = _refreshHeaderView;
-@synthesize articleViewController = _articleViewController;
+@synthesize entries = _entries,
+            tableView = _tableView,
+            refreshHeaderView = _refreshHeaderView,
+            articleViewController = _articleViewController;
 
 - (id)init
 {
@@ -39,20 +39,15 @@
 
 - (void)loadEntries:(NSMutableArray *)entries
 {
-    [self sortEntriesAndAddToTableView:entries];
-}
-
- - (void)sortEntriesAndAddToTableView:(NSMutableArray *)unsortedEntries
-{
-    for (RSSEntry *entry in unsortedEntries) 
+    for (RSSEntry *entry in entries) 
     {
         // Sort by date
         int insertIdx = [_entries indexForInsertingObject:entry
-                                            sortedUsingBlock:^(id a, id b) {
-                                                RSSEntry *entry1 = (RSSEntry *) a;
-                                                RSSEntry *entry2 = (RSSEntry *) b;
-                                                return [entry1.pubDate compare:entry2.pubDate];
-                                            }];
+                                         sortedUsingBlock:^(id a, id b) {
+                                             RSSEntry *entry1 = (RSSEntry *) a;
+                                             RSSEntry *entry2 = (RSSEntry *) b;
+                                             return [entry1.pubDate compare:entry2.pubDate];
+                                         }];
         // Add to array
         [_entries insertObject:entry atIndex:insertIdx];
         
@@ -76,7 +71,6 @@
     [_tableView setDataSource:self];
     [_tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
     [_tableView setRowHeight:80.0];
-
 
     /*
      * Load EGORefreshTableHeaderView
@@ -149,7 +143,7 @@
     
     //    cell.imageView.image = entry.thumbnail;
     UIImageView *imageView = [[UIImageView alloc] initWithImage:entry.thumbnail];
-    cell.accessoryView = imageView;
+    cell.imageView.image = imageView.image;
     
     cell.detailTextLabel.font = [UIFont fontWithName:@"Helvetica" size:13.0];
     cell.detailTextLabel.text = entry.summary;

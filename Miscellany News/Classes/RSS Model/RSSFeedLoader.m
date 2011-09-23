@@ -22,16 +22,16 @@
 
 @implementation RSSFeedLoader
 
-@synthesize delegate = _delegate;
-@synthesize queue = _queue;
-@synthesize feedURL = _feedURL;
+@synthesize delegate = _delegate,
+            queue = _queue,
+            feedURL = _feedURL;
 
 - (id)initWithFeedURL:(NSURL *)feedURL
 {
     if ((self = [super init])) 
     {
-        _feedURL = feedURL;
-        _queue = [[NSOperationQueue alloc] init];
+        self.feedURL = feedURL;
+        self.queue = [[NSOperationQueue alloc] init];
     }
     return self;
 }
@@ -90,7 +90,7 @@
     {
         @autoreleasepool 
         {
-            /* NOTE: lot of weird hackery in here to deal with the messy RSS */
+            // NOTE: lot of weird hackery in here to deal with the messy RSS
             NSString *title = [[item elementForName:@"title"] stringByFlatteningHTML];
             NSString *author = [[[[item elementForName:@"author"] substringFromIndex:1] 
                                  stringByReplacingOccurrencesOfString:@" and " withString:@" & "]
@@ -102,17 +102,22 @@
             NSString *category = [item elementForName:@"category"];
             int categoryID = [self categoryIDForCategory:category];
             
-            
-//            NSLog(@"category: %@", category);
-            
             // Allocate a new RSSEntry from feed info & add to unsorted entries
             RSSEntry *entry = [[RSSEntry alloc] initWithTitle:title link:link author:author summary:summary pubDate:pubDate guid:guid category:category categoryID:categoryID];
             JSAssert(entry != nil, @"Error allocating entry");
             [unsortedEntries addObject:entry];
             
-            // Fetch thumbnail
+            //Set thumbnail
             entry.thumbnailURL = [[[[item elementsForName:@"thumbnail"] lastObject] attributeForName:@"url"] stringValue];
-            entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:entry.thumbnailURL] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];
+            if (!entry.thumbnailURL || entry.thumbnailURL.length < 4) 
+            {
+                // Placerholder image
+                entry.thumbnail = [UIImage imageNamed:@"misc_placeholder.png"];
+            }
+            else 
+            {
+                entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:entry.thumbnailURL] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];   
+            }
             
             // Delegate will take care of parsing article text
             [_delegate feedLoaderDidLoadEntry:entry];

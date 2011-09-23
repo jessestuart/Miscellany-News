@@ -16,8 +16,6 @@
     __strong RSSFeedLoader *_feedLoader;
     NSOperationQueue *_queue;
     
-    UITabBarController *tabBarController;
-    
     ArticleListController *news;
     ArticleListController *features;
     ArticleListController *opinions;
@@ -25,9 +23,9 @@
     ArticleListController *sports;
 }
 
+@property (nonatomic, strong) UITabBarController *tabBarController;
 @property (nonatomic, strong) NSMutableArray *allEntries;
 
-//- (id)initWithEntries:(NSMutableArray *)entries;
 - (void)refreshFeed;
 
 @end

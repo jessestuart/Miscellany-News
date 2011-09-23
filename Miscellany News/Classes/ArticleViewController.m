@@ -46,7 +46,8 @@
 {
     // Article text has just been set for currently selected article,
     // so set textView's text and hide the activity indicator.
-    if (entry == self.entry) {
+    if (entry == self.entry) 
+    {
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             _textView.text = entry.text;;
             CGRect frame = _textView.frame;
@@ -66,10 +67,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
+    if ([super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) { }
     return self;
 }
 

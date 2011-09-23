@@ -15,19 +15,23 @@
 
 @implementation AppDelegate
 
-@synthesize queue = _queue;
-@synthesize feedLoader = _feedLoader;
-@synthesize entries = _entries;
-
-@synthesize window;
-@synthesize navigationController;
-@synthesize tabBarController;
-@synthesize articleViewController;
+@synthesize queue = _queue,
+            feedLoader = _feedLoader,
+            entries = _entries,
+            window,
+            navigationController,
+            tabBarController,
+            articleViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Create navigation controller & tab bar controller
     navigationController = [[UINavigationController alloc] init];
     tabBarController = [[MainTabBarController alloc] init];
+    
+    // Nest tab bar controller within navigation controller.
+    // Note: this is frowned upon by the HIG, but I believe it makes sense
+    // in this context (and besides, the nytimes app does the same thing)
     navigationController.viewControllers = [NSArray arrayWithObject:tabBarController];
     
     window.rootViewController = navigationController;

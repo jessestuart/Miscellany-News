@@ -13,21 +13,15 @@
 
 @interface ArticleViewController : UIViewController <RSSArticleParserDelegate>
 {
-    RSSEntry *_entry;
-    IBOutlet UIScrollView *_scrollView;
-    IBOutlet UITextView *_textView;
-    IBOutlet UILabel *_titleLabel;
-    IBOutlet UILabel *_authorAndDateLabel;
-    IBOutlet UILabel *_categoryLabel;
-    
     NSDateFormatter *_df;
 }
 
 @property (retain) RSSEntry *entry;
-@property (retain) UIScrollView *scrollView;
-@property (retain) UITextView *textView;
-@property (retain) UILabel *titleLabel;
-@property (retain) UILabel *authorAndDateLabel;
-@property (retain) UILabel *categoryLabel;
+
+@property (retain) IBOutlet UIScrollView *scrollView;
+@property (retain) IBOutlet UITextView *textView;
+@property (retain) IBOutlet UILabel *titleLabel;
+@property (retain) IBOutlet UILabel *authorAndDateLabel;
+@property (retain) IBOutlet UILabel *categoryLabel;
 
 @end

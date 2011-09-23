@@ -14,19 +14,17 @@
 
 @interface ArticleListController : UIViewController <UITableViewDelegate, UITableViewDataSource, EGORefreshTableHeaderDelegate, UIScrollViewDelegate>
 {
-    NSMutableArray *_entries;
     BOOL _reloading;
     
     UINavigationController *_navigationController;
 }
 
-//@property (strong) NSMutableArray *entries;
+@property (strong) NSMutableArray *entries;
 
 @property (strong) UITableView *tableView;
 @property (strong) EGORefreshTableHeaderView *refreshHeaderView;
 @property (strong) ArticleViewController *articleViewController;
 
 - (void)loadEntries:(NSMutableArray *)entries;
-//- (id)initWithEntries:(NSMutableArray *)entries;
 
 @end

@@ -41,6 +41,7 @@
 		D5601E8C142A6A5800F692D9 /* 33-cabinet.png in Resources */ = {isa = PBXBuildFile; fileRef = D5601E87142A6A5800F692D9 /* 33-cabinet.png */; };
 		D5601E8F142A6A5800F692D9 /* 98-palette.png in Resources */ = {isa = PBXBuildFile; fileRef = D5601E8A142A6A5800F692D9 /* 98-palette.png */; };
 		D5601E91142A6B9100F692D9 /* 89-dumbell.png in Resources */ = {isa = PBXBuildFile; fileRef = D5601E90142A6B9100F692D9 /* 89-dumbell.png */; };
+		D586BE81142BC3400068D209 /* misc_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = D586BE80142BC3400068D209 /* misc_placeholder.png */; };
 		D59A665F140F3D2200C1EEC4 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = D59A6578140F3D2200C1EEC4 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D59A6660140F3D2200C1EEC4 /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D59A657B140F3D2200C1EEC4 /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D59A6661140F3D2200C1EEC4 /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = D59A657D140F3D2200C1EEC4 /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -191,6 +192,7 @@
 		D5601E87142A6A5800F692D9 /* 33-cabinet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "33-cabinet.png"; sourceTree = "<group>"; };
 		D5601E8A142A6A5800F692D9 /* 98-palette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "98-palette.png"; sourceTree = "<group>"; };
 		D5601E90142A6B9100F692D9 /* 89-dumbell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "89-dumbell.png"; sourceTree = "<group>"; };
+		D586BE80142BC3400068D209 /* misc_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = misc_placeholder.png; path = "Miscellany News/Images/misc_placeholder.png"; sourceTree = "<group>"; };
 		D59A6577140F3D2200C1EEC4 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		D59A6578140F3D2200C1EEC4 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		D59A6579140F3D2200C1EEC4 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -440,9 +442,9 @@
 			isa = PBXGroup;
 			children = (
 				D59A6575140F3D2200C1EEC4 /* Libraries */,
-				D59A66D8140F3DC700C1EEC4 /* RSS Model */,
 				D59A66BB140F3D2F00C1EEC4 /* Categories */,
 				D516271213F8867100BDB710 /* Views */,
+				D59A66D8140F3DC700C1EEC4 /* RSS Model */,
 				D516271113F8865000BDB710 /* Controllers */,
 				D516270A13F884B700BDB710 /* Other Sources */,
 				D516270B13F884C100BDB710 /* Resources */,
@@ -484,8 +486,10 @@
 		D516270A13F884B700BDB710 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D51626E413F86C7D00BDB710 /* MainWindow.xib */,
 				D51626DB13F86C7D00BDB710 /* main.m */,
 				D51626DD13F86C7D00BDB710 /* Miscellany News-Prefix.pch */,
+				D51626D713F86C7D00BDB710 /* Miscellany News-Info.plist */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -493,15 +497,15 @@
 		D516270B13F884C100BDB710 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D5601E85142A6A5800F692D9 /* TabBar icons */,
-				D5E808591429806200116292 /* diploma.ttf */,
 				D535B0281405B3E400215FB7 /* EGOTableViewPullRefresh */,
+				D5601E85142A6A5800F692D9 /* TabBar icons */,
+				D586BE80142BC3400068D209 /* misc_placeholder.png */,
+				D5E808591429806200116292 /* diploma.ttf */,
 				D52F153B140173F000E5C1D2 /* background.png */,
 				D52F153C140173F000E5C1D2 /* Default.png */,
 				D52F153D140173F000E5C1D2 /* Default@2x.png */,
 				D52F153E140173F000E5C1D2 /* misc_iphone.png */,
 				D52F153F140173F000E5C1D2 /* misc_iphone@2x.png */,
-				D51626D713F86C7D00BDB710 /* Miscellany News-Info.plist */,
 				D51626D813F86C7D00BDB710 /* InfoPlist.strings */,
 			);
 			name = Resources;
@@ -529,7 +533,6 @@
 		D516271213F8867100BDB710 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D51626E413F86C7D00BDB710 /* MainWindow.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1200,6 +1203,7 @@
 				D5601E91142A6B9100F692D9 /* 89-dumbell.png in Resources */,
 				D52DAA67142A7BB100582D05 /* 08-chat.png in Resources */,
 				D52DAA68142A7BB100582D05 /* 28-star.png in Resources */,
+				D586BE81142BC3400068D209 /* misc_placeholder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

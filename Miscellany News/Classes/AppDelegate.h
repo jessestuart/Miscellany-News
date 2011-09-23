@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RSSFeedLoader.h"
 
-@class ArticleViewController, RootViewController, MainTabBarController;
+@class ArticleViewController, MainTabBarController;
 
 @interface AppDelegate : NSObject <UIApplicationDelegate>
 
@@ -18,11 +18,8 @@
 @property (nonatomic, strong) NSArray *entries;
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, strong) IBOutlet UINavigationController *navigationController;
-//@property (nonatomic, strong) RootViewController *rootViewController;
+@property (nonatomic, strong) UINavigationController *navigationController;
 @property (nonatomic, strong) IBOutlet MainTabBarController *tabBarController;
 @property (nonatomic, strong) ArticleViewController *articleViewController;
-
-//- (void)refreshFeed;
 
 @end

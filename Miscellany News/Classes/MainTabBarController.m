@@ -15,7 +15,8 @@
 
 @implementation MainTabBarController
 
-@synthesize allEntries = _allEntries;
+@synthesize allEntries = _allEntries,
+            tabBarController = _tabBarController;
 
 - (id)init
 {
@@ -26,6 +27,31 @@
     }
     return self;
 }
+
+#pragma mark -
+#pragma mark UITabBarController Delegate
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController
+{
+    int fromIdx = tabBarController.selectedIndex;
+    int toIdx = [tabBarController.viewControllers indexOfObject:viewController];
+    
+    // Get views. controllerIndex is passed in as the controller we want to go to. 
+    UIView * fromView = [[tabBarController.viewControllers objectAtIndex:fromIdx] view];
+    UIView * toView = [[tabBarController.viewControllers objectAtIndex:toIdx] view];
+    
+    [UIView transitionFromView:fromView toView:toView duration:0.5
+                       options:(fromIdx < toIdx ? UIViewAnimationOptionTransitionCurlUp : UIViewAnimationOptionTransitionCurlDown)
+                    completion:^(BOOL finished) {
+                        if (finished) {
+                            tabBarController.selectedIndex = toIdx;
+                        }
+                    }];
+
+    return YES;
+}
+
+#pragma mark -
+#pragma mark Feed loading
 
 - (void)refreshFeed
 {
@@ -85,7 +111,7 @@
                 break;
         }
     }
-
+    
     [news loadEntries:newsEntries];
     [features loadEntries:featuresEntries];
     [opinions loadEntries:opinionsEntries];
@@ -119,23 +145,32 @@
     label.text = self.title;
     self.navigationItem.titleView = label;
     
-    tabBarController = [[UITabBarController alloc] init];
-    tabBarController.view.frame = CGRectMake(0, 0, 320, 460);
-    
+    /*
+     * Create view controllers for each tab
+     */
     news = [[ArticleListController alloc] init];
     [news setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"News" image:[UIImage imageNamed:@"166-newspaper.png"] tag:0]];
+    
     features = [[ArticleListController alloc] init];
     [features setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Features" image:[UIImage imageNamed:@"28-star.png"] tag:0]];
+    
     opinions = [[ArticleListController alloc] init];
     [opinions setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Opinions" image:[UIImage imageNamed:@"08-chat.png"] tag:0]];
+    
     arts = [[ArticleListController alloc] init];
     [arts setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Arts" image:[UIImage imageNamed:@"98-palette.png"] tag:0]];
+    
     sports = [[ArticleListController alloc] init];
     [sports setTabBarItem:[[UITabBarItem alloc] initWithTitle:@"Sports" image:[UIImage imageNamed:@"89-dumbell.png"] tag:0]];
     
-    [tabBarController setViewControllers:[NSArray arrayWithObjects:news, features, opinions, arts, sports, nil]];
-    [tabBarController setDelegate:self];
-    [self.view addSubview:tabBarController.view];
+    /*
+     * Create the tab bar controller and add all tabs
+     */
+    _tabBarController = [[UITabBarController alloc] init];
+    _tabBarController.view.frame = CGRectMake(0, 0, 320, 460);
+    [_tabBarController setViewControllers:[NSArray arrayWithObjects:news, features, opinions, arts, sports, nil]];
+    [_tabBarController setDelegate:self];
+    [self.view addSubview:_tabBarController.view];
 }
 
 - (void)viewDidUnload
