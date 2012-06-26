@@ -84,9 +84,8 @@
     
     // Initialize date formatter. We'll use this to convert the pubDate into an NSDate object
     NSDateFormatter *pubDateFormatter = [[NSDateFormatter alloc] init];
-    NSLocale *USEnglishLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    [pubDateFormatter setLocale:USEnglishLocale];
-    [pubDateFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss zzz"];
+    [pubDateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+    [pubDateFormatter setDateFormat:@"EEE, dd MMM yyyy"];
     
     // Recurse over all the RSS items in the feed
     for (CXMLElement *item in [channel elementsForName:@"item"])
@@ -105,6 +104,12 @@
             NSString *category = [item elementForName:@"category"];
             int categoryID = [self categoryIDForCategory:category];
             
+            ///////////////////////////
+            // DEBUGGING
+            ///////////////////////////
+            
+            ///////////////////////////
+            
             // Allocate a new RSSEntry from feed info & add to unsorted entries
             RSSEntry *entry = [[RSSEntry alloc] initWithTitle:title link:link author:author summary:summary pubDate:pubDate guid:guid category:category categoryID:categoryID];
             JSAssert(entry != nil, @"Error allocating entry");
@@ -119,6 +124,7 @@
             }
             else 
             {
+                NSLog(@"entry.thumbnailURL: %@", entry.thumbnailURL);
                 entry.thumbnail = [[[EGOImageLoader sharedImageLoader] imageForURL:[NSURL URLWithString:entry.thumbnailURL] shouldLoadWithObserver:nil] imageCroppedToFitSize:CGSizeMake(70, 70)];   
             }
             

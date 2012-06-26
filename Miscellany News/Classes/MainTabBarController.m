@@ -63,6 +63,7 @@
     if(_feedLoader == nil)
     {
         NSURL *miscFeedURL = [NSURL URLWithString:[[[NSBundle mainBundle] infoDictionary] valueForKey:jFeedURL]];
+        NSLog(@"feed URL: %@", miscFeedURL);
         _feedLoader = [[RSSFeedLoader alloc] initWithFeedURL:miscFeedURL];
     }
     
